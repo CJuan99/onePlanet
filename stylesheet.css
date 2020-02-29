@@ -126,7 +126,7 @@ section {
   #mainNav.navbar-scrolled {
     -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: #0ac876 ;
+    background-color: #0ac876  ;
   }
 
   #mainNav.navbar-scrolled .navbar-brand {
@@ -306,6 +306,9 @@ h2 {
 .display-6 {
     font-family: 'Source Sans Pro',sans-serif;
     font-size: 1re}
+/*----about----------*/
+
+
 /*residence*/
 .card-title a{
   text-decoration: none;
@@ -351,7 +354,7 @@ span.text-muted {
 }
 
 .badge {
-  background-color: #FFCC00;
+  background-color: #0ac876;
 }
 
 .arrow {
@@ -413,12 +416,12 @@ ul.links li {
 }
 
 ul.social_section_1info li:hover {
-  color: #FFCC00 !important;
+  color: #0ac876 !important;
 }
 
 /*footer*/
 .flinks a:hover{
-  color: #FFCC00;
+  color: #0ac876;
   text-decoration: none;
 }
 
@@ -426,11 +429,11 @@ ul.social_section_1info li:hover {
   font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 1000;
   font-size: 2em;
-  color: #FFCC00;
+  color: #0ac876;
   letter-spacing: 0.2rem;
 }
  i.icon{
-  color: #FFCC00;
+  color: #0ac876;
 }
 
 
