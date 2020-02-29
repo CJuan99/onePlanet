@@ -200,7 +200,7 @@ header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 72px);
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url("../images/ban2.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url("ban2.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url("../images/ban2.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -309,54 +309,142 @@ h2 {
 /*----about----------*/
 
 
-/*residence*/
-.card-title a{
-  text-decoration: none;
+
+/*materials*/
+
+.cta-100 {
+  padding-top: 5rem;
 }
-.card-img-top {
-  display: block;
-  padding: 5px;
+
+.white {
+  color: #fff !important;
+}
+.mt{float: left;margin-top: -20px;padding-top: 20px;}
+.bg-blue-ui {
+  background-color: #708198 !important;
+}
+figure img{width:300px;}
+
+#blogCarousel {
+  padding-bottom: 50px;
+}
+
+.blog .carousel-indicators {
+  left: 0;
+  top: -50px;
+  height: 10%;
+}
+
+
+/* The colour of the indicators */
+
+.blog .carousel-indicators li {
+  background: #708198;
+  border-radius: 50%;
+
+
+}
+
+.blog .carousel-indicators .active {
+  background: #0fc9af;
+}
+
+
+
+
+.item-carousel-blog-block {
+  outline: medium none;
+  padding: 15px;
+}
+
+.item-box-blog {
+  border: 1px solid #dadada;
+  text-align: center;
+  z-index: 4;
+  padding: 20px;
+}
+
+.item-box-blog-image {
+  position: relative;
+}
+
+.item-box-blog-image figure img {
   width: 100%;
-  height: 250px;
+  height: auto;
 }
 
-span.text-muted {
-  font-size: 10px;
+.item-box-blog-date {
+  position: absolute;
+  z-index: 5;
+  padding: 4px 20px;
+  top: -20px;
+  right: 8px;
+  background-color: #41cb52;
 }
 
-.houseTitle {
-  font-size: 15px;
-  font-weight: bold;
+.item-box-blog-date span {
+  color: #fff;
+  display: block;
+  text-align: center;
+  line-height: 1.2;
 }
 
-.houseList {
+.item-box-blog-date span.mon {
+  font-size: 18px;
+}
+
+.item-box-blog-date span.day {
   font-size: 16px;
-  -webkit-box-shadow: 0px 5px 21px -14px rgba(0, 0, 0, 0.14);
-  -moz-box-shadow: 0px 5px 21px -14px rgba(0, 0, 0, 0.14);
-  box-shadow: 0px 5px 21px -14px rgba(0, 0, 0, 0.14);
 }
 
-.card-body:hover {
-  -webkit-box-shadow: 0px 5px 39px -14px rgba(0, 0, 0, 0.26);
-  -moz-box-shadow: 0px 5px 39px -14px rgba(0, 0, 0, 0.26);
-  box-shadow: 0px 5px 39px -14px rgba(0, 0, 0, 0.26);
+.item-box-blog-body {
+  padding: 10px;
 }
 
-.houseList li {
-  font-size: 16px;
-  margin-right: 10px;
-  display: inline;
-  list-style: none;
+.item-heading-blog a h5 {
+  margin: 0;
+  line-height: 1;
+  text-decoration:none;
+  transition: color 0.3s;
 }
 
-.houseList span {
-  margin-right: 5px;
+.item-box-blog-heading a {
+    text-decoration: none;
 }
 
-.badge {
-  background-color: #0ac876;
+.item-box-blog-data p {
+  font-size: 13px;
 }
 
+.item-box-blog-data p i {
+  font-size: 12px;
+}
+
+.item-box-blog-text {
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.mt-10 {
+  float: left;
+  margin-top: -10px;
+  padding-top: 10px;
+}
+
+.btn.bg-blue-ui.white.read {
+  cursor: pointer;
+  padding: 4px 20px;
+  float: left;
+  margin-top: 10px;
+}
+
+.btn.bg-blue-ui.white.read:hover {
+  box-shadow: 0px 5px 15px inset #4d5f77;
+}
+
+
+
+/*---materials--*/
 .arrow {
   text-align: center;
   margin: 0;
@@ -421,7 +509,7 @@ ul.social_section_1info li:hover {
 
 /*footer*/
 .flinks a:hover{
-  color: #0ac876;
+  color: #00000;
   text-decoration: none;
 }
 
