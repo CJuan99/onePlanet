@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <title>Home</title>
 </head>
 
@@ -110,15 +110,15 @@
           </button>
         </div>
         <ul class="nav nav-tabs px-3 m-auto" id="tabContent">
-          <li class="active mx-2 px-5 py-2"><a class="tempTextChg" href="#home" data-toggle="tab">Applicant</a></li>
-          <li class="px-5 py-2"><a class="tempTextChg" href="#menu1" data-toggle="tab">Housing Officer</a></li>
+          <li class="active mx-2 px-5 py-2"><a class="tempTextChg" href="#home" data-toggle="tab">Recycler</a></li>
+          <li class="px-5 py-2"><a class="tempTextChg" href="#menu1" data-toggle="tab">Collector</a></li>
         </ul>
 
         <div class="modal-body">
           <div class="login px-2 mx-auto mw-100">
             <div class="tab-content">
               <div id="home" class="tab-pane fade in active">
-                <h3>New Applicant</h3>
+                <h3> Recycler</h3>
                 <form action="register.php" method="POST" enctype="multipart/form-data">
                   <div class="form-group">
 
@@ -133,7 +133,7 @@
                     <label for="fullname">Full Name</label>
                     <input type="fullname" class="form-control" id="fullname" placeholder="Full Name" name="fullname" required="">
                   </div>
-                  <div class="form-group">
+              <!--    <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Email" name="email" required="">
                   </div>
@@ -144,7 +144,7 @@
                   <div class="form-group">
                     <label for="newemail">Pay Slip </label>
                     <input type="file" id="paySlip" name="paySlip" required="">
-                  </div>
+                  </div>-->
                   <div class="text-center">
                     <button type="submit" name="registerApplicant_btn" class="btn btn-primary submit mb-4 px-5" value="signUp">Sign Up</button>
                   </div>
@@ -153,7 +153,7 @@
 
               <!--HousingOfficer-->
               <div id="menu1" class="tab-pane fade">
-                <h3>New Housing Officer</h3>
+                <h3>Collector</h3>
                 <form action="registerHO.php" method="post">
                   <div class="form-group">
                     <label for="name">Username</label>
@@ -168,7 +168,7 @@
                     <input type="fullname" class="form-control" id="fullname" placeholder="Full Name" name="fullname" required="">
                   </div>
                   <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">Address</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter new email" name="email" required="">
                   </div>
 
@@ -291,9 +291,11 @@
 
     </div>
   </section>-->
+
+  <!--aboutUs-->
   <section class="page-section1 " id='about'>
     <div class="container">
-      <h2 class="title text-center mt-0">What we <span>do</span></h2>
+      <h2 class="title text-center mt-0">About <span>Us</span></h2>
       <div class="row mbr-justify-content-center">
 
         <div class="col-lg-6 mbr-col-md-10">
@@ -302,8 +304,8 @@
               <span class="mbr-iconfont fa-volume-up fa"></span>
             </div>
             <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Recycle <span>Material</span></h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Collect <span> Recyclable Material</span></h2>
+              <p class="mbr-fonts-style text1 mbr-text display-6">A various type of recyclable material are accepted to recycle in this online platform</p>
             </div>
           </div>
         </div>
@@ -313,10 +315,10 @@
               <span class="mbr-iconfont fa-calendar fa"></span>
             </div>
             <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Create
-                <span>An Effective Team</span>
+              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Make
+                <span>An Appointment to Recycle</span>
               </h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+              <p class="mbr-fonts-style text1 mbr-text display-6">Be a recycler and choose the your available date and make appointment with our collectors</p>
             </div>
           </div>
         </div>
@@ -326,10 +328,10 @@
               <span class="mbr-iconfont fa-globe fa"></span>
             </div>
             <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Launch
-                <span>A Unique Project</span>
+              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Connecting
+                <span>With Collectors</span>
               </h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+              <p class="mbr-fonts-style text1 mbr-text display-6"> A various of collector with multiple recyclable materials be part of this system </p>
             </div>
           </div>
         </div>
@@ -340,7 +342,7 @@
             </div>
             <div class="text-wrap vcenter">
               <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Achieve <span>Your Targets</span></h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+              <p class="mbr-fonts-style text1 mbr-text display-6">Accumulate your points of every weight of submitted and collected materials </p>
             </div>
           </div>
         </div>
@@ -431,121 +433,193 @@
 
   </div>
 </div>-->
-  <div class="page-section" id="recycle">
+<section class="page-section "  id="recycle">
     <div class="container">
-      <div id="carousel-example-multi" class="carousel slide carousel-multi-item v-2" data-ride="carousel">
-        <!--Controls-->
-        <div class="controls-top">
-          <a class="btn-floating" href="#carousel-example-multi" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-          <h2 class="text-center mt-0">Recycle Now</h2>
-          <a class="btn-floating" href="#carousel-example-multi" data-slide="next"><i class="fas fa-chevron-right"></i></a>
-        </div>
-        <!--/.Controls-->
+      <h2 class="text-center mt-0">Recycle Now</h2>
+      <div class="container cta-100 ">
+              <div class="container">
+                <div class="row blog">
+                  <div class="col-md-12">
+                    <div id="blogCarousel" class="carousel slide container-blog" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#blogCarousel" data-slide-to="1"></li>
+                      </ol>
+                      <!-- Carousel items -->
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <div class="row">
+                            <div class="col-md-4" >
+                              <div class="item-box-blog">
+                                <div class="item-box-blog-image">
+                                  <!--Date-->
+                                  <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
+                                  <!--Image-->
+                                  <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                </div>
+                                <div class="item-box-blog-body">
+                                  <!--Heading-->
+                                  <div class="item-box-blog-heading">
+                                    <a href="#" tabindex="0">
+                                      <h5>News Title</h5>
+                                    </a>
+                                  </div>
+                                  <!--Data-->
+                                  <div class="item-box-blog-data" style="padding: px 15px;">
+                                    <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
+                                  </div>
+                                  <!--Text-->
+                                  <div class="item-box-blog-text">
+                                    <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
+                                  </div>
+                                  <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
+                                  <!--Read More Button-->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4" >
+                              <div class="item-box-blog">
+                                <div class="item-box-blog-image">
+                                  <!--Date-->
+                                  <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
+                                  <!--Image-->
+                                  <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                </div>
+                                <div class="item-box-blog-body">
+                                  <!--Heading-->
+                                  <div class="item-box-blog-heading">
+                                    <a href="#" tabindex="0">
+                                      <h5>News Title</h5>
+                                    </a>
+                                  </div>
+                                  <!--Data-->
+                                  <div class="item-box-blog-data" style="padding: px 15px;">
+                                    <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
+                                  </div>
+                                  <!--Text-->
+                                  <div class="item-box-blog-text">
+                                    <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
+                                  </div>
+                                  <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
+                                  <!--Read More Button-->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4" >
+                              <div class="item-box-blog">
+                                <div class="item-box-blog-image">
+                                  <!--Date-->
+                                  <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
+                                  <!--Image-->
+                                  <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                </div>
+                                <div class="item-box-blog-body">
+                                  <!--Heading-->
+                                  <div class="item-box-blog-heading">
+                                    <a href="#" tabindex="0">
+                                      <h5>News Title</h5>
+                                    </a>
+                                  </div>
+                                  <!--Data-->
+                                  <div class="item-box-blog-data" style="padding: px 15px;">
+                                    <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
+                                  </div>
+                                  <!--Text-->
+                                  <div class="item-box-blog-text">
+                                    <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
+                                  </div>
+                                  <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
+                                  <!--Read More Button-->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--.row-->
+                        </div>
+                        <!--.item-->
+                        <div class="carousel-item ">
+                          <div class="row">
+                            <div class="col-md-4" >
+                              <div class="item-box-blog">
+                                <div class="item-box-blog-image">
+                                  <!--Date-->
+                                  <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
+                                  <!--Image-->
+                                  <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                </div>
+                                <div class="item-box-blog-body">
+                                  <!--Heading-->
+                                  <div class="item-box-blog-heading">
+                                    <a href="#" tabindex="0">
+                                      <h5>News Title</h5>
+                                    </a>
+                                  </div>
+                                  <!--Data-->
+                                  <div class="item-box-blog-data" style="padding: px 15px;">
+                                    <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
+                                  </div>
+                                  <!--Text-->
+                                  <div class="item-box-blog-text">
+                                    <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
+                                  </div>
+                                  <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
+                                  <!--Read More Button-->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4" >
+                              <div class="item-box-blog">
+                                <div class="item-box-blog-image">
+                                  <!--Date-->
+                                  <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
+                                  <!--Image-->
+                                  <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                </div>
+                                <div class="item-box-blog-body">
+                                  <!--Heading-->
+                                  <div class="item-box-blog-heading">
+                                    <a href="#" tabindex="0">
+                                      <h5>News Title</h5>
+                                    </a>
+                                  </div>
+                                  <!--Data-->
+                                  <div class="item-box-blog-data" style="padding: px 15px;">
+                                    <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
+                                  </div>
+                                  <!--Text-->
+                                  <div class="item-box-blog-text">
+                                    <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor.</p>
+                                  </div>
+                                  <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
+                                  <!--Read More Button-->
+                                </div>
+                              </div>
+                            </div>
+                          
+                          </div>
+                          <!--.row-->
+                        </div>
+                        <!--.item-->
+                      </div>
+                      <!--.carousel-inner-->
+                    </div>
+                    <!--.Carousel-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+</section>
 
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-          <li data-target="#carousel-example-multi" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel-example-multi" data-slide-to="1"></li>
-          <li data-target="#carousel-example-multi" data-slide-to="2"></li>
-          <li data-target="#carousel-example-multi" data-slide-to="3"></li>
-          <li data-target="#carousel-example-multi" data-slide-to="4"></li>
-          <li data-target="#carousel-example-multi" data-slide-to="5"></li>
-        </ol>
-        <!--/.Indicators-->
 
-        <div class="carousel-inner v-2" role="listbox">
-          <div class="carousel-item active">
-            <div class="col-12 col-md-4">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (36).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title font-weight-bold">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                  <a class="btn btn-primary btn-md btn-rounded">Button</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-12 col-md-4">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title font-weight-bold">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                  <a class="btn btn-primary btn-md btn-rounded">Button</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-12 col-md-4">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (38).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title font-weight-bold">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                  <a class="btn btn-primary btn-md btn-rounded">Button</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-12 col-md-4">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (29).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title font-weight-bold">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                  <a class="btn btn-primary btn-md btn-rounded">Button</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-12 col-md-4">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (30).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title font-weight-bold">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                  <a class="btn btn-primary btn-md btn-rounded">Button</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="col-12 col-md-4">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (27).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title font-weight-bold">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                  <a class="btn btn-primary btn-md btn-rounded">Button</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
   <!---contactUs-->
-  <section class="page-section" style="background-color:lightgrey;" id="contact">
+  <section class="page-section" style="background-color:#f1f4fa;" id="contact">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
           <h2 class="mt-0">Let's Get In Touch</h2>
           <hr class="divider my-4">
-          <p class="text-muted mb-5">Looking for a house? Give us a call or send us an email and we will get bak to you as soon as possible.</p>
+          <p class="text-muted mb-5">Need assistance? Give us a call or send us an email and we will get bak to you as soon as possible.</p>
         </div>
       </div>
       <div class="row">
@@ -615,7 +689,7 @@
               <p><i class="fa fa-phone  mx-2 "></i> +03 2617 9000</p>
             </div>
             <div>
-              <p><i class="fa fa-envelope  mx-2"></i><a class="text-decoration-none text-white" href="dbkualalumpur@gmail.com">dbkl@dbkl.gov.my</a></p>
+              <p><i class="fa fa-envelope  mx-2"></i><a class="text-decoration-none text-white" href="#">onePlanet.gmail.com</a></p>
             </div>
           </div>
         </div>
