@@ -611,7 +611,7 @@ p.w3l_sub_para_agile {
     text-align: center;
     font-size: 0.9em;
 }
-/*-- medile_agile --*/
+/*-- medile_agile
 .medile_agile_its_section {
     text-align: center;
 }
@@ -628,6 +628,7 @@ p.w3l_sub_para_agile {
     letter-spacing: 1px;
     padding-top: 2em;
 }
+
 .medile_agile_its_green {
      background: #06080e;
     min-height: 200px;
@@ -2646,11 +2647,11 @@ h3.agileinfo_sign  {
 	.agile_inner_grids {
 		margin-top: 2em;
 	}
-	.sub_para_agile {
+	/*.sub_para_agile {
 		font-size: 0.9em;
 		letter-spacing: 2px;
 		margin-top: 0.6em;
-	}
+	}*/
 	.banner-bottom h6,.inner_main_agile_section h6 {
 		letter-spacing: 6px;
 		font-size: 0.9em;
