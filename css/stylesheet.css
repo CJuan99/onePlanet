@@ -284,13 +284,150 @@ h2 {
 }
 .display-6 {
     font-family: 'Source Sans Pro',sans-serif;
-    font-size: 1re}
+    font-size: 1rem;}
 /*----about----------*/
 
+/*--loginmoduel--*/
 
-/*--modal--*/
-.modal-title
-/*--modal--*/
+.form-control{
+  background: #e5e5e5;
+  border: 0px;
+
+}
+/*
+.signin-form input[type="email"],.signin-form input[type="text"], .signin-form input[type="password"],.signin-form select {
+    width: 100%;
+    padding: 1em 1em 1em 1em;
+    font-size: 0.8em;
+    margin: 0.5em 0;
+    outline: none;
+    color: #212121;
+    border: none;
+    border: 1px solid #ccc;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.signin-form input[type="email"] {
+    background: none;
+    display: block;
+}
+.signin-form input[type="text"] {
+    background: none;
+    display: block;
+}
+.signin-form input[type="password"] {
+     background: none;
+    display: block;
+}
+.signin-form ::-webkit-input-placeholder{
+	color:#212121 !important;
+}
+.signin-form ::-webkit-textarea-placeholder{
+	color:#212121 !important;
+}
+.signin-form textarea {
+	min-height:100px;
+}*/
+.signup-form input[type="submit"] {
+    outline: none;
+    padding: 0.8em 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    margin-top: 1em;
+    border: none;
+    color: #FFFFFF;
+	text-transform:uppercase;
+    cursor: pointer;
+      background: #0ac876;
+    box-shadow: 0px 2px 1px rgba(28, 28, 29, 0.42);
+
+}
+.signup-form input[type="submit"]:hover {
+    color: #fff;
+       background: #000;
+    transition: .5s all;
+	-webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+}
+
+::-webkit-input-placeholder {
+   font-family: 'Source Sans Pro',sans-serif;
+   font-size: 1rem;
+   font-size: 14px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   letter-spacing: 0.2px;
+   font-family: 'Source Sans Pro',sans-serif;
+   font-size: 1rem;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   letter-spacing: 0.2px;
+   font-family: 'Source Sans Pro',sans-serif;
+   font-size: 1rem;
+}
+
+:-ms-input-placeholder {
+  letter-spacing: 0.2px;
+   font-family: 'Source Sans Pro',sans-serif;
+   font-size: 1rem;
+}
+
+.modal-content{
+    background: linear-gradient(145deg, #eee, #fff);
+}
+.modal-title{
+  font-family: 'Source Sans Pro',sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: capitalize;;
+}
+/*--loginmodule--*/
+/*--signUpmodule--*/
+.project-tab {
+    padding: 30px 10px 10px 10px;
+    margin-top: -8%;
+}
+.project-tab #tabs{
+    background: #007b5e;
+    color: #eee;
+}
+.project-tab #tabs h6.section-title{
+    color: #eee;
+}
+.project-tab #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color:  #3c763d;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 3px solid !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+.project-tab .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #3c763d;
+    font-size: 16px;
+    font-weight: 600;
+}
+.project-tab .nav-link:hover {
+    border: none;
+}
+.project-tab thead{
+    background: #f3f3f3;
+    color: #333;
+}
+.project-tab a{
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+/*--sign up module---*/
 
 
 /*materials*/
