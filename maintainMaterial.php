@@ -1,3 +1,5 @@
+<?php include("maintainMaterial_JS.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,6 +10,7 @@
         <meta name="author" content="" />
         <title>Dashboard - SB Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/ricky.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
@@ -63,7 +66,7 @@
                     <div class="container-fluid">
                       <h2 class="mt-4">Maintain Material Type</h2>
                       <div class="card mb-4 mt-3">
-                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material Table <button class="btn btn-success py-0 px-2 float-right"><i class="fas fa-plus"></i></button></div>
+                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material Table <button class="btn btn-success squareBtn py-0 px-2 float-right"><i class="fas fa-plus"></i></button></div>
                           <div class="card-body">
                               <div class="table-responsive">
                                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -83,9 +86,10 @@
                                               <td>Paper Desciption</td>
                                               <td>20</td>
                                               <td class="text-center">
-                                                <button class="btn btn-info py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                <button class="d-none btn btn-danger py-0 px-2 mr-3"><i class="fas fa-trash-alt"></i></button>
-                                                <button class="d-none btn btn-primary py-0 px-2"><i class="fas fa-check"></i></button>
+                                                <button onclick="editButton(this)" class="editBtn btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
+                                                <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-save"></i></button>
+                                                <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-trash-alt"></i></button>
+                                                <button onclick="cancelButton(this)" class="cancelBtn btn btn-warning squareBtn text-light py-0 px-2 d-none"><i class="fas fa-times"></i></button>
                                               </td>
                                           </tr>
                                           <tr>
@@ -94,9 +98,9 @@
                                               <td>Cardboard Description</td>
                                               <td>15</td>
                                               <td class="text-center">
-                                                <button class="btn btn-info py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                <button class="d-none btn btn-danger py-0 px-2 mr-3"><i class="fas fa-trash-alt"></i></button>
-                                                <button class="d-none btn btn-primary py-0 px-2"><i class="fas fa-check"></i></button>
+                                                <button class="btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
+                                                <button class="d-none btn btn-danger squareBtn py-0 px-2 mr-3"><i class="fas fa-trash-alt"></i></button>
+                                                <button class="d-none btn btn-primary squareBtn py-0 px-2"><i class="fas fa-check"></i></button>
                                               </td>
                                           </tr>
                                       </tbody>
@@ -126,5 +130,6 @@
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-demo.js"></script>
+
     </body>
 </html>
