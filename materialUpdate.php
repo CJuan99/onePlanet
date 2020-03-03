@@ -6,9 +6,7 @@
   $description = $_REQUEST["desc"];
   $points = $_REQUEST["p"];
 
-  $sql_update = "UPDATE material SET materialName='$materialName', description='$description', points='$points'
-                WHERE materialID = '$materialID'";
+  $sql_update = "UPDATE material SET materialName='$materialName', description='$description', pointsPerKg='$points' WHERE materialID = '$materialID'";
 
   $conn->query($sql_update);
-
 ?>

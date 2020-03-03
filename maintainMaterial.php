@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Maintain Material Type - Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/ricky.css" rel="stylesheet" />
 
@@ -66,7 +66,7 @@
                     <div class="container-fluid">
                       <h2 class="mt-4">Maintain Material Type</h2>
                       <div class="card mb-4 mt-3">
-                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material Table <button class="btn btn-success squareBtn py-0 px-2 float-right"><i class="fas fa-plus"></i></button></div>
+                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material Table <button class="btn btn-success squareBtn py-0 px-2 float-right" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button></div>
                           <div class="card-body">
                               <div class="table-responsive">
                                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -80,29 +80,26 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr>
-                                              <td>MA001</td>
-                                              <td>Paper</td>
-                                              <td>Paper Desciption</td>
-                                              <td>20</td>
-                                              <td class="text-center">
-                                                <button onclick="editButton(this)" class="editBtn btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-save"></i></button>
-                                                <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-trash-alt"></i></button>
-                                                <button onclick="cancelButton(this)" class="cancelBtn btn btn-warning squareBtn text-light py-0 px-2 d-none"><i class="fas fa-times"></i></button>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                              <td>MA002</td>
-                                              <td>Cardboard</td>
-                                              <td>Cardboard Description</td>
-                                              <td>15</td>
-                                              <td class="text-center">
-                                                <button class="btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                <button class="d-none btn btn-danger squareBtn py-0 px-2 mr-3"><i class="fas fa-trash-alt"></i></button>
-                                                <button class="d-none btn btn-primary squareBtn py-0 px-2"><i class="fas fa-check"></i></button>
-                                              </td>
-                                          </tr>
+                                        <?php
+                                          $sql_Materials = "SELECT * FROM material";
+                                          $results = $conn->query($sql_Materials);
+                                          if($results->num_rows > 0){
+                                            while($row = $results->fetch_assoc()){
+                                              echo '<tr>
+                                                        <td>'.$row["materialID"].'</td>
+                                                        <td>'.$row["materialName"].'</td>
+                                                        <td>'.$row["description"].'</td>
+                                                        <td>'.$row["pointsPerKg"].'</td>
+                                                        <td class="buttonGroup text-center">
+                                                          <button onclick="editButton(this)" class="editBtn btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
+                                                          <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-save"></i></button>
+                                                          <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-trash-alt"></i></button>
+                                                          <button onclick="cancelButton(this)" class="cancelBtn btn btn-warning squareBtn text-light py-0 px-2 d-none"><i class="fas fa-times"></i></button>
+                                                        </td>
+                                                    </tr>';
+                                            }
+                                          }
+                                        ?>
                                       </tbody>
                                   </table>
                               </div>
@@ -124,6 +121,41 @@
                 </footer>
             </div>
         </div>
+
+        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="bg-dark text-light text-center py-3 " >
+                 <button type="button" class="close pr-2 text-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                <h4 class="modal-title">Add Material</h4>
+              </div>
+              <div class="modal-body">
+                <div class="px-2 mx-auto mw-100">
+                  <form action="addMaterial.php" method="POST">
+                    <div class="form-group">
+                      <label class="mb-2">Material Name</label>
+                      <input type="text" class="form-control" name="materialName" id="materialName" placeholder="Material Name" required="">
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-2">Description</label>
+                      <input type="text" class="form-control" name="description" id="description" placeholder="Description" required="">
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-2">Points(per kg)</label>
+                      <input type="text" class="form-control" name="points" id="points" placeholder="Points" required="">
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" name="addBtn" class="btn btn-success submit mb-4 px-5" value="add">Add</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
