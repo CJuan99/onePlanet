@@ -1,3 +1,19 @@
+<?php
+
+session_start();
+include("conn.php");
+
+//$user_id = $userID;
+/*
+$sql = "SELECT * FROM user";
+$result = $conn->query($sql);
+$arr_user= [];
+
+if ($result->num_rows > 0) {
+    $arr_residence = $result->fetch_all(MYSQLI_ASSOC);
+}*/
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,48 +41,70 @@
 
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
-          <!--	<?php if(!empty($_SESSION['user'])) { ?>
-			<?php if($_SESSION['userType']=='HousingOfficer') { ?>-->
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#residence">Recycle Now</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-          </li>
-
+        <?php if(!empty($_SESSION['username'])) { ?>
+			    <?php if($_SESSION['userType']=='Recycler') { ?>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#residence">Recycle Now</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                  </li>
+          <?php }else { ?>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#residence">My Collection</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+              </li>
+            <?php } ?>
+        <?php }else { ?>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#residence">Recycle Now</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+              </li>
+        <?php } ?>
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
 
         <ul class="nav navbar-nav ml-auto my-2 my-lg-0 ">
-          <!--	<?php if(!empty($_SESSION['user'])) { ?>
-			<?php if($_SESSION['userType']=='HousingOfficer') { ?>
+
+      	<?php if(!empty($_SESSION['username'])) { ?>
+			<?php if($_SESSION['userType']=='Recycler') { ?>
 				  <li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="addNewUnit.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['user']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="addNewUnit.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } else{?>
 				<li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="viewApplication_Applicant.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['user']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="viewApplication_Applicant.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } ?>
 		   <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="logout.php"><span class="fas fa-sign-out-alt mx-3" aria-hidden="true"></span>Logout</a>
           </li>
-		<?php } else { ?>-->
+		<?php } else { ?>
           <li class="nav-item ">
             <a class="nav-link js-scroll-trigger" href="index.php" data-toggle="modal" data-target="#login"> <span class="fa fa-lock mx-3" aria-hidden="true"></span>Sign In</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link js-scroll-trigger" href="index.php" data-toggle="modal" data-target="#signUp"> <span class="fa fa-user mx-3" aria-hidden="true"></span>Sign Up</a>
           </li>
-          <!--		<?php } ?>-->
+    		<?php } ?>
         </ul>
       </div>
     </div>
   </nav>
-  <!--sign up-->
+  <!--sign in-->
   <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content shadow-lg rounded">
@@ -101,12 +139,12 @@
 
                 </div>
                 <div class="text-center">
-                  <input type="submit" value="sign in">
+                  <input type="submit" name="signin_btn" value="sign in">
                 </div>
                 <p class="text-center pb-4">
                   <span>Don't have an account?</span>
 
-                  <a class="text-decoration-none text-success" href="#">Click here to register</a>
+                  <a class="text-decoration-none text-success" href="#" data-toggle="modal" data-target="#signUp" data-dismiss="modal">Click here to register</a>
                 </p>
               </form>
             </div>
@@ -141,7 +179,7 @@
             <div class="tab-content">
               <div id="home" class="tab-pane active in">
                 <div class="signup-form profile">
-                  <form action="register.php" method="POST" enctype="multipart/form-data">
+                  <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" onSubmit="return formValidation();" >
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
                       <input type="text" class="form-control" id="name" placeholder="Username" name="username" required="">
@@ -166,7 +204,7 @@
               <!--Collector-->
               <div id="menu1" class="tab-pane fade">
                 <div class="signup-form profile">
-                  <form action="registerHO.php" method="post">
+                  <form action="signUpColl.php" method="post" name="registration" onSubmit="return formValidation();">
                     <div class="form-group ">
                       <!--  <label for="name">Username</label>-->
                       <input type="text" class="form-control" id="name" placeholder="Username" name="username" required="">
@@ -181,7 +219,7 @@
                     </div>
                     <div class="form-group">
                       <!--<label for="email">Address</label>-->
-                      <input type="email" class="form-control" id="email" placeholder="Address" name="email" required="">
+                      <input type="text" class="form-control" id="address" placeholder="Address" name="address" required="">
                     </div>
                     <div class="form-group ">
                       <!--<label for="materials">Materials</label>-->
@@ -517,7 +555,7 @@
     </div>
   </section>
 
-
+<!--footer-->
   <footer style="background-color: #2c292f">
     <div class="container ">
       <div class="row ">
