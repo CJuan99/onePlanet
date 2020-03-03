@@ -17,6 +17,11 @@ $address = $_POST['address'];
 $userType = "Collector";
 $totalPoints= "0";
 
+
+$matID = $_POST['materials'];
+
+ var_dump($_POST);
+
 $query = "SELECT * FROM users";
 $results = $conn->query($query);
 
@@ -38,8 +43,10 @@ if($userExist){
 	// insert into user table
 	$queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints,address, userType) VALUES ('$username', '$password', '$fullname', '$totalPoints','$address','$userType')";
 	// insert into applicant table
+	$queryMaterials = "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
 
-	if( $conn->query($queryInsertUser) ){
+
+	if( $conn->query($queryInsertUser) &&  $conn->query($queryMaterials)){
 		header("Location:index.php");
 		//$_SESSION['fullname']=$fullname;
 		//$_SESSION['userType']='applicant';
@@ -47,6 +54,18 @@ if($userExist){
 	else{
 		echo"fail query";
 	}
+
+/*
+		if( $conn->query($queryMaterials) ){
+			header("Location:index.php");
+		 ec
+			//$_SESSION['fullname']=$fullname;
+			//$_SESSION['userType']='applicant';
+		}
+		else{
+			echo"fail query";
+		}
+*/
 }
 
 }

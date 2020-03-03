@@ -20,7 +20,6 @@ $ecoLevel= "Newbie";
 
 
 
-
 $query = "SELECT * FROM users";
 $results = $conn->query($query);
 
@@ -41,6 +40,7 @@ if($userExist){
 	$password=md5($password);
 	// insert into user table
 	$queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints, ecoLevel, userType) VALUES ('$username', '$password', '$fullname', '$totalPoints','$ecoLevel','$userType')";
+
 	// insert into applicant table
 
 	if( $conn->query($queryInsertUser) ){
