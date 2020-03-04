@@ -19,6 +19,7 @@ $totalPoints= "0";
 
 
 $matID = $_POST['materials'];
+$schedule = $_POST['time'];
 
  var_dump($_POST);
 
@@ -39,14 +40,15 @@ if($userExist){
 	echo 'window.location.href="index.php";</script>'; //instead header(); because unable to alert
 }else{
 
-	$password=md5($password);
+	//$password=md5($password);
 	// insert into user table
-	$queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints,address, userType) VALUES ('$username', '$password', '$fullname', '$totalPoints','$address','$userType')";
+	$queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints,address, userType, schedule) VALUES ('$username', '$password', '$fullname', '$totalPoints','$address','$userType','$schedule')";
 	// insert into applicant table
 	$queryMaterials = "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
 
 
 	if( $conn->query($queryInsertUser) &&  $conn->query($queryMaterials)){
+    echo '<script type="text/javascript">window.alert("Account is successfully created");';
 		header("Location:index.php");
 		//$_SESSION['fullname']=$fullname;
 		//$_SESSION['userType']='applicant';

@@ -3,14 +3,151 @@
 session_start();
 include("conn.php");
 
-//$user_id = $userID;
+
+
+/*numColl= SELECT materialID,count(*) as numberOfCollector FROM registeredmaterial;
+$collector = mysqli_query($conn, $numColl);*/
 /*
-$sql = "SELECT * FROM user";
+$qry = "SELECT * FROM material";
+$result = mysqli_query($conn, $qry);
+$matRecd = mysqli_fetch_assoc($result);
+
+if(isset($_POST['materialID'])){
+	$matID= $_POST['materialID'];
+	$_SESSION['materialID']=$matID;
+}*/
+
+$sql = "SELECT * FROM material";
 $result = $conn->query($sql);
-$arr_user= [];
+$arr_mat= [];
 
 if ($result->num_rows > 0) {
-    $arr_residence = $result->fetch_all(MYSQLI_ASSOC);
+    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
+}
+
+if(isset($_POST['materialID'])){
+	$matID= $_POST['materialID'];
+	$_SESSION['materialID']= $matID;
+}
+
+
+/*$time_start = '10:00';
+ $time_end   = '22:00';
+
+ # use date function with the time variables to create a timestamp to use in the while loop
+ $timestamp_start = strtotime(date('d-m-Y').' '.$time_start);
+ $timestamp_end   = strtotime(date('d-m-Y').' '.$time_end);
+
+ # create array to fill with the options
+ $options_array = array();
+
+ # loop through until the end timestamp is reached
+ while($timestamp_start <= $timestamp_end){
+     $options_array[] = date('H:i', $timestamp_start);
+     $timestamp_start = $timestamp_start+900; //Adds 15 minutes
+ }*/
+
+
+
+
+/*$urerr = $perr = $fnerr = $aderr = " ";
+$username = $password = $fullname = $add =  "";
+
+$boolen  = false;
+
+
+if(isset($_POST["regRec_btn"])){
+
+    if(empty($_POST["username"])){
+       $urerr = "Username Required...!";
+        $boolen  = false;
+    }elseif(ctype_alnum($_POST["username"])) {
+       $username = validate_input($_POST["username"]);
+        $boolen  = true;
+    }else{
+       $urerr = "Username must be alphanumeric";
+        $boolen  = false;
+    }
+
+
+    $length = strlenght($_POST["password"]);
+
+    if(empty($_POST["password"])){
+        $perr = "Password Field Required...!";
+        $boolen  = false;
+    }elseif($length){
+        $perr = $length;
+        $boolen  = false;
+    }else{
+            $passwd = validate_input($_POST["password"]);
+        $boolen  = true;
+    }
+
+    if(empty($_POST["fullname"])){
+        $fnerr = "Fullname Field Required...!";
+        $boolen  = false;
+    }elseif( ctype_alpha($_POST["fullname"])){
+      $fullname = validate_input($_POST["fullname"]);
+      $boolen  = true;
+    }else{
+        $fnerr = "Fullname must be all letters";
+        $boolen  = false;
+    }
+
+
+    if(empty($_POST["address"])){
+       $aderr = "Address Required...!";
+        $boolen  = false;
+    }else{
+       $add= validate_input($_POST["address"]);
+        $boolen  = true;
+    }
+
+  /*  if(empty($_POST["cpasswd"])){
+        $cperr = "Confirm Password Required...!";
+        $boolen  = false;
+    }
+    elseif($_POST["cpasswd"]!=$passwd){
+        $cperr = "Password Not Match...!";
+        $boolen  = false;
+    }
+
+    if(empty($_POST["fname"]) || empty($_POST["lname"])){
+        $fnerr = "First &amp; Last Name Required...!";
+        $boolen  = false;
+    }else{
+        $name = validate_input($_POST["fname"]);
+        $boolen  = true;
+    }
+
+    if(empty($_POST["gender"])){
+        $gerr = "Gender Required...!";
+        $boolen  = false;
+    }else{
+        $gender = validate_input($_POST["gender"]);
+        $boolen  = true;
+    }
+
+    if(isset($_POST["ck1"])){
+        $boolen  = true;
+    }else{
+        $boolen  = false;
+    }
+}/*
+function strlenght($str){
+    $ln = strlen($str);
+    if($ln > 18){
+        return "Passwod should less than 18 characters";
+    }elseif($ln < 5 && $ $ln >= 1){
+        return "Password should greater then 3 characters";
+    }
+    return;
+}
+function validate_input($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }*/
 
 ?>
@@ -34,7 +171,7 @@ if ($result->num_rows > 0) {
       <button type="button" class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navBarUser" aria-controls="navBarUser" aria-expanded="false" aria-label="Toggle navigation">
         <i class="icon fa fa-user"></i>
       </button>
-      <a class="navbar-brand js-scroll-trigger" href="#page-top" id="logo">OnePlanet</a>
+      <a class="navbar-brand js-scroll-trigger" href="index.php" id="logo">OnePlanet</a>
       <button type="button" class="navbar-toggler navbar-toggler-left" data-toggle="collapse" data-target="#navBarResponsive" aria-controls="navBarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <i class="icon fas fa-bars fa-1x"></i>
       </button>
@@ -47,7 +184,7 @@ if ($result->num_rows > 0) {
                     <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#residence">Recycle Now</a>
+                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
@@ -57,7 +194,7 @@ if ($result->num_rows > 0) {
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#residence">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
@@ -68,7 +205,7 @@ if ($result->num_rows > 0) {
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#residence">Recycle Now</a>
+                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
@@ -82,11 +219,11 @@ if ($result->num_rows > 0) {
       	<?php if(!empty($_SESSION['username'])) { ?>
 			<?php if($_SESSION['userType']=='Recycler') { ?>
 				  <li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="addNewUnit.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="profile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } else{?>
 				<li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="viewApplication_Applicant.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="profile.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } ?>
 		   <li class="nav-item">
@@ -104,6 +241,7 @@ if ($result->num_rows > 0) {
       </div>
     </div>
   </nav>
+
   <!--sign in-->
   <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -118,7 +256,7 @@ if ($result->num_rows > 0) {
         <div class="modal-body">
           <div class="login px-2 mx-auto mw-100 ">
             <div class="signup-form profile">
-              <form action="login.php" method="POST">
+              <form action="login.php" method="POST" id="loginForm" name="loginForm">
                 <div class="form-group">
                   <!--  <label class="mb-2">Username</label>-->
                   <div class="input-group mb-2">
@@ -134,7 +272,7 @@ if ($result->num_rows > 0) {
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-key icon text-default"></i></span>
                     </div>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required="">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required minlength="6">
                   </div>
 
                 </div>
@@ -179,24 +317,30 @@ if ($result->num_rows > 0) {
             <div class="tab-content">
               <div id="home" class="tab-pane active in">
                 <div class="signup-form profile">
-                  <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" onSubmit="return formValidation();" >
+                  <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="name" placeholder="Username" name="username" required="">
+                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4">
+                    <!--  <span id="span"> </span>-->
                     </div>
                     <div class="form-group">
-                      <!--  <label for="newpwd">Password</label>-->
-                      <input type="password" class="form-control" id="password" placeholder="Password" name="password" required="">
+                      <!-- <label for="newpwd">Password</label>-->
+                      <input type="password" class="form-control" id="rpassword" placeholder="Password" name="password" required minlength="6">
+
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="fullname" class="form-control" id="fullname" placeholder="Full Name" name="fullname" required="">
-                    </div>
+                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5">
 
+                    </div>
                     <div class="text-center">
-                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up">
+                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up" onclick="ajaxRegistration()">
                     </div>
                   </form>
+                  <div class="success-message" id="register-success-message"
+       style="display: none"></div>
+   <div class="error-message" id="register-error-message"
+       style="display: none"></div>
 
                 </div>
               </div>
@@ -204,31 +348,72 @@ if ($result->num_rows > 0) {
               <!--Collector-->
               <div id="menu1" class="tab-pane fade">
                 <div class="signup-form profile">
-                  <form action="signUpColl.php" method="post" name="registration" onSubmit="return formValidation();">
+                  <form action="signUpColl.php" method="post" name="registration" id="c-registration">
                     <div class="form-group ">
                       <!--  <label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="name" placeholder="Username" name="username" required="">
+                      <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4">
+                      <!--<span id="span"> </span>-->
                     </div>
                     <div class="form-group">
                       <!--  <label for="password">Password</label>-->
-                      <input type="password" class="form-control" id="password" placeholder="Password" name="password" required="">
+                      <input type="password" class="form-control" id="cpassword" placeholder="Password" name="password"  required minlength="6">
+                        <!--<span id="span"> </span>-->
+
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="text" class="form-control" id="fullname" placeholder="Full Name" name="fullname" required="">
+                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required="">
+                    <!--<span id="span" class="error"></span>-->
                     </div>
                     <div class="form-group">
                       <!--<label for="email">Address</label>-->
-                      <input type="text" class="form-control" id="address" placeholder="Address" name="address" required="">
+                      <input type="text" class="form-control" id="caddress" placeholder="Address" name="address" required="">
+
                     </div>
                     <div class="form-group ">
                       <!--<label for="materials">Materials</label>-->
 
                       <select name="materials" class="form-control " required="true">
-                        <option disabled="disabled" selected="selected" value="">Choose materials</option>
-                        <option selected="selected" value="Paper">Paper </option>
-                        <option selected="selected" value="Metal">Metal </option>
+                        <option disabled="disabled" selected="selected" value="">Choose materials </option>
+                        <?php if(!empty($arr_mat)) { ?>
+                            <?php foreach($arr_mat as $mat) {?>
+                                <?php
+								                          echo "<option value='". $mat['materialID']."'>" . $mat['materialID']. ", ".$mat['materialName'].'</option>'; ?>
+                							<?php } ?>
+                						<?php }  ?>
+
                       </select>
+                    </div>
+                    <div class="form-group ">
+                      <!--<label for="materials">Materials</label>-->
+                      <?php
+                      function get_times( $default = '08:00', $interval = '+30 minutes' ) {
+                          //$dates = array("", "Mon", "Tues", "Wed", "Thurs", "Fri", "Satur", "Sun");
+
+                          $output = '';
+
+                          $current = strtotime( '08:00' );
+                          $end = strtotime( '20:00' );
+
+                          while( $current <= $end ) {
+                              $time = date( 'H:i', $current );
+                              $sel = ( $time == $default ) ? ' selected' : '';
+
+                            /*  echo date ('l');
+                              echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
+                              $output .= "<option value=\"{$time}\"{$sel}>" . date( 'h.i A', $current ) .'</option>';
+                              $current = strtotime( $interval, $current );
+                          }
+
+                          return $output;
+                      } ?>
+
+                      <select name="time" class="form-control " required="true">
+                        <option disabled="disabled" selected="selected" value="">Choose schedule</option>
+                        <?php echo get_times(); ?>
+                      </select>
+
+
                     </div>
                     <div class="text-center ">
                       <input type="submit" name="regColl_btn" value="sign Up">
@@ -245,8 +430,6 @@ if ($result->num_rows > 0) {
   <!--signup-->
 
 <!--header-->
-
-
   <header class="masthead">
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
@@ -615,9 +798,53 @@ if ($result->num_rows > 0) {
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <script src="js/cj.js"></script>
+  <script src="js/login-registration.js"></script>
+<!--  <script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#loginForm").validate();
+
+      $("#registration").validate();
+
+      $("#c-registration").validate();
+
+    $('#rfullname').keypress(function (e) {
+			var regex = new RegExp("^[a-zA-Z]+$");
+			var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+			if (regex.test(str)) {
+				return true;
+			}
+			else
+			{
+			e.preventDefault();
+			$('.error').show();
+			$('.error').text('Please enter alphabet characters');
+			return false;
+			}
+		});
+
+
+    $('#cfullname').keypress(function (e) {
+      var regex = new RegExp("^[a-zA-Z]+$");
+      var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+      if (regex.test(str)) {
+        return true;
+      }
+      else
+      {
+      e.preventDefault();
+      $('.error').show();
+      $('.error').text('Please enter alphabet characters');
+      return false;
+      }
+    });
+
+
+  });
+</script>-->
 
 
 </body>
