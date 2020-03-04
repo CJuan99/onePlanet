@@ -46,7 +46,7 @@
                                 Dashboard</a
                             >
                             <div class="sb-sidenav-menu-heading">Features</div>
-                            <a class="nav-link" href="maintainMaterial.html"
+                            <a class="nav-link" href="maintainMaterial.php"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                                 Maintain Material Type</a
                             ><a class="nav-link" href="viewHistory.html"
