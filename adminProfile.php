@@ -1,7 +1,17 @@
 <?php
 session_start();
 include("maintainMaterial_JS.php");
+$username_session = $_SESSION["username"];
+$sql_user = "SELECT * FROM users WHERE username='$username_session'";
+$result_user = $conn->query($sql_user);
 
+if($result_user->num_rows > 0){
+  $row_user = $result_user->fetch_assoc();
+
+  $username = $row_user["username"];
+  $password = $row_user["password"];
+  $fullname = $row_user["fullname"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,45 +76,31 @@ include("maintainMaterial_JS.php");
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                      <h2 class="mt-4">Maintain Material Type</h2>
+                      <h2 class="mt-4">Manage Profile</h2>
                       <div class="card mb-4 mt-3">
-                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material Table <button class="btn btn-success squareBtn py-0 px-2 float-right" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button></div>
+                          <div class="card-header"><i class="fas fa-user-alt"></i> Profile Information
+                            <button onclick="editProfile(this)" id="editProfileBtn" class=" btn btn-info squareBtn py-0 px-2 float-right"><i class="fas fa-cog"></i></button>
+                            <button onclick="cancelProfile(this)" id="cancelProfileBtn" class="btn btn-warning squareBtn text-light py-0 px-2 float-right d-none"><i class="fas fa-times"></i></button>
+                            <button onclick="confirmProfile(this)" id="confirmProfileBtn" class="btn btn-primary squareBtn py-0 px-2 mr-3 float-right d-none"><i class="fas fa-save"></i></button>
+                          </div>
                           <div class="card-body">
-                              <div class="table-responsive">
-                                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                      <thead>
-                                          <tr>
-                                              <th>Material ID</th>
-                                              <th>Material Name</th>
-                                              <th>Description</th>
-                                              <th>Points(per kg)</th>
-                                              <th>Options</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                        <?php
-                                          $sql_Materials = "SELECT * FROM material";
-                                          $results = $conn->query($sql_Materials);
-                                          if($results->num_rows > 0){
-                                            while($row = $results->fetch_assoc()){
-                                              echo '<tr>
-                                                        <td>'.$row["materialID"].'</td>
-                                                        <td>'.$row["materialName"].'</td>
-                                                        <td>'.$row["description"].'</td>
-                                                        <td>'.$row["pointsPerKg"].'</td>
-                                                        <td class="buttonGroup text-center">
-                                                          <button onclick="editButton(this)" class="editBtn btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                          <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-save"></i></button>
-                                                          <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-trash-alt"></i></button>
-                                                          <button onclick="cancelButton(this)" class="cancelBtn btn btn-warning squareBtn text-light py-0 px-2 d-none"><i class="fas fa-times"></i></button>
-                                                        </td>
-                                                    </tr>';
-                                            }
-                                          }
-                                        ?>
-                                      </tbody>
-                                  </table>
+                            <form name="profileForm" action="updateAdminProfile.php" method="POST">
+                              <div class="form-group">
+                                <label class="mb-2">Username</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<?php echo $username;?>" required readonly>
                               </div>
+                              <div class="form-group">
+                                <label class="mb-2">Password</label>
+                                <input type="text" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password;?>" required readonly>
+                              </div>
+                              <div class="form-group">
+                                <label class="mb-2">Fullname</label>
+                                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Fullname" value="<?php echo $fullname;?>" required readonly>
+                              </div>
+                              <!--<div class="text-center">
+                                <button type="submit" name="addBtn" class="btn btn-success submit mb-4 px-5" value="add">Add</button>
+                              </div>-->
+                            </form>
                           </div>
                       </div>
                     </div>
@@ -122,40 +118,6 @@ include("maintainMaterial_JS.php");
                     </div>
                 </footer>
             </div>
-        </div>
-
-        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="bg-dark text-light text-center py-3 " >
-                 <button type="button" class="close pr-2 text-light" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                <h4 class="modal-title">Add Material</h4>
-              </div>
-              <div class="modal-body">
-                <div class="px-2 mx-auto mw-100">
-                  <form action="addMaterial.php" method="POST">
-                    <div class="form-group">
-                      <label class="mb-2">Material Name</label>
-                      <input type="text" class="form-control" name="materialName" id="materialName" placeholder="Material Name" pattern="[A-Za-z]{1,}" title="Must contain only alphabet" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="mb-2">Description</label>
-                      <input type="text" class="form-control" name="description" id="description" placeholder="Description" pattern=".{20,}" title="Must contain at least 20 characters" required>
-                    </div>
-                    <div class="form-group">
-                      <label class="mb-2">Points(per kg)</label>
-                      <input type="text" class="form-control" name="points" id="points" placeholder="Points" pattern="[0-9]{1,5}" title="Must contain only integer number and less than equal to 5 numbers" required>
-                    </div>
-                    <div class="text-center">
-                      <button type="submit" name="addBtn" class="btn btn-success submit mb-4 px-5" value="add">Add</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>

@@ -3,6 +3,7 @@
 ?>
 
 <script type="text/javascript">
+//Maintain Material Javascript
 var checkEditing = false;
 var currentWorkingRow_Options;
 
@@ -23,6 +24,7 @@ function editButton(vButton){
 
       for(var i=1;i<4;i++){
         columns[i].contentEditable = false;
+        columns[i].classList.remove("bg-warning");
       }
 
       currentWorkingRow_Options.getElementsByClassName("editBtn")[0].classList.remove("d-none");
@@ -43,7 +45,9 @@ function editButton(vButton){
 
   for(var i=1;i<4;i++){
     columns[i].contentEditable = true;
+    columns[i].classList.add("bg-warning");
   }
+  columns[1].focus();
 
   vButton.classList.add("d-none");
   vButton.parentNode.getElementsByClassName("confirmBtn")[0].classList.remove("d-none");
@@ -68,6 +72,7 @@ function cancelButton(vButton){
 
       for(var i=1;i<4;i++){
         columns[i].contentEditable = false;
+        columns[i].classList.remove("bg-warning");
       }
 
       vButton.classList.add("d-none");
@@ -80,6 +85,7 @@ function cancelButton(vButton){
 
     for(var i=1;i<4;i++){
       columns[i].contentEditable = false;
+      columns[i].classList.remove("bg-warning");
     }
 
     vButton.classList.add("d-none");
@@ -103,6 +109,7 @@ function confirmButton(vButton){
 
       for(var i=1;i<4;i++){
         columns[i].contentEditable = false;
+        columns[i].classList.remove("bg-warning");
       }
 
       //send request to another php file to do update query
@@ -123,6 +130,7 @@ function confirmButton(vButton){
 
     for(var i=1;i<4;i++){
       columns[i].contentEditable = false;
+      columns[i].classList.remove("bg-warning");
     }
 
     vButton.classList.add("d-none");
@@ -150,8 +158,80 @@ function deleteButton(vButton){
     xmlhttp.open("GET", "materialDelete.php?mid="+materialID_Selected, true);
     xmlhttp.send();
 
-    alert("Data delete successfully.");
+    alert("Data deleted successfully.");
   }
 }
 
+//Manage Profile Javascript
+var password;
+var fullname;
+
+function editProfile(vButton){
+  var field = vButton.parentNode.parentNode.getElementsByTagName("input");
+
+  password = field[1].value;
+  fullname = field[2].value;
+
+  for(var i=1;i<3;i++){
+    field[i].readOnly = false;
+  }
+
+  vButton.classList.add("d-none");
+  document.getElementById("confirmProfileBtn").classList.remove("d-none");
+  document.getElementById("cancelProfileBtn").classList.remove("d-none");
+}
+
+function confirmProfile(vButton){
+  var field = vButton.parentNode.parentNode.getElementsByTagName("input");
+
+  var password_Edited = field[1].value;
+  var fullname_Edited = field[2].value;
+
+  if((password!=password_Edited) || (fullname!=fullname_Edited)){
+    if(confirm("Are you sure to save?")){
+      document.profileForm.submit();
+    }
+  }else{
+    for(var i=1;i<3;i++){
+      field[i].readOnly = true;
+    }
+
+    vButton.classList.add("d-none");
+    document.getElementById("cancelProfileBtn").classList.add("d-none");
+    document.getElementById("editProfileBtn").classList.remove("d-none");
+
+    alert("No data changed.");
+  }
+}
+
+function cancelProfile(vButton){
+  var field = vButton.parentNode.parentNode.getElementsByTagName("input");
+
+  var password_Edited = field[1].value;
+  var fullname_Edited = field[2].value;
+
+  if((password!=password_Edited) || (fullname!=fullname_Edited)){
+    var confirm = window.confirm("Are you sure to discard changes?\nPrevious data will be recovered.");
+    if(confirm){
+      field[1].value = password;
+      field[2].value = fullname;
+
+      for(var i=1;i<3;i++){
+        field[i].readOnly = true;
+      }
+
+      vButton.classList.add("d-none");
+      document.getElementById("confirmProfileBtn").classList.add("d-none");
+      document.getElementById("editProfileBtn").classList.remove("d-none");
+    }
+  }else{
+    for(var i=1;i<3;i++){
+      field[i].readOnly = true;
+    }
+
+    vButton.classList.add("d-none");
+    document.getElementById("confirmProfileBtn").classList.add("d-none");
+    document.getElementById("editProfileBtn").classList.remove("d-none");
+  }
+}
 </script>
