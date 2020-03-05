@@ -15,7 +15,7 @@ if($result->num_rows > 0){
 
     $values = $result->fetch_assoc();
     if($values["userType"]=="Admin"){
-        header('location:index.php'); //-adminpage
+        header('location:maintainMaterial.php');
         $_SESSION["username"] = $username;
         $_SESSION["userType"] = $values['userType'];
     }else {

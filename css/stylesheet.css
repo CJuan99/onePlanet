@@ -461,8 +461,8 @@ figure img{width:300px;}
 .blog .carousel-indicators li {
   background: #708198;
   border-radius: 50%;
-
-
+  width:23px;
+  height:2px;
 }
 
 .blog .carousel-indicators .active {
