@@ -97,9 +97,6 @@ if($result_user->num_rows > 0){
                                 <label class="mb-2">Fullname</label>
                                 <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Fullname" value="<?php echo $fullname;?>" required readonly>
                               </div>
-                              <!--<div class="text-center">
-                                <button type="submit" name="addBtn" class="btn btn-success submit mb-4 px-5" value="add">Add</button>
-                              </div>-->
                             </form>
                           </div>
                       </div>

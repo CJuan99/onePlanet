@@ -184,12 +184,20 @@ function editProfile(vButton){
 function confirmProfile(vButton){
   var field = vButton.parentNode.parentNode.getElementsByTagName("input");
 
+  var username = field[0].value;
   var password_Edited = field[1].value;
   var fullname_Edited = field[2].value;
 
   if((password!=password_Edited) || (fullname!=fullname_Edited)){
     if(confirm("Are you sure to save?")){
-      document.profileForm.submit();
+      //document.profileForm.submit();
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.open("GET", "updateAdminProfile.php?username="+username+"&password="+password_Edited+"&fullname="+fullname_Edited, true);
+      xmlhttp.send();
+
+      alert("Data saved successfully.");
+      location.reload();
     }
   }else{
     for(var i=1;i<3;i++){
