@@ -385,6 +385,22 @@ function validate_input($data){
                       </select>
                     </div>
                     <div class="form-group ">
+
+                    <!--  <select id="days" multiple>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="audi">Audi</option>
+                     </select>-->
+                      Monday <input type="checkbox" name="day[]" id="day" value="Monday">
+                      Tuesday <input type="checkbox" name="day[]" id="day" value="Tuesday">
+                      Wednesday <input type="checkbox" name="day[]" id="day" value="Wednesday">
+                     Thursday <input type="checkbox" name="day[]" id="day" value="Thursday">
+                     Friday <input type="checkbox" name="day[]" id="day" value="Friday">
+
+
+                    </div>
+                    <div class="form-group ">
                       <!--<label for="materials">Materials</label>-->
                       <?php
                       function get_times( $default = '08:00', $interval = '+30 minutes' ) {

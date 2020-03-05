@@ -1,5 +1,5 @@
 <?php
-
+$connect = mysqli_connect("localhost", "root", "", "onePlanet");
 include("conn.php");
 session_start();
 
@@ -17,11 +17,12 @@ $address = $_POST['address'];
 $userType = "Collector";
 $totalPoints= "0";
 
+//$chk="";
 
 $matID = $_POST['materials'];
 $schedule = $_POST['time'];
 
- var_dump($_POST);
+ //var_dump($_POST);
 
 $query = "SELECT * FROM users";
 $results = $conn->query($query);
@@ -41,33 +42,34 @@ if($userExist){
 }else{
 
 	//$password=md5($password);
-	// insert into user table
-	$queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints,address, userType, schedule) VALUES ('$username', '$password', '$fullname', '$totalPoints','$address','$userType','$schedule')";
-	// insert into applicant table
-	$queryMaterials = "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
+
+  $for_day = '';
+  if(!empty($_POST['day']))
+  {
+   foreach($_POST['day']as $day)
+   {
+    $for_day .= $day . ' ';
+   }
+  // $for_day = substr($for_day, 0, -2);
+  // $queryDay = "INSERT INTO users (day) VALUES ('$for_query')";
+   $queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints,address, userType, schedule,day) VALUES ('$username', '$password', '$fullname', '$totalPoints','$address','$userType','$schedule','$for_day')";
+   $queryMaterials = "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
+
+   if( $conn->query($queryInsertUser) &&  $conn->query($queryMaterials)){
+     echo '<script type="text/javascript">window.alert("Account is successfully created");';
+ 	  echo 'window.location.href="index.php";</script>';
+
+ 	}
+ 	else{
+ 		echo"fail query";
+ 	}
+  }
+  else
+  {
+   echo "<label class='text-danger'>* Please Select Atleast one Programming language</label>";
+  }
 
 
-	if( $conn->query($queryInsertUser) &&  $conn->query($queryMaterials)){
-    echo '<script type="text/javascript">window.alert("Account is successfully created");';
-		header("Location:index.php");
-		//$_SESSION['fullname']=$fullname;
-		//$_SESSION['userType']='applicant';
-	}
-	else{
-		echo"fail query";
-	}
-
-/*
-		if( $conn->query($queryMaterials) ){
-			header("Location:index.php");
-		 ec
-			//$_SESSION['fullname']=$fullname;
-			//$_SESSION['userType']='applicant';
-		}
-		else{
-			echo"fail query";
-		}
-*/
 }
 
 }
