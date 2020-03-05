@@ -42,11 +42,13 @@ include("maintainMaterial_JS.php");
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Home</div>
-                            <a class="nav-link" href="adminHome.php"
-                                ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard</a
-                            >
+                          <div class="profile-img">
+                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                              <div class="file btn btn-lg btn-primary">
+                                  Upload Photo
+                                  <input type="file" name="file"/>
+                              </div>
+                          </div>
                             <div class="sb-sidenav-menu-heading">Features</div>
                             <a class="nav-link" href="maintainMaterial.php"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
@@ -94,8 +96,8 @@ include("maintainMaterial_JS.php");
                                                         <td>'.$row["pointsPerKg"].'</td>
                                                         <td class="buttonGroup text-center">
                                                           <button onclick="editButton(this)" class="editBtn btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                          <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-save"></i></button>
-                                                          <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 mr-2 d-none"><i class="fas fa-trash-alt"></i></button>
+                                                          <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 margin-r d-none"><i class="fas fa-save"></i></button>
+                                                          <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 margin-r d-none"><i class="fas fa-trash-alt"></i></button>
                                                           <button onclick="cancelButton(this)" class="cancelBtn btn btn-warning squareBtn text-light py-0 px-2 d-none"><i class="fas fa-times"></i></button>
                                                         </td>
                                                     </tr>';
@@ -112,12 +114,7 @@ include("maintainMaterial_JS.php");
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2019</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                            <div class="text-muted">© 2020 Copyright: OnePlanet</div>
                         </div>
                     </div>
                 </footer>
