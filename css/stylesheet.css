@@ -539,8 +539,26 @@ figure img{width:300px;}
 }
 
 .item-box-blog-text {
-  max-height: 100px;
-  overflow: hidden;
+  height: 97px;
+  margin-bottom:7px;
+  padding:0px 5px 0px 5px;
+  overflow-y:scroll;
+}
+
+.item-box-blog-text::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.item-box-blog-text {
+    -ms-overflow-style: none;
+}
+
+.item-box-blog-text p {
+  font-size:12px;
+  line-height:1.2;
+  text-align:justify;
+  word-wrap: break-word;
 }
 
 .mt-10 {

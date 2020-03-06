@@ -568,28 +568,23 @@ function validate_input($data){
                         }
 
                         for($j=$i;$j<$num_loop;$j++){
+                          $c = $i+$j;
                           echo     '<div class="col-md-4">
                                       <div class="item-box-blog">
                                         <div class="item-box-blog-image">
-                                          <!--Date-->
-                                          <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
                                           <!--Image-->
-                                          <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                          <figure> <img alt="" src="images/material.jpg"> </figure>
                                         </div>
                                         <div class="item-box-blog-body">
                                           <!--Heading-->
                                           <div class="item-box-blog-heading">
                                             <a href="#" tabindex="0">
-                                              <h5>'.$arr_mat[$j]["materialName"].'</h5>
+                                              <h5>'.$arr_mat[$c]["materialName"].'</h5>
                                             </a>
-                                          </div>
-                                          <!--Data-->
-                                          <div class="item-box-blog-data" style="padding: px 15px;">
-                                            <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
                                           </div>
                                           <!--Text-->
                                           <div class="item-box-blog-text">
-                                            <p>'.$arr_mat[$j]["description"].'</p>
+                                            <p>'.$arr_mat[$c]["description"].'</p>
                                           </div>
                                           <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">Recycle</a> </div>
                                           <!--Recycle Button-->
@@ -616,10 +611,8 @@ function validate_input($data){
                           echo     '<div class="col-md-4">
                                       <div class="item-box-blog">
                                         <div class="item-box-blog-image">
-                                          <!--Date-->
-                                          <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
                                           <!--Image-->
-                                          <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
+                                          <figure> <img alt="material icon" src="images/material.jpg"> </figure>
                                         </div>
                                         <div class="item-box-blog-body">
                                           <!--Heading-->
@@ -627,10 +620,6 @@ function validate_input($data){
                                             <a href="#" tabindex="0">
                                               <h5>'.$arr_mat[$c]["materialName"].'</h5>
                                             </a>
-                                          </div>
-                                          <!--Data-->
-                                          <div class="item-box-blog-data" style="padding: px 15px;">
-                                            <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
                                           </div>
                                           <!--Text-->
                                           <div class="item-box-blog-text">
