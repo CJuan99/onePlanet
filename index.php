@@ -3,19 +3,34 @@
 session_start();
 include("conn.php");
 
+$username = $_SESSION['username'];
 
 
-/*numColl= SELECT materialID,count(*) as numberOfCollector FROM registeredmaterial;
-$collector = mysqli_query($conn, $numColl);*/
-/*
-$qry = "SELECT * FROM material";
-$result = mysqli_query($conn, $qry);
-$matRecd = mysqli_fetch_assoc($result);
+$sql = "SELECT * FROM users WHERE username ='$username'";
+$resultset = mysqli_query($conn, $sql);
+$userRecord = mysqli_fetch_assoc($resultset);
 
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']=$matID;
-}*/
+$sqlCount = "SELECT * FROM submission WHERE collector ='$username'";
+
+$resultCount  = $conn->query($sqlCount);
+$arr_count= [];
+if ($resultCount->num_rows > 0) {
+    $count = $resultCount->num_rows;
+}
+
+
+$sqlCollMat = "SELECT materialName FROM registeredmaterial, material
+ WHERE registeredmaterial.materialID= material.materialID AND registeredmaterial.username ='$username'";
+
+
+ $resultColl = $conn->query($sqlCollMat);
+ $arr_coll= [];
+
+ if ($resultColl->num_rows > 0) {
+     $arr_coll = $resultColl->fetch(MYSQLI_ASSOC);
+ }else{
+ $arr_coll="0";
+ }
 
 $sql = "SELECT * FROM material";
 $result = $conn->query($sql);
@@ -25,132 +40,11 @@ if ($result->num_rows > 0) {
     $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
 }
 
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']= $matID;
-}
 
 
-/*$time_start = '10:00';
- $time_end   = '22:00';
-
- # use date function with the time variables to create a timestamp to use in the while loop
- $timestamp_start = strtotime(date('d-m-Y').' '.$time_start);
- $timestamp_end   = strtotime(date('d-m-Y').' '.$time_end);
-
- # create array to fill with the options
- $options_array = array();
-
- # loop through until the end timestamp is reached
- while($timestamp_start <= $timestamp_end){
-     $options_array[] = date('H:i', $timestamp_start);
-     $timestamp_start = $timestamp_start+900; //Adds 15 minutes
- }*/
-
-
-
-
-/*$urerr = $perr = $fnerr = $aderr = " ";
-$username = $password = $fullname = $add =  "";
-
-$boolen  = false;
-
-
-if(isset($_POST["regRec_btn"])){
-
-    if(empty($_POST["username"])){
-       $urerr = "Username Required...!";
-        $boolen  = false;
-    }elseif(ctype_alnum($_POST["username"])) {
-       $username = validate_input($_POST["username"]);
-        $boolen  = true;
-    }else{
-       $urerr = "Username must be alphanumeric";
-        $boolen  = false;
-    }
-
-
-    $length = strlenght($_POST["password"]);
-
-    if(empty($_POST["password"])){
-        $perr = "Password Field Required...!";
-        $boolen  = false;
-    }elseif($length){
-        $perr = $length;
-        $boolen  = false;
-    }else{
-            $passwd = validate_input($_POST["password"]);
-        $boolen  = true;
-    }
-
-    if(empty($_POST["fullname"])){
-        $fnerr = "Fullname Field Required...!";
-        $boolen  = false;
-    }elseif( ctype_alpha($_POST["fullname"])){
-      $fullname = validate_input($_POST["fullname"]);
-      $boolen  = true;
-    }else{
-        $fnerr = "Fullname must be all letters";
-        $boolen  = false;
-    }
-
-
-    if(empty($_POST["address"])){
-       $aderr = "Address Required...!";
-        $boolen  = false;
-    }else{
-       $add= validate_input($_POST["address"]);
-        $boolen  = true;
-    }
-
-  /*  if(empty($_POST["cpasswd"])){
-        $cperr = "Confirm Password Required...!";
-        $boolen  = false;
-    }
-    elseif($_POST["cpasswd"]!=$passwd){
-        $cperr = "Password Not Match...!";
-        $boolen  = false;
-    }
-
-    if(empty($_POST["fname"]) || empty($_POST["lname"])){
-        $fnerr = "First &amp; Last Name Required...!";
-        $boolen  = false;
-    }else{
-        $name = validate_input($_POST["fname"]);
-        $boolen  = true;
-    }
-
-    if(empty($_POST["gender"])){
-        $gerr = "Gender Required...!";
-        $boolen  = false;
-    }else{
-        $gender = validate_input($_POST["gender"]);
-        $boolen  = true;
-    }
-
-    if(isset($_POST["ck1"])){
-        $boolen  = true;
-    }else{
-        $boolen  = false;
-    }
-}/*
-function strlenght($str){
-    $ln = strlen($str);
-    if($ln > 18){
-        return "Passwod should less than 18 characters";
-    }elseif($ln < 5 && $ $ln >= 1){
-        return "Password should greater then 3 characters";
-    }
-    return;
-}
-function validate_input($data){
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}*/
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -160,10 +54,11 @@ function validate_input($data){
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>Profile</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
-<body id="page-top">
+<body id="page-top" style="background-color: #D0F0C0;">
 
   <!-- Navigation -->
   <nav id="mainNav" class="navbar navbar-expand-lg navbar-light fixed-top pt-2">
@@ -178,18 +73,7 @@ function validate_input($data){
 
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
-        <?php if(!empty($_SESSION['username'])) { ?>
-			    <?php if($_SESSION['userType']=='Recycler') { ?>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-                  </li>
-          <?php }else { ?>
+
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
@@ -199,18 +83,7 @@ function validate_input($data){
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
               </li>
-            <?php } ?>
-        <?php }else { ?>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-              </li>
-        <?php } ?>
+
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
 
@@ -242,572 +115,390 @@ function validate_input($data){
     </div>
   </nav>
 
-  <!--sign in-->
-  <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content shadow-lg rounded">
-        <div class=" text-center py-3 ">
-          <button type="button" class="close pr-2 text-success" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title text-success">SIGN IN</h4>
-
-        </div>
-        <div class="modal-body">
-          <div class="login px-2 mx-auto mw-100 ">
-            <div class="signup-form profile">
-              <form action="login.php" method="POST" id="loginForm" name="loginForm">
-                <div class="form-group">
-                  <!--  <label class="mb-2">Username</label>-->
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fas fa-user-tie text-default"></i></div>
-                    </div>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required="">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <!--<label class="mb-2">Password</label>-->
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-key icon text-default"></i></span>
-                    </div>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required minlength="6">
-                  </div>
-
-                </div>
-                <div class="text-center">
-                  <input type="submit" name="signin_btn" value="sign in">
-                </div>
-                <p class="text-center pb-4">
-                  <span>Don't have an account?</span>
-
-                  <a class="text-decoration-none text-success" href="#" data-toggle="modal" data-target="#signUp" data-dismiss="modal">Click here to register</a>
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <!--signup-->
-  <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content shadow-lg rounded ">
-        <div class=" text-center py-3 ">
-          <button type="button" class="close pr-2 text-success" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title text-success">SIGN UP</h4>
-
-        </div>
-        <div class="project-tab">
-          <div class="col-md-12">
-            <nav>
-              <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="nav-home" aria-selected="true">Recycler</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#menu1" role="tab" aria-controls="nav-profile" aria-selected="false">Collector</a </div>
-            </nav>
-          </div>
-        </div>
-        <div class="modal-body">
-          <div class="login px-2 mx-auto mw-100">
-            <div class="tab-content">
-              <div id="home" class="tab-pane active in">
-                <div class="signup-form profile">
-                  <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
-                    <div class="form-group ">
-                      <!--<label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4">
-                    <!--  <span id="span"> </span>-->
-                    </div>
-                    <div class="form-group">
-                      <!-- <label for="newpwd">Password</label>-->
-                      <input type="password" class="form-control" id="rpassword" placeholder="Password" name="password" required minlength="6">
-
-                    </div>
-                    <div class="form-group">
-                      <!--  <label for="fullname">Full Name</label>-->
-                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5">
-
-                    </div>
-                    <div class="text-center">
-                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up" onclick="ajaxRegistration()">
-                    </div>
-                  </form>
-                  <div class="success-message" id="register-success-message"
-       style="display: none"></div>
-   <div class="error-message" id="register-error-message"
-       style="display: none"></div>
-
-                </div>
-              </div>
-
-              <!--Collector-->
-              <div id="menu1" class="tab-pane fade">
-                <div class="signup-form profile">
-                  <form action="signUpColl.php" method="post" name="registration" id="c-registration">
-                    <div class="form-group ">
-                      <!--  <label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4">
-                      <!--<span id="span"> </span>-->
-                    </div>
-                    <div class="form-group">
-                      <!--  <label for="password">Password</label>-->
-                      <input type="password" class="form-control" id="cpassword" placeholder="Password" name="password"  required minlength="6">
-                        <!--<span id="span"> </span>-->
-
-                    </div>
-                    <div class="form-group">
-                      <!--  <label for="fullname">Full Name</label>-->
-                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required="">
-                    <!--<span id="span" class="error"></span>-->
-                    </div>
-                    <div class="form-group">
-                      <!--<label for="email">Address</label>-->
-                      <input type="text" class="form-control" id="caddress" placeholder="Address" name="address" required="">
-
-                    </div>
-                    <div class="form-group ">
-                      <!--<label for="materials">Materials</label>-->
-
-                      <select name="materials" class="form-control " required="true">
-                        <option disabled="disabled" selected="selected" value="">Choose materials </option>
-                        <?php if(!empty($arr_mat)) { ?>
-                            <?php foreach($arr_mat as $mat) {?>
-                                <?php
-								                          echo "<option value='". $mat['materialID']."'>" . $mat['materialID']. ", ".$mat['materialName'].'</option>'; ?>
-                							<?php } ?>
-                						<?php }  ?>
-
-                      </select>
-                    </div>
-                    <div class="form-group ">
-
-                    <!--  <select id="days" multiple>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="audi">Audi</option>
-                     </select>-->
-                      Monday <input type="checkbox" name="day[]" id="day" value="Monday">
-                      Tuesday <input type="checkbox" name="day[]" id="day" value="Tuesday">
-                      Wednesday <input type="checkbox" name="day[]" id="day" value="Wednesday">
-                     Thursday <input type="checkbox" name="day[]" id="day" value="Thursday">
-                     Friday <input type="checkbox" name="day[]" id="day" value="Friday">
-
-
-                    </div>
-                    <div class="form-group ">
-                      <!--<label for="materials">Materials</label>-->
-                      <?php
-                      function get_times( $default = '08:00', $interval = '+30 minutes' ) {
-                          //$dates = array("", "Mon", "Tues", "Wed", "Thurs", "Fri", "Satur", "Sun");
-
-                          $output = '';
-
-                          $current = strtotime( '08:00' );
-                          $end = strtotime( '20:00' );
-
-                          while( $current <= $end ) {
-                              $time = date( 'H:i', $current );
-                              $sel = ( $time == $default ) ? ' selected' : '';
-
-                            /*  echo date ('l');
-                              echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
-                              $output .= "<option value=\"{$time}\"{$sel}>" . date( 'h.i A', $current ) .'</option>';
-                              $current = strtotime( $interval, $current );
-                          }
-
-                          return $output;
-                      } ?>
-
-                      <select name="time" class="form-control " required="true">
-                        <option disabled="disabled" selected="selected" value="">Choose schedule</option>
-                        <?php echo get_times(); ?>
-                      </select>
-
-
-                    </div>
-                    <div class="text-center ">
-                      <input type="submit" name="regColl_btn" value="sign Up">
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--signup-->
-
 <!--header-->
-  <header class="masthead">
-    <div class="container h-100">
-      <div class="row h-100 align-items-center justify-content-center text-center">
-        <div class="col-lg-10 align-self-end ">
-          <h1 class="text-uppercase text-white"> Save the Earth</h1>
-          <hr class="linedivider my-4 ">
-        </div>
-        <div class="col-lg-8 align-self-baseline">
-
-          <p class="text-white font-weight-light ">Join us now to be the recycler and collector</p>
-
-          <i class="arrow bounce text-white fa-3x fas fa-angle-double-down mt-5"></i>
-        </div>
-
-      </div>
+    <div class="jumbotron paral paralsec">
+    <h1 class="display-3">Welcome to <?php echo  $userRecord['username'];?> 's </h1>
+    <p class="lead">Profile</p>
     </div>
-  </header>
+
+    <!--profile-->
+    <div class="container emp-profile">
+              <!--<form method="post">-->
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="profile-img">
+                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                              <div class="file btn btn-lg btn-primary">
+                                  Upload Photo
+                                  <input type="file" name="file"/>
+                              </div>
+                          </div>
+                        <ul class="list-group px-2 py-3">
+                          <li class="list-group-item text-white bg-success">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                          <li class="list-group-item text-left"><span class="pull-left"><strong>Collection</strong></span> <span class="badge bg-warning text-white"><?php $count ?></span></li>
+                          <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">2</span></li>
+
+                        </ul>
+                        <!--<div class="profile-work">
+                            <p>WORK LINK</p>
+                            <a href="">Website Link</a><br/>
+                            <a href="">Bootsnipp Profile</a><br/>
+                            <a href="">Bootply Profile</a>
+                            <p>SKILLS</p>
+                            <a href="">Web Designer</a><br/>
+                            <a href="">Web Developer</a><br/>
+                            <a href="">WordPress</a><br/>
+                            <a href="">WooCommerce</a><br/>
+                            <a href="">PHP, .Net</a><br/>
+                        </div>-->
+                      </div>
+                      <div class="col-md-9">
+                          <div class="profile-head">
+                                      <h4 class="py-2">
+                                        <?php echo  $userRecord['fullname'];?>
+                                      </h4>
+                                      <h5 >
+                                          <?php echo  $userRecord['userType'];?>
+                                      </h5 >
+                                      <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
+
+                              <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
+                                  <li class="nav-item">
+                                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">History</a>
+                                  </li>
+                              </ul>
+                          </div>
 
 
-  <!--aboutUs-->
-  <section class="page-section1 " id='about'>
-    <div class="container">
-      <h2 class="title text-center mt-0">About <span>Us</span></h2>
-      <div class="row mbr-justify-content-center">
+                          <div class="tab-content profile-tab" id="myTabContent">
+                              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form  action="javascript:void(0)"  method="" enctype="multipart/form-data" name="editProfile" id="editProfile" >
 
-        <div class="col-lg-6 mbr-col-md-10">
-          <div class="wrap">
-            <div class="ico-wrap">
-              <span class="mbr-iconfont fa-volume-up fa"></span>
-            </div>
-            <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Collect <span> Recyclable Material</span></h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">A various type of recyclable material are accepted to recycle in this online platform</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 mbr-col-md-10">
-          <div class="wrap">
-            <div class="ico-wrap">
-              <span class="mbr-iconfont fa-calendar fa"></span>
-            </div>
-            <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Make
-                <span>An Appointment to Recycle</span>
-              </h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">Be a recycler and choose the your available date and make appointment with our collectors</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 mbr-col-md-10">
-          <div class="wrap">
-            <div class="ico-wrap">
-              <span class="mbr-iconfont fa-globe fa"></span>
-            </div>
-            <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Connecting
-                <span>With Collectors</span>
-              </h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6"> A various of collector with multiple recyclable materials be part of this system </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 mbr-col-md-10">
-          <div class="wrap">
-            <div class="ico-wrap">
-              <span class="mbr-iconfont fa-trophy fa"></span>
-            </div>
-            <div class="text-wrap vcenter">
-              <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">Achieve <span>Your Targets</span></h2>
-              <p class="mbr-fonts-style text1 mbr-text display-6">Accumulate your points of every weight of submitted and collected materials </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!--RecycleNow-->
-  <section class="page-section " id="recycle">
-    <div class="container">
-      <h2 class="text-center mt-0">Recycle Now</h2>
-      <div class="container cta-100 ">
-        <div class="container">
-          <div class="row blog">
-            <div class="col-md-12">
-              <div id="blogCarousel" class="carousel slide container-blog" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <?php
-                  if(!empty($arr_mat)){
-                    $first_dot=true;
-                    $c=0;
-                    for($i=0;$i<sizeof($arr_mat);$i+=3){
-                      if($first_dot){
-                        $first_dot=false;
-                        echo '<li data-target="#blogCarousel" data-slide-to="'.$c.'" class="active"></li>';
-                      }else{
-                        echo '<li data-target="#blogCarousel" data-slide-to="'.$c.'"></li>';
-                      }
-                      $c++;
-                    }
-                  }
-                  ?>
-                </ol>
-                <!-- Carousel items -->
-                <div class="carousel-inner">
-                  <?php
-                  if(!empty($arr_mat)){
-                    $first_item=true;
-                    for($i=0;$i<sizeof($arr_mat);$i+=3){
-                      if($first_item){
-                        $first_item=false;
-
-                        echo '<div class="carousel-item active">
-                                <div class="row">';
-
-                        if( (sizeof($arr_mat)-$i) < 3){
-                          $num_loop = sizeof($arr_mat) % 3;
-                        }else{
-                          $num_loop = 3;
-                        }
-
-                        for($j=$i;$j<$num_loop;$j++){
-                          $c = $i+$j;
-                          echo     '<div class="col-md-4">
-                                      <div class="item-box-blog">
-                                        <div class="item-box-blog-image">
-                                          <!--Image-->
-                                          <figure> <img alt="" src="images/material.jpg"> </figure>
+                                      <div class=" row ">
+                                        <div class="col-sm-3 col-md-3 col-5">
+                                        <label class="font-weight-bold" >Username</label>
+                                      </div>
+                                        <div class="col-md-8 col-6">
+                                            <h5><?php echo  $userRecord['username'];?></h5>
+                                            <?php $_SESSION['username']=$userRecord['username'];?>
                                         </div>
-                                        <div class="item-box-blog-body">
-                                          <!--Heading-->
-                                          <div class="item-box-blog-heading">
-                                            <a href="#" tabindex="0">
-                                              <h5>'.$arr_mat[$c]["materialName"].'</h5>
-                                            </a>
+
+                                      </div>
+
+
+                                      <div class="row py-3">
+                                        <div class="col-sm-3 col-md-3 col-5">
+                                        <label class="font-weight-bold">Password</label>
+                                      </div>
+                                        <div class="col-sm-7 col-md-7 col-5">
+                                          <input type="password"  readonly class="form-control-plaintext" id="password" required minlength="6" name="password" value="******">
+                                        </div>
+                                          <div class="col-sm-2 col-md-2 col-2" >
+                                            <input id="edit" type="button" value="Edit">
+                                          <!--  <a href="" id="edit" >Edit</a>-->
                                           </div>
-                                          <!--Text-->
-                                          <div class="item-box-blog-text">
-                                            <p>'.$arr_mat[$c]["description"].'</p>
-                                          </div>
-                                          <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">Recycle</a> </div>
-                                          <!--Recycle Button-->
+                                        <!--  <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">-->
+                                      </div>
+
+
+
+                                      <div class="row py-3">
+                                       <div class="col-sm-3 col-md-3 col-5">
+                                       <label class="font-weight-bold">Fullname</label>
+                                     </div>
+                                       <div class="col-sm-7 col-md-7 col-5">
+                                         <h5 id="txtFn"><?php echo  $userRecord['fullname'];?></h5>
+                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" >
+
+                                       </div>
+                                         <div  class="col-sm-2 col-md-2 col-2">
+                                          <!-- <a href="" id="edit" >Edit</a>-->
+                                          <input id="editFn" type="button" value="Edit">
+
+                                         </div>
+                                     </div>
+
+                                       <div class="row py-3">
+                                        <div class="col-sm-3 col-md-3 col-5">
+                                        <label class="font-weight-bold">Schedule</label>
+                                      </div>
+                                        <div class="col-md-2 col-4">
+                                            <h5><?php echo  $userRecord['day']?></h5>
+                                        </div>
+                                        <div class="col-sm-3 col-md-5 col-3">
+                                            <h5><?php echo  $userRecord['schedule']?></h5>
                                         </div>
                                       </div>
-                                    </div>';
-                        }
 
-                        echo     '</div>
-                                <!--.row-->
-                              </div>';
-                      }else{
-                        echo '<div class="carousel-item">
-                                <div class="row">';
+                                      <div class="row py-3">
+                                         <div class="col-sm-3 col-md-3 col-5">
+                                         <label class="font-weight-bold">Materials</label>
+                                       </div>
+                                         <div class="col-md-8 col-6">
+                                           <?php if(!empty($arr_coll)) {
+                                             foreach($arr_coll as $coll) {
+                                                  $matID = $coll['materialName'];
+                                                  //echo $matID;
+                                                 echo "<h5>".$matID."</h5>";
+                                                  }
+                                                }?>
 
-                        if( (sizeof($arr_mat)-$i) < 3){
-                          $num_loop = sizeof($arr_mat) % 3;
-                        }else{
-                          $num_loop = 3;
-                        }
+                                              <small><button type="button" class="text-decoration-none" id="myMat" ><i class="fas fa-plus pr-2"></i> Materials </button> </small>
+                                              <select name="materials" class="form-control d-none"  id="selectMat">
+                                                <option disabled="disabled" selected="selected" value="">Choose materials </option>
+                                                <?php if(!empty($arr_mat)) { ?>
+                                                    <?php foreach($arr_mat as $mat) {?>
+                                                        <?php
+                                                                  echo "<option value='". $mat['materialID']."'>" . $mat['materialID']. ", ".$mat['materialName']. ", ".$mat['description'].", ".$mat['pointsPerKg'].'</option>'; ?>
+                                                      <?php } ?>
+                                                    <?php }  ?>
 
-                        for($j=0;$j<$num_loop;$j++){
-                          $c = $i+$j;
-                          echo     '<div class="col-md-4">
-                                      <div class="item-box-blog">
-                                        <div class="item-box-blog-image">
-                                          <!--Image-->
-                                          <figure> <img alt="material icon" src="images/material.jpg"> </figure>
+                                              </select>
+                                         </div>
                                         </div>
-                                        <div class="item-box-blog-body">
-                                          <!--Heading-->
-                                          <div class="item-box-blog-heading">
-                                            <a href="#" tabindex="0">
-                                              <h5>'.$arr_mat[$c]["materialName"].'</h5>
-                                            </a>
-                                          </div>
-                                          <!--Text-->
-                                          <div class="item-box-blog-text">
-                                            <p>'.$arr_mat[$c]["description"].'</p>
-                                          </div>
-                                          <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">Recycle</a> </div>
-                                          <!--Recycle Button-->
+
+                                        <div class="row " >
+                                          <div class="text-center d-inline  w-50  ">
+                                            <button class="btn btn-secondary py-2 px-3 text-uppercase d-none mx-3 float-right" id="btncancelColl" name="btncancelColl" type="button" value="Cancel"  >Cancel</button>
+                                            <button class="btn btn-success py-2 px-3 text-uppercase d-none ml-auto float-right" id="btnsave" name="btnsubmitColl" type="submit" value="Submit"  >Save</button>
                                         </div>
                                       </div>
-                                    </div>';
-                        }
+                                      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                                       <script type="text/javascript">
+                                        var el  = document.getElementById('edit');
+                                        var inp = document.getElementById('password');
+                                        var eF  = document.getElementById('editFn');
+                                        var txtFn = document.getElementById('txtFn');
+                                        var fn = document.getElementById('myFn');
+                                        var matAdd = document.getElementById('myMat');
+                                        var selectMat = document.getElementById("selectMat")
 
-                        echo     '</div>
-                                <!--.row-->
-                              </div>';
-                      }
-                    }
-                  }
-                  ?>
+                                        var cancelColl= document.getElementById('btncancelColl')
+                                        var save = document.getElementById('btnsave');
+
+
+
+                                        el.addEventListener('click', function(){
+                                            inp.readOnly=false;
+                                            inp.value='';
+                                            save.style.display="inline";
+
+                                            inp.focus(); // set the focus on the editable field
+                                            save.classList.remove("d-none");
+                                            cancelColl.classList.remove("d-none");
+
+
+                                        });
+
+                                        eF.addEventListener('click', function(){
+
+                                          txtFn.style.display="none";
+                                          fn.classList.remove("d-none");
+                                          fn.focus();
+                                          save.classList.remove("d-none");
+                                          cancelColl.classList.remove("d-none");
+
+                                        });
+
+
+                                        matAdd.addEventListener('click', function(){
+
+                                            matAdd.style.display="none";
+
+                                            // set the focus on the editable field
+
+                                          selectMat.classList.remove("d-none");
+                                          selectMat.required= true;
+                                          save.classList.remove("d-none");
+                                          cancelColl.classList.remove("d-none");
+
+                                          //  var xmlhttp = new XMLHttpRequest();
+
+
+                                        });
+
+                                        jQuery(document).ready(function(){
+                                            $('#editProfile').submit(function(){
+
+                                          var pwd=inp.value;
+                                          var fullname=fn.value;
+                                          var mat=selectMat.value;
+                                          var error="true";
+
+                                       var xmlhttp = new XMLHttpRequest();
+
+                                      xmlhttp.onreadystatechange = function() {
+                                          if (this.readyState == 4 && this.status == 200) {
+                                            error=this.responseText;
+
+                                          }
+                                        };
+
+
+                                        xmlhttp.open("GET", "backupupdate.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
+                                        xmlhttp.send();
+                                        if (error="true"){
+                                          alert("Account is successfully updated");
+                                           window.location.reload();
+                                        }else{
+                                          alert("Cannot update");
+                                           window.location.reload();
+                                        }
+
+
+
+                                    });
+                                  });
+
+                                      cancelColl.addEventListener('click', function(){
+                                        inp.readOnly=true;
+
+                                        txtFn.style.display="block";
+                                        fn.classList.add("d-none");
+                                        matAdd.style.display="block";
+                                        selectMat.classList.add("d-none");
+                                        selectMat.required= false;
+                                         window.location.reload();
+                                      });
+
+
+                                       </script>
+
+
+                                    </form>
+                              </div>
+                              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                      <!--    <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Experience</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>Expert</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Hourly Rate</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>10$/hr</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Total Projects</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>230</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>English Level</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>Expert</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <label>Availability</label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <p>6 months</p>
+                                              </div>
+                                          </div>
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <label>Your Bio</label><br/>
+                                          <p>Your detail description</p>
+                                      </div>
+                                  </div>-->
+                              </div>
+                          </div>
+
+                        <!--details-->
+
+                      </div>
+                      <!--<div class="col-md-2">
+                          <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                      </div>-->
+                  </div>
 
                 </div>
-                <!--.carousel-inner-->
+
+
+          <!--profile-->
+  <!--footer-->
+    <footer style="background-color: #2c292f">
+      <div class="container ">
+        <div class="row ">
+          <div class="col-md-4 text-center text-md-left ">
+            <div class="py-2 my-4">
+
+              <h5 id='logo'>OnePlanet</h5>
+              <ul class=" list-unstyled quick-links text-decoration-none py-2">
+                <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right "></i>Home</a></li>
+                <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About Us</a></li>
+                <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Recycle Now</a></li>
+                <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Contact Us</a></li>
+              </ul>
+
+            </div>
+          </div>
+
+          <div class="col-md-4 text-white text-center text-md-left ">
+            <div class="icon py-2 my-4">
+              <div>
+                <p class="text-white"> <i class="fa fa-map-marker-alt mx-2 "></i>
+                  Menara Earth 1, Jalan Raja Laut
+                  50350 Kuala Lumpur, MALAYSIA</p>
               </div>
-              <!--.Carousel-->
+              <div>
+                <p><i class="fa fa-phone  mx-2 "></i> +03 2617 9000</p>
+              </div>
+              <div>
+                <p><i class="fa fa-envelope  mx-2"></i><a class="text-decoration-none text-white" href="#">onePlanet.gmail.com</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 text-white my-4 text-center text-md-left ">
+            <div class="py-2 my-4">
+              <blockquote class="blockquote text-center">
+                <p class="font-italic">Plans to protect air and water, wilderness and wildlife are in fact plans to protect man.</p>
+                <footer class="blockquote-footer text-white  ">
+                  <cite title="Source Title">Stewart Udall</cite>
+                </footer>
+              </blockquote>
             </div>
           </div>
         </div>
       </div>
+    </footer>
+    <!-- Copyright -->
+    <div class="col-lg-12 footer-copyright text-center py-2 text-white bg-dark">© 2020 Copyright:
+      <a class="text-white" href="#"> OnePlanet</a>
     </div>
-  </section>
+    <!-- Copyright -->
 
 
-  <!---contactUs-->
-  <section class="page-section" style="background-color:#f1f4fa;" id="contact">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="mt-0">Let's Get In Touch</h2>
-          <hr class="divider my-4">
-          <p class="text-muted mb-5">Need assistance? Give us a call or send us an email and we will get bak to you as soon as possible.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 ml-auto text-center">
-          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-          <div class="pb-5"> +03 2617 9000</div>
-        </div>
-        <div class="col-lg-4 mr-auto pb-5 text-center ">
-          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-          <a class="d-block text-decoration-none text-dark" href="mailto:contact@yourwebsite.com">onePlanet@gmail.com</a>
-        </div>
-        <div class="col-lg-4 mr-auto pb-5 justify-content-center text-center">
-          <ul class="social_section_1info">
-            <li class="mb-3 facebook"> <a class="fb-ic">
-                <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-              </a></li>
-            <li class="mb-3 twitter"> <a class="tw-ic">
-                <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-              </a></li>
-            <li class="mb-3 google"> <a class="gplus-ic">
-                <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-              </a></li>
-            <li class="mb-3 linkedin"> <a class="li-ic">
-                <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-              </a></li>
-            <li class="mb-3 instagram"><a class="ins-ic">
-                <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-              </a></li>
-            <li class="mb-3 pinterest"><a class="pin-ic">
-                <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
-              </a></li>
-          </ul>
-        </div>
+    <!-- Footer -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-      </div>
-    </div>
-  </section>
-
-<!--footer-->
-  <footer style="background-color: #2c292f">
-    <div class="container ">
-      <div class="row ">
-        <div class="col-md-4 text-center text-md-left ">
-          <div class="py-2 my-4">
-
-            <h5 id='logo'>OnePlanet</h5>
-            <ul class=" list-unstyled quick-links text-decoration-none py-2">
-              <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right "></i>Home</a></li>
-              <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About Us</a></li>
-              <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Recycle Now</a></li>
-              <li class="nav-info"><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Contact Us</a></li>
-            </ul>
-
-          </div>
-        </div>
-
-        <div class="col-md-4 text-white text-center text-md-left ">
-          <div class="icon py-2 my-4">
-            <div>
-              <p class="text-white"> <i class="fa fa-map-marker-alt mx-2 "></i>
-                Menara Earth 1, Jalan Raja Laut
-                50350 Kuala Lumpur, MALAYSIA</p>
-            </div>
-            <div>
-              <p><i class="fa fa-phone  mx-2 "></i> +03 2617 9000</p>
-            </div>
-            <div>
-              <p><i class="fa fa-envelope  mx-2"></i><a class="text-decoration-none text-white" href="#">onePlanet.gmail.com</a></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 text-white my-4 text-center text-md-left ">
-          <div class="py-2 my-4">
-            <blockquote class="blockquote text-center">
-              <p class="font-italic">Plans to protect air and water, wilderness and wildlife are in fact plans to protect man.</p>
-              <footer class="blockquote-footer text-white  ">
-                <cite title="Source Title">Stewart Udall</cite>
-              </footer>
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Copyright -->
-  <div class="col-lg-12 footer-copyright text-center py-2 text-white bg-dark">© 2020 Copyright:
-    <a class="text-white" href="#"> OnePlanet</a>
-  </div>
-  <!-- Copyright -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
 
-  <!-- Footer -->
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-
-  <script src="js/cj.js"></script>
-  <script src="js/login-registration.js"></script>
-<!--  <script type="text/javascript">
-  $(document).ready(function(){
-
-    $("#loginForm").validate();
-
-      $("#registration").validate();
-
-      $("#c-registration").validate();
-
-    $('#rfullname').keypress(function (e) {
-			var regex = new RegExp("^[a-zA-Z]+$");
-			var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-			if (regex.test(str)) {
-				return true;
-			}
-			else
-			{
-			e.preventDefault();
-			$('.error').show();
-			$('.error').text('Please enter alphabet characters');
-			return false;
-			}
-		});
+    <script src="js/cj.js"></script>
 
 
-    $('#cfullname').keypress(function (e) {
-      var regex = new RegExp("^[a-zA-Z]+$");
-      var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-      if (regex.test(str)) {
-        return true;
-      }
-      else
-      {
-      e.preventDefault();
-      $('.error').show();
-      $('.error').text('Please enter alphabet characters');
-      return false;
-      }
-    });
+  </body>
 
 
-  });
-</script>-->
-
-
-</body>
-
-
-</html>
+  </html>

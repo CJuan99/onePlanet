@@ -9,13 +9,6 @@ $username = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
-/*$result = $conn->query($sql);
-$arr_mat= [];*/
-
-/*$schsql ="SELECT format(schedule,'hh:mm') from users WHERE username ='$username'";
-$resultsch = mysqli_query($conn, $schsql);
-$time= mysqli_fetch_assoc($resultsch);
-var_dump($time);*/
 
 $sqlCount = "SELECT * FROM submission WHERE collector ='$username'";
 
@@ -34,20 +27,10 @@ $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  $arr_coll= [];
 
  if ($resultColl->num_rows > 0) {
-     $arr_coll = $resultColl->fetch_all(MYSQLI_ASSOC);
+     $arr_coll = $resultColl->fetch(MYSQLI_ASSOC);
+ }else{
+ $arr_coll="0";
  }
-
-/* $sqlCount = "SELECT * FROM submission
-  WHERE  collector='$username'";
-  $resultCount = $conn->query($sqlCount);
-
-  if ($resultCount->num_rows > 0) {
-
-  }*/
-/*$resultColl = mysqli_query($conn, $sqlCollMat);
-$collRecord = mysqli_fetch_assoc($resultColl);*/
-
-
 
 $sql = "SELECT * FROM material";
 $result = $conn->query($sql);
@@ -60,15 +43,6 @@ if ($result->num_rows > 0) {
 
 
 
-/*if ($resultset->num_rows > 0) {
-    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
-}
-
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']= $matID;
-}*/
-
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +54,8 @@ if(isset($_POST['materialID'])){
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>Profile</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
