@@ -6,7 +6,7 @@ session_start();
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-//$password = md5($password);
+$password = md5($password);
 
 $sql = "select * from users where username = '$username' and password = '$password'";
 
@@ -18,7 +18,7 @@ if($result->num_rows > 0){
         header('location:index.php'); //-adminpage
         $_SESSION["username"] = $username;
         $_SESSION["userType"] = $values['userType'];
-    }else {
+    }elseif {
           header('location:index.php');
           $_SESSION["username"] = $username;
           $_SESSION["userType"] = $values['userType'];

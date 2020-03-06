@@ -9,15 +9,21 @@ $username = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
+/*$result = $conn->query($sql);
+$arr_mat= [];*/
 
+/*$schsql ="SELECT format(schedule,'hh:mm') from users WHERE username ='$username'";
+$resultsch = mysqli_query($conn, $schsql);
+$time= mysqli_fetch_assoc($resultsch);
+var_dump($time);*/
 
-$sqlnumSub ="SELECT COUNT(*) FROM submission WHERE collector = '$username'";
-$resultSub= mysqli_query($conn, $sqlnumSub );
-if ($resultSub->num_rows > 0) {
-    $num = $resultSub->fetch_all(MYSQLI_ASSOC);
+$sqlCount = "SELECT * FROM submission WHERE collector ='$username'";
+
+$resultCount  = $conn->query($sqlCount);
+$arr_count= [];
+if ($resultCount->num_rows > 0) {
+    $count = $resultCount->num_rows;
 }
-
-
 
 
 $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
@@ -30,6 +36,14 @@ $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  if ($resultColl->num_rows > 0) {
      $arr_coll = $resultColl->fetch_all(MYSQLI_ASSOC);
  }
+
+/* $sqlCount = "SELECT * FROM submission
+  WHERE  collector='$username'";
+  $resultCount = $conn->query($sqlCount);
+
+  if ($resultCount->num_rows > 0) {
+
+  }*/
 /*$resultColl = mysqli_query($conn, $sqlCollMat);
 $collRecord = mysqli_fetch_assoc($resultColl);*/
 
@@ -84,18 +98,7 @@ if(isset($_POST['materialID'])){
 
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
-        <?php if(!empty($_SESSION['username'])) { ?>
-			    <?php if($_SESSION['userType']=='Recycler') { ?>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-                  </li>
-          <?php }else { ?>
+
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
@@ -105,18 +108,7 @@ if(isset($_POST['materialID'])){
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
               </li>
-            <?php } ?>
-        <?php }else { ?>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-              </li>
-        <?php } ?>
+
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
 
@@ -168,14 +160,7 @@ if(isset($_POST['materialID'])){
                           </div>
                         <ul class="list-group px-2 py-3">
                           <li class="list-group-item text-white bg-success">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                          <?php if(!empty($_SESSION['username'])) {?>
-                          <?php  if($_SESSION['userType']=='Recycler')  { ?>
-                             <li class="list-group-item text-left"><span class="pull-left"><strong>Submission</strong></span> <span class="badge bg-warning text-white"><?php echo $num ?></span></li>
-                            <?php }else { ?>
-                                  <li class="list-group-item text-left"><span class="pull-left"><strong>Collection</strong></span> <span class="badge bg-warning text-white">3</span></li>
-                            <?php } ?>
-                            <?php } ?>
-
+                          <li class="list-group-item text-left"><span class="pull-left"><strong>Collection</strong></span> <span class="badge bg-warning text-white"><?php $count ?></span></li>
                           <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">2</span></li>
 
                         </ul>
@@ -201,11 +186,7 @@ if(isset($_POST['materialID'])){
                                           <?php echo  $userRecord['userType'];?>
                                       </h5 >
                                       <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
-                                      <?php if(!empty($_SESSION['username'])) { ?>
-                                        <?php if($_SESSION['userType']=='Recycler') { ?>
-                                            <h6 class="proile-rating lead ">Eco Level: <span>  <?php echo $userRecord['ecoLevel'];?></span></h6>
-                                          <?php } ?>
-                                            <?php } ?>
+
                               <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
                                   <li class="nav-item">
                                       <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -220,6 +201,7 @@ if(isset($_POST['materialID'])){
                           <div class="tab-content profile-tab" id="myTabContent">
                               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <form  action="javascript:void(0)"  method="" enctype="multipart/form-data" name="editProfile" id="editProfile" >
+
                                       <div class=" row ">
                                         <div class="col-sm-3 col-md-3 col-5">
                                         <label class="font-weight-bold" >Username</label>
@@ -237,7 +219,7 @@ if(isset($_POST['materialID'])){
                                         <label class="font-weight-bold">Password</label>
                                       </div>
                                         <div class="col-sm-7 col-md-7 col-5">
-                                          <input type="password"  readonly class="form-control-plaintext" id="password" required minlength="6" name="password" value="<?php echo  $userRecord['password'];?>">
+                                          <input type="password"  readonly class="form-control-plaintext" id="password" required minlength="6" name="password" value="******">
                                         </div>
                                           <div class="col-sm-2 col-md-2 col-2" >
                                             <input id="edit" type="button" value="Edit">
@@ -263,8 +245,7 @@ if(isset($_POST['materialID'])){
 
                                          </div>
                                      </div>
-                                  <?php if(!empty($_SESSION['username'])) { ?>
-                                       <?php if($_SESSION['userType']=='Collector') { ?>
+
                                        <div class="row py-3">
                                         <div class="col-sm-3 col-md-3 col-5">
                                         <label class="font-weight-bold">Schedule</label>
@@ -303,52 +284,47 @@ if(isset($_POST['materialID'])){
                                               </select>
                                          </div>
                                         </div>
-                                        <div class="text-center " >
-                                          <button class="btn btn-success py-2 px-3 text-uppercase float-right d-none" id="btnsave" name="btnsubmitColl" type="submit" value="Submit"  >Save</button>
-                                            <button class="btn btn-success py-2 px-3 text-uppercase float-right" id="btncancelColl" name="btncancelColl" type="submit" value="Cancel"  >Cancel</button>
+
+                                        <div class="row " >
+                                          <div class="text-center d-inline  w-50  ">
+                                            <button class="btn btn-secondary py-2 px-3 text-uppercase d-none mx-3 float-right" id="btncancelColl" name="btncancelColl" type="button" value="Cancel"  >Cancel</button>
+                                            <button class="btn btn-success py-2 px-3 text-uppercase d-none ml-auto float-right" id="btnsave" name="btnsubmitColl" type="submit" value="Submit"  >Save</button>
                                         </div>
-                                        <?php } ?>
-                                          <?php } ?>
-
-                                       <div class="text-center " >
-                                         <button class="btn btn-success py-2 px-3 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmit" type="submit" value="Submit"  >Save</button>
-                                         <button class="btn btn-success py-2 px-3 text-uppercase float-right d-none" id="btncancel" name="btncancelColl" type="submit" value="Cancel"  >Save</button>
-                                       </div>
-
+                                      </div>
+                                      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
                                        <script type="text/javascript">
-                                       var el  = document.getElementById('edit');
+                                        var el  = document.getElementById('edit');
                                         var inp = document.getElementById('password');
-                                         var eF  = document.getElementById('editFn');
-                                         var txtFn = document.getElementById('txtFn');
+                                        var eF  = document.getElementById('editFn');
+                                        var txtFn = document.getElementById('txtFn');
                                         var fn = document.getElementById('myFn');
                                         var matAdd = document.getElementById('myMat');
                                         var selectMat = document.getElementById("selectMat")
 
+                                        var cancelColl= document.getElementById('btncancelColl')
                                         var save = document.getElementById('btnsave');
+
+
 
                                         el.addEventListener('click', function(){
                                             inp.readOnly=false;
-                                              ///inp.value='';
-                                            save.style.display="block";
+                                            inp.value='';
+                                            save.style.display="inline";
 
                                             inp.focus(); // set the focus on the editable field
                                             save.classList.remove("d-none");
-                                          //  fn.classList.remove("d-none");
+                                            cancelColl.classList.remove("d-none");
 
 
                                         });
 
                                         eF.addEventListener('click', function(){
-                                            //inp.disabled = false;
 
-                                          //  alert("Account is successfully updated");
-                                            txtFn.style.display="none";
-
-                                            // set the focus on the editable field
-
+                                          txtFn.style.display="none";
                                           fn.classList.remove("d-none");
                                           fn.focus();
                                           save.classList.remove("d-none");
+                                          cancelColl.classList.remove("d-none");
 
                                         });
 
@@ -362,13 +338,15 @@ if(isset($_POST['materialID'])){
                                           selectMat.classList.remove("d-none");
                                           selectMat.required= true;
                                           save.classList.remove("d-none");
+                                          cancelColl.classList.remove("d-none");
 
-                                            var xmlhttp = new XMLHttpRequest();
+                                          //  var xmlhttp = new XMLHttpRequest();
 
 
                                         });
 
-                                        save.addEventListener('click', function(){
+                                        jQuery(document).ready(function(){
+                                            $('#editProfile').submit(function(){
 
                                           var pwd=inp.value;
                                           var fullname=fn.value;
@@ -384,6 +362,7 @@ if(isset($_POST['materialID'])){
                                           }
                                         };
 
+
                                         xmlhttp.open("GET", "backupupdate.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
                                         xmlhttp.send();
                                         if (error="true"){
@@ -395,23 +374,25 @@ if(isset($_POST['materialID'])){
                                         }
 
 
-                                      /*  xmlhttp.open("GET", "backupupdate.php?password="+password_Selected, true);
-                                        xmlhttp.send();
 
-                                        xmlhttp.open("GET", "backupupdate.php?materialID="+materials_Selected, true);
-                                        xmlhttp.send();*/
+                                    });
+                                  });
 
+                                      cancelColl.addEventListener('click', function(){
+                                        inp.readOnly=true;
+
+                                        txtFn.style.display="block";
+                                        fn.classList.add("d-none");
+                                        matAdd.style.display="block";
+                                        selectMat.classList.add("d-none");
+                                        selectMat.required= false;
+                                         window.location.reload();
                                       });
+
 
                                        </script>
 
-                                  <!--    <div class="form-group row">
-                                        <label for="select" class="col-4 col-form-label">Materials</label>
-                                        <div class="col-8">
-                                            <p>php <span ><a href="" class="about-item-edit">Edit</a></span></p>
 
-                                        </div>
-                                      </div>-->
                                     </form>
                               </div>
                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -472,7 +453,7 @@ if(isset($_POST['materialID'])){
                       </div>-->
                   </div>
 
-                          </div>
+                </div>
 
 
           <!--profile-->
@@ -533,7 +514,7 @@ if(isset($_POST['materialID'])){
     <!-- Footer -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>

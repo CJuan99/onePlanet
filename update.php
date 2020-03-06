@@ -20,13 +20,7 @@ if(isset($_REQUEST["materialID"])){
 
   $matID = $_REQUEST["materialID"];
 
-
-
   $sql_updateMat= "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
-
-
-
-
 
   $conn->query($sql_updateMat);
 }
@@ -43,12 +37,10 @@ if(isset($_REQUEST["materialID"])){
     echo 'false';
   }
 
+//Recycler
 
-
-
-
-if(isset($_GET["btnsubmit"])){
-
+//if(isset($_GET["btnsubmit"])){
+/*
   $username = $_SESSION["username"];
   $fullname = $_REQUEST["fullname"];
   $password= $_REQUEST["password"];
@@ -60,5 +52,5 @@ var_dump($_REQUEST);
 
   $conn->query($sql_upRfn);
   $conn->query($sql_upRpwd );
-}
+}*/
 ?>
