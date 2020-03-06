@@ -105,25 +105,44 @@ function confirmButton(vButton){
   if((materialName!=materialName_Edited) || (description!=description_Edited) || (points!=points_Edited)){
     var confirm = window.confirm("Are you sure to save?");
     if(confirm){
-      checkEditing = false;
+      var letters = /^[a-zA-Z]+$/;
+      var integers = /^[0-9]+$/;
 
-      for(var i=1;i<4;i++){
-        columns[i].contentEditable = false;
-        columns[i].classList.remove("bg-warning");
+      if(materialName_Edited.length>0 && description_Edited.length>0 && points_Edited.length>0){
+        if(letters.test(materialName_Edited)){
+          if((description_Edited.length >= 20) && (description_Edited.length <= 50)){
+            if(integers.test(points_Edited) && (points_Edited.length<=3)){
+              checkEditing = false;
+
+              for(var i=1;i<4;i++){
+                columns[i].contentEditable = false;
+                columns[i].classList.remove("bg-warning");
+              }
+
+              //send request to another php file to do update query
+              var xmlhttp = new XMLHttpRequest();
+
+              xmlhttp.open("GET", "materialUpdate.php?mid="+materialID_Selected+"&mn="+materialName_Edited+"&desc="+description_Edited+"&p="+points_Edited, true);
+              xmlhttp.send();
+
+              vButton.classList.add("d-none");
+              vButton.parentNode.getElementsByClassName("cancelBtn")[0].classList.add("d-none");
+              vButton.parentNode.getElementsByClassName("deleteBtn")[0].classList.add("d-none");
+              vButton.parentNode.getElementsByClassName("editBtn")[0].classList.remove("d-none");
+
+              alert("Data saved successfully.");
+            }else{
+              alert('"Points" must contain only integer number and less than equal to 3 numbers.')
+            }
+          }else{
+            alert('"Description" must contain between 20 to 50 characters.');
+          }
+        }else{
+          alert('"Material Name" must contain only alphabet.');
+        }
+      }else{
+        alert("All fields must be filled.");
       }
-
-      //send request to another php file to do update query
-      var xmlhttp = new XMLHttpRequest();
-
-      xmlhttp.open("GET", "materialUpdate.php?mid="+materialID_Selected+"&mn="+materialName_Edited+"&desc="+description_Edited+"&p="+points_Edited, true);
-      xmlhttp.send();
-
-      vButton.classList.add("d-none");
-      vButton.parentNode.getElementsByClassName("cancelBtn")[0].classList.add("d-none");
-      vButton.parentNode.getElementsByClassName("deleteBtn")[0].classList.add("d-none");
-      vButton.parentNode.getElementsByClassName("editBtn")[0].classList.remove("d-none");
-
-      alert("Data saved successfully.");
     }
   }else{
     checkEditing = false;
@@ -181,6 +200,12 @@ function editProfile(vButton){
   document.getElementById("cancelProfileBtn").classList.remove("d-none");
 }
 
+var formSubmitted=false;
+
+function checkFormSubmitted(){
+  formSubmitted=true;
+}
+
 function confirmProfile(vButton){
   var field = vButton.parentNode.parentNode.getElementsByTagName("input");
 
@@ -190,14 +215,20 @@ function confirmProfile(vButton){
 
   if((password!=password_Edited) || (fullname!=fullname_Edited)){
     if(confirm("Are you sure to save?")){
+      var submitBtn = document.getElementById("submit");
+      submitBtn.click();
       //document.profileForm.submit();
-      var xmlhttp = new XMLHttpRequest();
+      if(formSubmitted){
+        //formSubmitted=false; -- Because included location.reload() to refresh page, the value will be reseted to false (So not required)
+        var xmlhttp = new XMLHttpRequest();
 
-      xmlhttp.open("GET", "updateAdminProfile.php?username="+username+"&password="+password_Edited+"&fullname="+fullname_Edited, true);
-      xmlhttp.send();
+        xmlhttp.open("GET", "updateAdminProfile.php?username="+username+"&password="+password_Edited+"&fullname="+fullname_Edited, true);
+        xmlhttp.send();
 
-      alert("Data saved successfully.");
-      location.reload();
+        alert("Data saved successfully.");
+        location.reload();
+      }
+
     }
   }else{
     for(var i=1;i<3;i++){

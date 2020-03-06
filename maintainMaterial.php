@@ -139,11 +139,11 @@ include("maintainMaterial_JS.php");
                     </div>
                     <div class="form-group">
                       <label class="mb-2">Description</label>
-                      <input type="text" class="form-control" name="description" id="description" placeholder="Description" pattern=".{20,}" title="Must contain at least 20 characters" required>
+                      <input type="text" class="form-control" name="description" id="description" placeholder="Description" pattern=".{20,50}" title="Must contain between 20 to 50 characters" required>
                     </div>
                     <div class="form-group">
                       <label class="mb-2">Points(per kg)</label>
-                      <input type="text" class="form-control" name="points" id="points" placeholder="Points" pattern="[0-9]{1,5}" title="Must contain only integer number and less than equal to 5 numbers" required>
+                      <input type="text" class="form-control" name="points" id="points" placeholder="Points" pattern="[0-9]{1,3}" title="Must contain only integer number and less than equal to 3 numbers" required>
                     </div>
                     <div class="text-center">
                       <button type="submit" name="addBtn" class="btn btn-success submit mb-4 px-5" value="add">Add</button>

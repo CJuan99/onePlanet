@@ -86,19 +86,20 @@ if($result_user->num_rows > 0){
                             <button onclick="confirmProfile(this)" id="confirmProfileBtn" class="btn btn-primary squareBtn py-0 px-2 mr-3 float-right d-none"><i class="fas fa-save"></i></button>
                           </div>
                           <div class="card-body">
-                            <form name="profileForm" action="updateAdminProfile.php" method="POST">
+                            <form name="profileForm" action="javascript:void(0)" method="POST" onsubmit="checkFormSubmitted()">
                               <div class="form-group">
                                 <label class="mb-2">Username</label>
                                 <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<?php echo $username;?>" required readonly>
                               </div>
                               <div class="form-group">
                                 <label class="mb-2">Password</label>
-                                <input type="text" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password;?>" required readonly>
+                                <input type="text" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password;?>" required minlength="6" readonly>
                               </div>
                               <div class="form-group">
                                 <label class="mb-2">Fullname</label>
-                                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Fullname" value="<?php echo $fullname;?>" required readonly>
+                                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Fullname" value="<?php echo $fullname;?>" required minlength="5" readonly>
                               </div>
+                              <input class="d-none" type="submit" id="submit">
                             </form>
                           </div>
                       </div>
