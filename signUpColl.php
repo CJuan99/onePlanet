@@ -41,7 +41,7 @@ if($userExist){
 	echo 'window.location.href="index.php";</script>'; //instead header(); because unable to alert
 }else{
 
-	//$password=md5($password);
+	$password=md5($password);
 
   $for_day = '';
   if(!empty($_POST['day']))

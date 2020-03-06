@@ -18,8 +18,6 @@ $totalPoints= "0";
 $ecoLevel= "Newbie";
 
 
-
-
 $query = "SELECT * FROM users";
 $results = $conn->query($query);
 
@@ -37,7 +35,7 @@ if($userExist){
 	echo 'window.location.href="index.php";</script>'; //instead header(); because unable to alert
 }else{
 
-//	$password=md5($password);
+	$password=md5($password);
 	// insert into user table
 	$queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints, ecoLevel, userType) VALUES ('$username', '$password', '$fullname', '$totalPoints','$ecoLevel','$userType')";
 

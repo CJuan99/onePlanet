@@ -6,7 +6,7 @@ session_start();
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-//$password = md5($password);
+$password = md5($password);
 
 $sql = "select * from users where username = '$username' and password = '$password'";
 
@@ -18,8 +18,12 @@ if($result->num_rows > 0){
         header('location:maintainMaterial.php');
         $_SESSION["username"] = $username;
         $_SESSION["userType"] = $values['userType'];
+    }elseif($values["userType"]=="Recycler") {
+          header('location:recprofile.php');
+          $_SESSION["username"] = $username;
+          $_SESSION["userType"] = $values['userType'];
     }else {
-          header('location:index.php');
+          header('location:profile.php');
           $_SESSION["username"] = $username;
           $_SESSION["userType"] = $values['userType'];
         }
