@@ -5,18 +5,6 @@ include("conn.php");
 
 
 
-/*numColl= SELECT materialID,count(*) as numberOfCollector FROM registeredmaterial;
-$collector = mysqli_query($conn, $numColl);*/
-/*
-$qry = "SELECT * FROM material";
-$result = mysqli_query($conn, $qry);
-$matRecd = mysqli_fetch_assoc($result);
-
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']=$matID;
-}*/
-
 $sql = "SELECT * FROM material";
 $result = $conn->query($sql);
 $arr_mat= [];
