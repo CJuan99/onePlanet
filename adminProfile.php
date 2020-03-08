@@ -93,11 +93,11 @@ if($result_user->num_rows > 0){
                               </div>
                               <div class="form-group">
                                 <label class="mb-2">Password</label>
-                                <input type="text" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password;?>" required minlength="6" readonly>
+                                <input type="text" class="form-control" name="password" id="password" placeholder="******" value="******" required minlength="6" readonly>
                               </div>
                               <div class="form-group">
                                 <label class="mb-2">Fullname</label>
-                                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Fullname" value="<?php echo $fullname;?>" required minlength="5" readonly>
+                                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Fullname" value="<?php echo $fullname;?>" required minlength="5" pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters" readonly>
                               </div>
                               <input class="d-none" type="submit" id="submit">
                             </form>
