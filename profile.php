@@ -256,6 +256,22 @@ if(isset($_POST['materialID'])){
                                          </div>
                                      </div>
 
+                                     <div class="row py-3">
+                                      <div class="col-sm-3 col-md-3 col-5">
+                                      <label class="font-weight-bold">Address</label>
+                                    </div>
+                                      <div class="col-sm-7 col-md-7 col-5">
+                                        <h5 id="txtFn"><?php echo  $userRecord['address'];?></h5>
+                                          <input type="text"  class="form-control-plaintext d-none" id="myAdd" name="address" required minlength="5" value="<?php echo  $userRecord['address'];?>" required minlength="10"  >
+
+                                      </div>
+                                      <!--<div  class="col-sm-2 col-md-2 col-2">
+                                         <!-- <a href="" id="edit" >Edit</a>
+                                         <input id="editAdd" type="button" value="Edit">
+
+                                       </div>-->
+                                    </div>
+
                                        <div class="row py-3">
                                         <div class="col-sm-3 col-md-3 col-5">
                                         <label class="font-weight-bold">Schedule</label>
