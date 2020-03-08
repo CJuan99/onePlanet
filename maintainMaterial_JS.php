@@ -191,6 +191,8 @@ function editProfile(vButton){
   password = field[1].value;
   fullname = field[2].value;
 
+  field[1].value = "";
+
   for(var i=1;i<3;i++){
     field[i].readOnly = false;
   }
@@ -213,7 +215,7 @@ function confirmProfile(vButton){
   var password_Edited = field[1].value;
   var fullname_Edited = field[2].value;
 
-  if((password!=password_Edited) || (fullname!=fullname_Edited)){
+  if((password_Edited!="") || (fullname!=fullname_Edited)){
     if(confirm("Are you sure to save?")){
       var submitBtn = document.getElementById("submit");
       submitBtn.click();
@@ -231,6 +233,8 @@ function confirmProfile(vButton){
 
     }
   }else{
+    field[1].value ="******";
+
     for(var i=1;i<3;i++){
       field[i].readOnly = true;
     }
@@ -249,7 +253,7 @@ function cancelProfile(vButton){
   var password_Edited = field[1].value;
   var fullname_Edited = field[2].value;
 
-  if((password!=password_Edited) || (fullname!=fullname_Edited)){
+  if((password_Edited!="") || (fullname!=fullname_Edited)){
     var confirm = window.confirm("Are you sure to discard changes?\nPrevious data will be recovered.");
     if(confirm){
       field[1].value = password;
@@ -264,6 +268,8 @@ function cancelProfile(vButton){
       document.getElementById("editProfileBtn").classList.remove("d-none");
     }
   }else{
+    field[1].value ="******";
+
     for(var i=1;i<3;i++){
       field[i].readOnly = true;
     }

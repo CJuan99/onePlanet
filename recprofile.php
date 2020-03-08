@@ -209,7 +209,7 @@ if(isset($_POST['materialID'])){
                                        </div>
                                          <div class="col-sm-7 col-md-7 col-5">
                                            <h5 id="rec_txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters" >
+                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters">
 
                                          </div>
                                            <div  class="col-sm-2 col-md-2 col-2">
@@ -219,9 +219,9 @@ if(isset($_POST['materialID'])){
                                            </div>
                                        </div>
                                        <div class="row " >
-                                        <div class="text-center w-100 pt-4">
-                                           <button class="btn btn-secondary py-2 px-4 mr-5 text-uppercase float-right d-none" id="btncancelRec" name="btncancelRec" type="button" value="Cancel"  >Cancel</button>
-                                           <button class="btn btn-success py-2 px-4 mr-5 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmitRec" type="submit" value="Submit"  >Save</button>
+                                        <div class="text-center d-inline  w-50  ">
+                                           <button class="btn btn-secondary py-2 px-4 mx-3 text-uppercase float-right d-none" id="btncancelRec" name="btncancelRec" type="button" value="Cancel"  >Cancel</button>
+                                           <button class="btn btn-success py-2 px-4 ml-5 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmitRec" type="submit" value="Submit"  >Save</button>
 
                                          </div>
                                          </div>
@@ -242,7 +242,7 @@ if(isset($_POST['materialID'])){
 
                                         ebtn.addEventListener('click', function(){
                                             recp.readOnly=false;
-                                            recp.value='';
+                                            inp.value='';
                                             saveRec.style.display="inline";
 
                                             recp.focus(); // set the focus on the editable field
@@ -291,13 +291,14 @@ if(isset($_POST['materialID'])){
                                       xmlhttp.onreadystatechange = function() {
                                           if (this.readyState == 4 && this.status == 200) {
                                             error=this.responseText;
-                                            if (error){
+                                            if (error="true"){
                                               alert("Account is successfully updated");
-                                              window.location.reload();
+                                               //window.location.reload();
                                             }else{
                                               alert("Cannot update");
-                                              window.location.reload();
+                                               //window.location.reload();
                                             }
+
                                           }
                                         };
 
@@ -351,22 +352,7 @@ if(isset($_POST['materialID'])){
                                                   <p>230</p>
                                               </div>
                                           </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>English Level</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>Expert</p>
-                                              </div>
-                                          </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Availability</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>6 months</p>
-                                              </div>
-                                          </div>
+
                                   <div class="row">
                                       <div class="col-md-12">
                                           <label>Your Bio</label><br/>

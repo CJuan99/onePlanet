@@ -85,7 +85,7 @@ include("maintainMaterial_JS.php");
                                       </thead>
                                       <tbody>
                                         <?php
-                                          $sql_Materials = "SELECT * FROM material";
+                                          $sql_Materials = "SELECT * FROM material WHERE materialStatus='Available'";
                                           $results = $conn->query($sql_Materials);
                                           if($results->num_rows > 0){
                                             while($row = $results->fetch_assoc()){

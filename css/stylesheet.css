@@ -677,10 +677,8 @@ background-image: url("https://img.webnots.com/2017/05/parallax.jpg");
       border-radius: 0.5rem;
       background: #fff;
   }
-.profile-img{
-
-      padding: 20%;
-      margin-top: -15%;
+  .profile-img{
+      text-align: center;
   }
   .profile-img img{
       text-center;
