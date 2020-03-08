@@ -242,7 +242,7 @@ if(isset($_POST['materialID'])){
 
                                         ebtn.addEventListener('click', function(){
                                             recp.readOnly=false;
-                                            inp.value='';
+                                            recp.value='';
                                             saveRec.style.display="inline";
 
                                             recp.focus(); // set the focus on the editable field
