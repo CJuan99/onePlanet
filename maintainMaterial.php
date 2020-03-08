@@ -135,7 +135,7 @@ include("maintainMaterial_JS.php");
                   <form action="addMaterial.php" method="POST">
                     <div class="form-group">
                       <label class="mb-2">Material Name</label>
-                      <input type="text" class="form-control" name="materialName" id="materialName" placeholder="Material Name" pattern="[A-Za-z]{1,}" title="Must contain only alphabet" required>
+                      <input type="text" class="form-control" name="materialName" id="materialName" placeholder="Material Name" pattern="[A-Za-z ]{1,}" title="Must contain only alphabet" required>
                     </div>
                     <div class="form-group">
                       <label class="mb-2">Description</label>
