@@ -296,11 +296,14 @@ if(isset($_POST['materialID'])){
                                         </div>
 
                                         <div class="row " >
-                                          <div class="text-center d-inline  w-50  ">
+                                          <div class="text-center w-100 pt-4">
                                             <button class="btn btn-secondary py-2 px-3 text-uppercase d-none mx-3 float-right" id="btncancelColl" name="btncancelColl" type="button" value="Cancel"  >Cancel</button>
                                             <button class="btn btn-success py-2 px-3 text-uppercase d-none ml-auto float-right" id="btnsave" name="btnsubmitColl" type="submit" value="Submit"  >Save</button>
                                         </div>
                                       </div>
+
+
+
                                       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
                                        <script type="text/javascript">
                                         var el  = document.getElementById('edit');

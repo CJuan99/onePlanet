@@ -8,6 +8,7 @@ session_start();
   $fullname = $_REQUEST["fullname"];
   $password= $_REQUEST["password"];
 
+	$password=md5($password);
   $sql_update = "UPDATE users SET fullname='$fullname' WHERE username= '$username'";
 
   $sql_updatePwd = "UPDATE users SET password='$password' WHERE username= '$username'";
