@@ -9,15 +9,6 @@ $username = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
-/*$result = $conn->query($sql);
-$arr_mat= [];*/
-
-/*$schsql ="SELECT format(schedule,'hh:mm') from users WHERE username ='$username'";
-$resultsch = mysqli_query($conn, $schsql);
-$time= mysqli_fetch_assoc($resultsch);
-var_dump($time);*/
-
-
 
 $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  WHERE registeredmaterial.materialID= material.materialID AND registeredmaterial.username ='$username'";
@@ -29,9 +20,6 @@ $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  if ($resultColl->num_rows > 0) {
      $arr_coll = $resultColl->fetch_all(MYSQLI_ASSOC);
  }
-/*$resultColl = mysqli_query($conn, $sqlCollMat);
-$collRecord = mysqli_fetch_assoc($resultColl);*/
-
 
 
 $sql = "SELECT * FROM material";
@@ -65,7 +53,8 @@ if(isset($_POST['materialID'])){
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>Recycler Profile</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -83,8 +72,7 @@ if(isset($_POST['materialID'])){
 
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
-        <?php if(!empty($_SESSION['username'])) { ?>
-			    <?php if($_SESSION['userType']=='Recycler') { ?>
+
                   <li class="nav-item">
                     <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
                   </li>
@@ -94,28 +82,7 @@ if(isset($_POST['materialID'])){
                   <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
                   </li>
-          <?php }else { ?>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-              </li>
-            <?php } ?>
-        <?php }else { ?>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-              </li>
-        <?php } ?>
+
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
 
@@ -225,7 +192,7 @@ if(isset($_POST['materialID'])){
                                           <label class="font-weight-bold">Password</label>
                                         </div>
                                           <div class="col-sm-7 col-md-7 col-5">
-                                            <input type="password"  readonly class="form-control-plaintext" id="rec_password" required minlength="6" name="password" value="<?php echo  $userRecord['password'];?>">
+                                            <input type="password"  readonly class="form-control-plaintext" id="rec_password" required minlength="6" name="password" value="******">
                                           </div>
                                             <div class="col-sm-2 col-md-2 col-2" >
                                               <input id="pd_edit" type="button" value="Edit">
@@ -275,7 +242,7 @@ if(isset($_POST['materialID'])){
 
                                         ebtn.addEventListener('click', function(){
                                             recp.readOnly=false;
-                                              ///inp.value='';
+                                            inp.value='';
                                             saveRec.style.display="inline";
 
                                             recp.focus(); // set the focus on the editable field

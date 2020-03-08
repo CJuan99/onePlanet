@@ -12,7 +12,6 @@ $sql = "select * from users where username = '$username' and password = '$passwo
 
 $result = $conn->query($sql);
 if($result->num_rows > 0){
-
     $values = $result->fetch_assoc();
     if($values["userType"]=="Admin"){
         header('location:maintainMaterial.php');
@@ -27,10 +26,9 @@ if($result->num_rows > 0){
           $_SESSION["username"] = $username;
           $_SESSION["userType"] = $values['userType'];
         }
-
 }else{
     echo '<script type="text/javascript">window.alert("Incorrect username or password. Please try again.");';
-    echo 'window.location.href="index.php";</script>'; //instead header(); because unable to alert
+    echo 'window.location.href="index.php";</script>';
 }
 
 $conn->close();

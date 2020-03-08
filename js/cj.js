@@ -39,7 +39,7 @@ $(document).on('#login', 'hidden.bs.modal', function () {
     $('body').append(myClone);
 });
 
-login-frm
+
 })(jQuery); // End of use strict
 
 // Select all tabs
@@ -72,14 +72,14 @@ $('.carousel.carousel-multi-item.v-2 .carousel-item').each(function(){
 });
 
 //document.getElementById("registration").onsubmit = function() {formValidationx()};
-function formValidation()
+/*function formValidation()
 {
 var passid = document.getElementsById("rpassword");
 var uname = document.getElementsById("rname");
 var fname = document.getElementsById("rfullname");
-/*
+
 var uadd =document.getElementsById("password");
-var material = document.getElementsById("address");*/
+var material = document.getElementsById("address");
 
 
 
@@ -178,4 +178,4 @@ else
 {
 return true;
 }
-}
+}*/

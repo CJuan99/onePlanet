@@ -14,7 +14,7 @@ session_start();
   $conn->query($sql_update);
   $conn->query($sql_updatePwd);
 
-var_dump($_GET);
+//var_dump($_GET);
 if(isset($_REQUEST["materialID"])){
 
 

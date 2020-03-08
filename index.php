@@ -160,7 +160,8 @@ function validate_input($data){
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>OnePlanet</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top">
@@ -263,7 +264,7 @@ function validate_input($data){
                     <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fas fa-user-tie text-default"></i></div>
                     </div>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required="">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
                   </div>
                 </div>
                 <div class="form-group">
@@ -320,7 +321,7 @@ function validate_input($data){
                   <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4">
+                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
                     <!--  <span id="span"> </span>-->
                     </div>
                     <div class="form-group">
@@ -330,7 +331,7 @@ function validate_input($data){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5">
+                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5" pattern="[A-Za-z]{5}" title="Fullname must be alphabet">
 
                     </div>
                     <div class="text-center">
@@ -351,7 +352,7 @@ function validate_input($data){
                   <form action="signUpColl.php" method="post" name="registration" id="c-registration">
                     <div class="form-group ">
                       <!--  <label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4">
+                      <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
                       <!--<span id="span"> </span>-->
                     </div>
                     <div class="form-group">
@@ -362,12 +363,12 @@ function validate_input($data){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required="">
+                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required="" pattern="[A-Za-z]{5}" title="Fullname must be alphabet">
                     <!--<span id="span" class="error"></span>-->
                     </div>
                     <div class="form-group">
                       <!--<label for="email">Address</label>-->
-                      <input type="text" class="form-control" id="caddress" placeholder="Address" name="address" required="">
+                      <input type="text" class="form-control" id="caddress" placeholder="Address" name="address" required minlength="10">
 
                     </div>
                     <div class="form-group ">

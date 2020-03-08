@@ -3,13 +3,10 @@ $connect = mysqli_connect("localhost", "root", "", "onePlanet");
 include("conn.php");
 session_start();
 
-//$sqlUsers = "SELECT * FROM users";
-//$userTable = $conn->query($sqlUsers);
 
 
 if(isset($_POST["regColl_btn"])){
-// attributes for user table
-/*$userID = $userTable->num_rows + 1;*/
+
 $username = $_POST["username"];
 $password = $_POST["password"];
 $fullname = $_POST["fullname"];
