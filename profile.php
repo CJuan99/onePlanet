@@ -9,6 +9,13 @@ $username = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
+/*$result = $conn->query($sql);
+$arr_mat= [];*/
+
+/*$schsql ="SELECT format(schedule,'hh:mm') from users WHERE username ='$username'";
+$resultsch = mysqli_query($conn, $schsql);
+$time= mysqli_fetch_assoc($resultsch);
+var_dump($time);*/
 
 $sqlCount = "SELECT * FROM submission WHERE collector ='$username'";
 
@@ -27,10 +34,20 @@ $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  $arr_coll= [];
 
  if ($resultColl->num_rows > 0) {
-     $arr_coll = $resultColl->fetch(MYSQLI_ASSOC);
- }else{
- $arr_coll="0";
+     $arr_coll = $resultColl->fetch_all(MYSQLI_ASSOC);
  }
+
+/* $sqlCount = "SELECT * FROM submission
+  WHERE  collector='$username'";
+  $resultCount = $conn->query($sqlCount);
+
+  if ($resultCount->num_rows > 0) {
+
+  }*/
+/*$resultColl = mysqli_query($conn, $sqlCollMat);
+$collRecord = mysqli_fetch_assoc($resultColl);*/
+
+
 
 $sql = "SELECT * FROM material";
 $result = $conn->query($sql);
@@ -43,6 +60,15 @@ if ($result->num_rows > 0) {
 
 
 
+/*if ($resultset->num_rows > 0) {
+    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
+}
+
+if(isset($_POST['materialID'])){
+	$matID= $_POST['materialID'];
+	$_SESSION['materialID']= $matID;
+}*/
+
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +80,7 @@ if ($result->num_rows > 0) {
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Profile</title>
+  <title>Collector Profile</title>
   <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
@@ -133,13 +159,13 @@ if ($result->num_rows > 0) {
                                   <input type="file" name="file"/>
                               </div>
                           </div>
-                        <ul class="list-group px-2 py-3">
+                        <!--<ul class="list-group px-2 py-3">
                           <li class="list-group-item text-white bg-success">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                           <li class="list-group-item text-left"><span class="pull-left"><strong>Collection</strong></span> <span class="badge bg-warning text-white"><?php $count ?></span></li>
                           <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">2</span></li>
 
                         </ul>
-                        <!--<div class="profile-work">
+                        <div class="profile-work">
                             <p>WORK LINK</p>
                             <a href="">Website Link</a><br/>
                             <a href="">Bootsnipp Profile</a><br/>
@@ -151,18 +177,27 @@ if ($result->num_rows > 0) {
                             <a href="">WooCommerce</a><br/>
                             <a href="">PHP, .Net</a><br/>
                         </div>-->
+                        <div class="profile-head mx-5">
+                                    <h4 class="py-2">
+                                      <?php echo  $userRecord['fullname'];?>
+                                    </h4>
+                                    <h5 >
+                                        <?php echo  $userRecord['userType'];?>
+                                    </h5 >
+                                    <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
+                        </div>
                       </div>
                       <div class="col-md-9">
                           <div class="profile-head">
-                                      <h4 class="py-2">
+                                    <!--  <h4 class="py-2">
                                         <?php echo  $userRecord['fullname'];?>
                                       </h4>
                                       <h5 >
                                           <?php echo  $userRecord['userType'];?>
                                       </h5 >
-                                      <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
+                                      <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>-->
 
-                              <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
+                              <ul class="nav nav-tabs " id="myTab" role="tablist">
                                   <li class="nav-item">
                                       <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                   </li>
@@ -211,7 +246,7 @@ if ($result->num_rows > 0) {
                                      </div>
                                        <div class="col-sm-7 col-md-7 col-5">
                                          <h5 id="txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" >
+                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z]{4}" title="Fullname must be all alphabets with at least 4 characters" >
 
                                        </div>
                                          <div  class="col-sm-2 col-md-2 col-2">
