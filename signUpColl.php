@@ -34,7 +34,7 @@ if($results->num_rows > 0){
 }
 
 if($userExist){
-	echo '<script type="text/javascript">window.alert("User already exist. Please try again.");';
+	echo '<script type="text/javascript">window.alert("Username has been taken. Please try again.");';
 	echo 'window.location.href="index.php";</script>'; //instead header(); because unable to alert
 }else{
 
