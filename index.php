@@ -5,6 +5,18 @@ include("conn.php");
 
 
 
+/*numColl= SELECT materialID,count(*) as numberOfCollector FROM registeredmaterial;
+$collector = mysqli_query($conn, $numColl);*/
+/*
+$qry = "SELECT * FROM material";
+$result = mysqli_query($conn, $qry);
+$matRecd = mysqli_fetch_assoc($result);
+
+if(isset($_POST['materialID'])){
+	$matID= $_POST['materialID'];
+	$_SESSION['materialID']=$matID;
+}*/
+
 $sql = "SELECT * FROM material";
 $result = $conn->query($sql);
 $arr_mat= [];
@@ -19,6 +31,124 @@ if(isset($_POST['materialID'])){
 }
 
 
+/*$time_start = '10:00';
+ $time_end   = '22:00';
+
+ # use date function with the time variables to create a timestamp to use in the while loop
+ $timestamp_start = strtotime(date('d-m-Y').' '.$time_start);
+ $timestamp_end   = strtotime(date('d-m-Y').' '.$time_end);
+
+ # create array to fill with the options
+ $options_array = array();
+
+ # loop through until the end timestamp is reached
+ while($timestamp_start <= $timestamp_end){
+     $options_array[] = date('H:i', $timestamp_start);
+     $timestamp_start = $timestamp_start+900; //Adds 15 minutes
+ }*/
+
+
+
+
+/*$urerr = $perr = $fnerr = $aderr = " ";
+$username = $password = $fullname = $add =  "";
+
+$boolen  = false;
+
+
+if(isset($_POST["regRec_btn"])){
+
+    if(empty($_POST["username"])){
+       $urerr = "Username Required...!";
+        $boolen  = false;
+    }elseif(ctype_alnum($_POST["username"])) {
+       $username = validate_input($_POST["username"]);
+        $boolen  = true;
+    }else{
+       $urerr = "Username must be alphanumeric";
+        $boolen  = false;
+    }
+
+
+    $length = strlenght($_POST["password"]);
+
+    if(empty($_POST["password"])){
+        $perr = "Password Field Required...!";
+        $boolen  = false;
+    }elseif($length){
+        $perr = $length;
+        $boolen  = false;
+    }else{
+            $passwd = validate_input($_POST["password"]);
+        $boolen  = true;
+    }
+
+    if(empty($_POST["fullname"])){
+        $fnerr = "Fullname Field Required...!";
+        $boolen  = false;
+    }elseif( ctype_alpha($_POST["fullname"])){
+      $fullname = validate_input($_POST["fullname"]);
+      $boolen  = true;
+    }else{
+        $fnerr = "Fullname must be all letters";
+        $boolen  = false;
+    }
+
+
+    if(empty($_POST["address"])){
+       $aderr = "Address Required...!";
+        $boolen  = false;
+    }else{
+       $add= validate_input($_POST["address"]);
+        $boolen  = true;
+    }
+
+  /*  if(empty($_POST["cpasswd"])){
+        $cperr = "Confirm Password Required...!";
+        $boolen  = false;
+    }
+    elseif($_POST["cpasswd"]!=$passwd){
+        $cperr = "Password Not Match...!";
+        $boolen  = false;
+    }
+
+    if(empty($_POST["fname"]) || empty($_POST["lname"])){
+        $fnerr = "First &amp; Last Name Required...!";
+        $boolen  = false;
+    }else{
+        $name = validate_input($_POST["fname"]);
+        $boolen  = true;
+    }
+
+    if(empty($_POST["gender"])){
+        $gerr = "Gender Required...!";
+        $boolen  = false;
+    }else{
+        $gender = validate_input($_POST["gender"]);
+        $boolen  = true;
+    }
+
+    if(isset($_POST["ck1"])){
+        $boolen  = true;
+    }else{
+        $boolen  = false;
+    }
+}/*
+function strlenght($str){
+    $ln = strlen($str);
+    if($ln > 18){
+        return "Passwod should less than 18 characters";
+    }elseif($ln < 5 && $ $ln >= 1){
+        return "Password should greater then 3 characters";
+    }
+    return;
+}
+function validate_input($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}*/
 
 ?>
 <!DOCTYPE html>
@@ -201,11 +331,11 @@ if(isset($_POST['materialID'])){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5" pattern="[A-Za-z]{5}" title="Fullname must be alphabet">
+                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="4" pattern="[A-Za-z]{4}" title="Fullname must be all alphabets with at least 4 characters">
 
                     </div>
                     <div class="text-center">
-                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up" onclick="ajaxRegistration()">
+                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up">
                     </div>
                   </form>
                   <div class="success-message" id="register-success-message"

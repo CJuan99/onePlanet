@@ -132,10 +132,10 @@ if(isset($_POST['materialID'])){
                                   <input type="file" name="file"/>
                               </div>
                           </div>
-                        <ul class="list-group px-2 py-3">
+                      <!--  <ul class="list-group px-2 py-3">
                           <li class="list-group-item text-white bg-success">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                           <li class="list-group-item text-left"><span class="pull-left"><strong>Submission</strong></span> <span class="badge bg-warning text-white">3</span></li>
-                        </ul>
+                        </ul>-->
                         <!--<div class="profile-work">
                             <p>WORK LINK</p>
                             <a href="">Website Link</a><br/>
@@ -148,19 +148,31 @@ if(isset($_POST['materialID'])){
                             <a href="">WooCommerce</a><br/>
                             <a href="">PHP, .Net</a><br/>
                         </div>-->
+
+                        <div class="profile-head mx-5">
+                                    <h4 class="">
+                                      <?php echo  $userRecord['fullname'];?>
+                                    </h4>
+                                    <h5 >
+                                        <?php echo  $userRecord['userType'];?>
+                                    </h5 >
+                                    <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
+                                    <h6 class="proile-rating lead ">Eco Level: <span>  <?php echo $userRecord['ecoLevel'];?></span></h6>
+                        </div>
+
                       </div>
                       <div class="col-md-9">
                           <div class="profile-head">
-                                      <h4 class="py-2">
+                                    <!--  <h4 class="py-2">
                                         <?php echo  $userRecord['fullname'];?>
                                       </h4>
                                       <h5 >
                                           <?php echo  $userRecord['userType'];?>
                                       </h5 >
                                       <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
-                                      <h6 class="proile-rating lead ">Eco Level: <span>  <?php echo $userRecord['ecoLevel'];?></span></h6>
+                                      <h6 class="proile-rating lead ">Eco Level: <span>  <?php echo $userRecord['ecoLevel'];?></span></h6>-->
 
-                              <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
+                              <ul class="nav nav-tabs " id="myTab" role="tablist">
                                   <li class="nav-item">
                                       <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                   </li>
@@ -209,7 +221,7 @@ if(isset($_POST['materialID'])){
                                        </div>
                                          <div class="col-sm-7 col-md-7 col-5">
                                            <h5 id="rec_txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" >
+                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" pattern="[A-Za-z]{4}" title="Fullname must be all alphabets with at least 4 characters" >
 
                                          </div>
                                            <div  class="col-sm-2 col-md-2 col-2">
@@ -219,9 +231,9 @@ if(isset($_POST['materialID'])){
                                            </div>
                                        </div>
                                        <div class="row " >
-                                        <div class="text-center d-inline  w-50  ">
-                                           <button class="btn btn-secondary py-2 px-4 mx-3 text-uppercase float-right d-none" id="btncancelRec" name="btncancelRec" type="button" value="Cancel"  >Cancel</button>
-                                           <button class="btn btn-success py-2 px-4 ml-5 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmitRec" type="submit" value="Submit"  >Save</button>
+                                        <div class="text-center w-100 pt-4">
+                                           <button class="btn btn-secondary py-2 px-4 mr-5 text-uppercase float-right d-none" id="btncancelRec" name="btncancelRec" type="button" value="Cancel"  >Cancel</button>
+                                           <button class="btn btn-success py-2 px-4 mr-5 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmitRec" type="submit" value="Submit"  >Save</button>
 
                                          </div>
                                          </div>
@@ -242,7 +254,7 @@ if(isset($_POST['materialID'])){
 
                                         ebtn.addEventListener('click', function(){
                                             recp.readOnly=false;
-                                            inp.value='';
+                                            recp.value='';
                                             saveRec.style.display="inline";
 
                                             recp.focus(); // set the focus on the editable field
