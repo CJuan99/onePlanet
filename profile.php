@@ -118,7 +118,7 @@ if(isset($_POST['materialID'])){
       	<?php if(!empty($_SESSION['username'])) { ?>
 			<?php if($_SESSION['userType']=='Recycler') { ?>
 				  <li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="profile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="recprofile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } else{?>
 				<li class="nav-item">
@@ -159,13 +159,13 @@ if(isset($_POST['materialID'])){
                                   <input type="file" name="file"/>
                               </div>
                           </div>
-                        <!--<ul class="list-group px-2 py-3">
+                        <ul class="list-group px-2 py-3">
                           <li class="list-group-item text-white bg-success">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                           <li class="list-group-item text-left"><span class="pull-left"><strong>Collection</strong></span> <span class="badge bg-warning text-white"><?php $count ?></span></li>
-                          <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">2</span></li>
+                          <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">1</span></li>
 
                         </ul>
-                        <div class="profile-work">
+                      <!--  <div class="profile-work">
                             <p>WORK LINK</p>
                             <a href="">Website Link</a><br/>
                             <a href="">Bootsnipp Profile</a><br/>
@@ -176,7 +176,7 @@ if(isset($_POST['materialID'])){
                             <a href="">WordPress</a><br/>
                             <a href="">WooCommerce</a><br/>
                             <a href="">PHP, .Net</a><br/>
-                        </div>-->
+                        </div>
                         <div class="profile-head mx-5">
                                     <h4 class="py-2">
                                       <?php echo  $userRecord['fullname'];?>
@@ -185,19 +185,19 @@ if(isset($_POST['materialID'])){
                                         <?php echo  $userRecord['userType'];?>
                                     </h5 >
                                     <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
-                        </div>
+                        </div>-->
                       </div>
                       <div class="col-md-9">
                           <div class="profile-head">
-                                    <!--  <h4 class="py-2">
+                                     <h4 class="py-2">
                                         <?php echo  $userRecord['fullname'];?>
                                       </h4>
                                       <h5 >
                                           <?php echo  $userRecord['userType'];?>
                                       </h5 >
-                                      <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>-->
+                                      <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
 
-                              <ul class="nav nav-tabs " id="myTab" role="tablist">
+                              <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
                                   <li class="nav-item">
                                       <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                   </li>
@@ -366,22 +366,28 @@ if(isset($_POST['materialID'])){
                                        var xmlhttp = new XMLHttpRequest();
 
                                       xmlhttp.onreadystatechange = function() {
-                                          if (this.readyState == 4 && this.status == 200) {
-                                            error=this.responseText;
-
+                                        if (this.readyState == 4 && this.status == 200) {
+                                          error=this.responseText;
+                                          if (error){
+                                            alert("Account is successfully updated");
+                                            window.location.reload();
+                                          }else{
+                                            alert("Cannot update");
+                                            window.location.reload();
                                           }
+                                        }
                                         };
 
 
                                         xmlhttp.open("GET", "update.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
                                         xmlhttp.send();
-                                        if (error="true"){
+                                      /*  if (error="true"){
                                           alert("Account is successfully updated");
                                            window.location.reload();
                                         }else{
                                           alert("Cannot update");
                                            window.location.reload();
-                                        }
+                                        }*/
 
 
 
