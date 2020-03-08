@@ -24,7 +24,7 @@ $results = $conn->query($query);
 $userExist = false;
 if($results->num_rows > 0){
 	while($row = $results->fetch_assoc()){
-		if($username == $row["username"]){
+		if(strtolower($username) == strtolower($row["username"])){
 			$userExist = true;
 		}
 	}

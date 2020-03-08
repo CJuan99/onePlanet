@@ -246,7 +246,7 @@ if(isset($_POST['materialID'])){
                                      </div>
                                        <div class="col-sm-7 col-md-7 col-5">
                                          <h5 id="txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z]{4}" title="Fullname must be all alphabets with at least 4 characters" >
+                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters" >
 
                                        </div>
                                          <div  class="col-sm-2 col-md-2 col-2">
@@ -373,7 +373,7 @@ if(isset($_POST['materialID'])){
                                         };
 
 
-                                        xmlhttp.open("GET", "backupupdate.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
+                                        xmlhttp.open("GET", "update.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
                                         xmlhttp.send();
                                         if (error="true"){
                                           alert("Account is successfully updated");

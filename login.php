@@ -18,11 +18,11 @@ if($result->num_rows > 0){
         $_SESSION["username"] = $username;
         $_SESSION["userType"] = $values['userType'];
     }elseif($values["userType"]=="Recycler") {
-          header('location:recprofile.php');
+          header('location:index.php');
           $_SESSION["username"] = $username;
           $_SESSION["userType"] = $values['userType'];
     }else {
-          header('location:profile.php');
+          header('location:index.php');
           $_SESSION["username"] = $username;
           $_SESSION["userType"] = $values['userType'];
         }

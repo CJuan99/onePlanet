@@ -27,7 +27,7 @@ $results = $conn->query($query);
 $userExist = false;
 if($results->num_rows > 0){
 	while($row = $results->fetch_assoc()){
-		if($username == $row["username"]){
+			if(strtolower($username) == strtolower($row["username"])){
 			$userExist = true;
 		}
 	}
@@ -47,8 +47,7 @@ if($userExist){
    {
     $for_day .= $day . ' ';
    }
-  // $for_day = substr($for_day, 0, -2);
-  // $queryDay = "INSERT INTO users (day) VALUES ('$for_query')";
+
    $queryInsertUser = "INSERT INTO users (username, password, fullname, totalPoints,address, userType, schedule,day) VALUES ('$username', '$password', '$fullname', '$totalPoints','$address','$userType','$schedule','$for_day')";
    $queryMaterials = "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
 
@@ -63,7 +62,7 @@ if($userExist){
   }
   else
   {
-   echo "<label class='text-danger'>* Please Select Atleast one Programming language</label>";
+   echo "Please choose at least a day";
   }
 
 

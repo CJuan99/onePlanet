@@ -221,7 +221,7 @@ if(isset($_POST['materialID'])){
                                        </div>
                                          <div class="col-sm-7 col-md-7 col-5">
                                            <h5 id="rec_txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" pattern="[A-Za-z]{4}" title="Fullname must be all alphabets with at least 4 characters" >
+                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters" >
 
                                          </div>
                                            <div  class="col-sm-2 col-md-2 col-2">
@@ -237,91 +237,7 @@ if(isset($_POST['materialID'])){
 
                                          </div>
                                          </div>
-                                       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-                                       <script type="text/javascript">
 
-                                        var ebtn  = document.getElementById('pd_edit');
-                                        var recp = document.getElementById('rec_password');
-
-                                        var fnbtn  = document.getElementById('fn_edit');
-                                        var rectxt = document.getElementById('rec_txtFn');
-                                        var recFn = document.getElementById('rec_Fn');
-
-
-                                        var saveRec = document.getElementById('btnsaveRec');
-                                        var cancelRec =  document.getElementById('btncancelRec');
-
-
-                                        ebtn.addEventListener('click', function(){
-                                            recp.readOnly=false;
-                                            recp.value='';
-                                            saveRec.style.display="inline";
-
-                                            recp.focus(); // set the focus on the editable field
-                                            saveRec.classList.remove("d-none");
-                                            cancelRec.classList.remove("d-none");
-
-
-                                        });
-
-
-                                        fnbtn.addEventListener('click', function(){
-                                            //inp.disabled = false;
-
-                                          //  alert("Account is successfully updated");
-                                            rectxt.style.display="none";
-
-                                            recFn.classList.remove("d-none");
-                                            recFn.focus();
-                                            saveRec.classList.remove("d-none");
-                                            cancelRec.classList.remove("d-none");
-
-                                        });
-
-                                        cancelRec.addEventListener('click', function(){
-                                          recp.readOnly=true;
-
-                                          rectxt.style.display="block";
-                                          recFn.classList.add("d-none");
-
-                                           window.location.reload();
-                                        });
-
-
-
-                                jQuery(document).ready(function(){
-                                    $('#editProfile').submit(function(){
-
-                                          var pwd=recp.value;
-                                          var fullname=recFn.value;
-                                          var error="true";
-
-                                          console.log(editProfile.submit());
-
-                                          var xmlhttp = new XMLHttpRequest();
-
-                                      xmlhttp.onreadystatechange = function() {
-                                          if (this.readyState == 4 && this.status == 200) {
-                                            error=this.responseText;
-
-                                          }
-                                        };
-
-                                        xmlhttp.open("GET", "backupupdate.php?fullname="+fullname+"&password="+pwd , true);
-                                        xmlhttp.send();
-                                        if (error="true"){
-                                          alert("Account is successfully updated");
-                                           //window.location.reload();
-                                        }else{
-                                          alert("Cannot update");
-                                           //window.location.reload();
-                                        }
-                                      });
-                                    });
-
-
-
-                                       </script>
 
                                   <!--    <div class="form-group row">
                                         <label for="select" class="col-4 col-form-label">Materials</label>
@@ -458,6 +374,91 @@ if(isset($_POST['materialID'])){
 
 
     <script src="js/cj.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript">
+
+     var ebtn  = document.getElementById('pd_edit');
+     var recp = document.getElementById('rec_password');
+
+     var fnbtn  = document.getElementById('fn_edit');
+     var rectxt = document.getElementById('rec_txtFn');
+     var recFn = document.getElementById('rec_Fn');
+
+
+     var saveRec = document.getElementById('btnsaveRec');
+     var cancelRec =  document.getElementById('btncancelRec');
+
+
+     ebtn.addEventListener('click', function(){
+         recp.readOnly=false;
+         recp.value='';
+         saveRec.style.display="inline";
+
+         recp.focus(); // set the focus on the editable field
+         saveRec.classList.remove("d-none");
+         cancelRec.classList.remove("d-none");
+
+
+     });
+
+
+     fnbtn.addEventListener('click', function(){
+         //inp.disabled = false;
+
+       //  alert("Account is successfully updated");
+         rectxt.style.display="none";
+
+         recFn.classList.remove("d-none");
+         recFn.focus();
+         saveRec.classList.remove("d-none");
+         cancelRec.classList.remove("d-none");
+
+     });
+
+     cancelRec.addEventListener('click', function(){
+       recp.readOnly=true;
+
+       rectxt.style.display="block";
+       recFn.classList.add("d-none");
+
+        window.location.reload();
+     });
+
+
+
+jQuery(document).ready(function(){
+ $('#editProfile').submit(function(){
+
+       var pwd=recp.value;
+       var fullname=recFn.value;
+       var error="true";
+
+       console.log(editProfile.submit());
+
+       var xmlhttp = new XMLHttpRequest();
+
+   xmlhttp.onreadystatechange = function() {
+       if (this.readyState == 4 && this.status == 200) {
+         error=this.responseText;
+
+       }
+     };
+
+     xmlhttp.open("GET", "update.php?fullname="+fullname+"&password="+pwd , true);
+     xmlhttp.send();
+     if (error="true"){
+       alert("Account is successfully updated");
+        //window.location.reload();
+     }else{
+       alert("Cannot update");
+        //window.location.reload();
+     }
+   });
+ });
+
+
+
+    </script>
 
 
   </body>

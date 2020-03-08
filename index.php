@@ -31,125 +31,6 @@ if(isset($_POST['materialID'])){
 }
 
 
-/*$time_start = '10:00';
- $time_end   = '22:00';
-
- # use date function with the time variables to create a timestamp to use in the while loop
- $timestamp_start = strtotime(date('d-m-Y').' '.$time_start);
- $timestamp_end   = strtotime(date('d-m-Y').' '.$time_end);
-
- # create array to fill with the options
- $options_array = array();
-
- # loop through until the end timestamp is reached
- while($timestamp_start <= $timestamp_end){
-     $options_array[] = date('H:i', $timestamp_start);
-     $timestamp_start = $timestamp_start+900; //Adds 15 minutes
- }*/
-
-
-
-
-/*$urerr = $perr = $fnerr = $aderr = " ";
-$username = $password = $fullname = $add =  "";
-
-$boolen  = false;
-
-
-if(isset($_POST["regRec_btn"])){
-
-    if(empty($_POST["username"])){
-       $urerr = "Username Required...!";
-        $boolen  = false;
-    }elseif(ctype_alnum($_POST["username"])) {
-       $username = validate_input($_POST["username"]);
-        $boolen  = true;
-    }else{
-       $urerr = "Username must be alphanumeric";
-        $boolen  = false;
-    }
-
-
-    $length = strlenght($_POST["password"]);
-
-    if(empty($_POST["password"])){
-        $perr = "Password Field Required...!";
-        $boolen  = false;
-    }elseif($length){
-        $perr = $length;
-        $boolen  = false;
-    }else{
-            $passwd = validate_input($_POST["password"]);
-        $boolen  = true;
-    }
-
-    if(empty($_POST["fullname"])){
-        $fnerr = "Fullname Field Required...!";
-        $boolen  = false;
-    }elseif( ctype_alpha($_POST["fullname"])){
-      $fullname = validate_input($_POST["fullname"]);
-      $boolen  = true;
-    }else{
-        $fnerr = "Fullname must be all letters";
-        $boolen  = false;
-    }
-
-
-    if(empty($_POST["address"])){
-       $aderr = "Address Required...!";
-        $boolen  = false;
-    }else{
-       $add= validate_input($_POST["address"]);
-        $boolen  = true;
-    }
-
-  /*  if(empty($_POST["cpasswd"])){
-        $cperr = "Confirm Password Required...!";
-        $boolen  = false;
-    }
-    elseif($_POST["cpasswd"]!=$passwd){
-        $cperr = "Password Not Match...!";
-        $boolen  = false;
-    }
-
-    if(empty($_POST["fname"]) || empty($_POST["lname"])){
-        $fnerr = "First &amp; Last Name Required...!";
-        $boolen  = false;
-    }else{
-        $name = validate_input($_POST["fname"]);
-        $boolen  = true;
-    }
-
-    if(empty($_POST["gender"])){
-        $gerr = "Gender Required...!";
-        $boolen  = false;
-    }else{
-        $gender = validate_input($_POST["gender"]);
-        $boolen  = true;
-    }
-
-    if(isset($_POST["ck1"])){
-        $boolen  = true;
-    }else{
-        $boolen  = false;
-    }
-}/*
-function strlenght($str){
-    $ln = strlen($str);
-    if($ln > 18){
-        return "Passwod should less than 18 characters";
-    }elseif($ln < 5 && $ $ln >= 1){
-        return "Password should greater then 3 characters";
-    }
-    return;
-}
-function validate_input($data){
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}*/
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -264,7 +145,7 @@ function validate_input($data){
                     <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fas fa-user-tie text-default"></i></div>
                     </div>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
                   </div>
                 </div>
                 <div class="form-group">
@@ -321,7 +202,7 @@ function validate_input($data){
                   <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
+                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric with at least ">
                     <!--  <span id="span"> </span>-->
                     </div>
                     <div class="form-group">
@@ -331,7 +212,7 @@ function validate_input($data){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="4" pattern="[A-Za-z]{4}" title="Fullname must be all alphabets with at least 4 characters">
+                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5" pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters">
 
                     </div>
                     <div class="text-center">
@@ -363,7 +244,7 @@ function validate_input($data){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required="" pattern="[A-Za-z]{5}" title="Fullname must be alphabet">
+                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required minlength="5" pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters">
                     <!--<span id="span" class="error"></span>-->
                     </div>
                     <div class="form-group">
