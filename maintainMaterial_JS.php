@@ -105,7 +105,7 @@ function confirmButton(vButton){
   if((materialName!=materialName_Edited) || (description!=description_Edited) || (points!=points_Edited)){
     var confirm = window.confirm("Are you sure to save?");
     if(confirm){
-      var letters = /^[a-zA-Z]+$/;
+      var letters = /^[a-zA-Z ]+$/;
       var integers = /^[0-9]+$/;
 
       if(materialName_Edited.length>0 && description_Edited.length>0 && points_Edited.length>0){
