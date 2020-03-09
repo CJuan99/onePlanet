@@ -18,6 +18,10 @@ html {
 }
 
 @media (min-width: 576px) {
+  .item-box-blog {
+    margin-bottom: 80px;
+  }
+
   .container {
     max-width: 540px;
   }
@@ -467,7 +471,8 @@ figure img{width:300px;}
 .blog .carousel-indicators li {
   background: #708198;
   border-radius: 50%;
-
+  width:21px;
+  height:1px;
 
 }
 
@@ -663,6 +668,7 @@ line-height: 100px;
 
 .paralsec {
 background-image: url("https://img.webnots.com/2017/05/parallax.jpg");
+background-size:cover;
 }
 
 

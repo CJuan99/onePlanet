@@ -74,13 +74,13 @@ if(isset($_POST['materialID'])){
         <ul class="navbar-nav ml-3  my-lg-0 ">
 
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                    <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#recycle">Recycle Now</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
                   </li>
 
       </div>

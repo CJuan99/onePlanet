@@ -62,7 +62,7 @@ if($userExist){
   }
   else
   {
-		echo '<script type="text/javascript">window.alert("Please choose at least day");';
+		echo '<script type="text/javascript">window.alert("Please choose at least a day");';
 	 echo 'window.location.href="index.php";</script>';
   }
 

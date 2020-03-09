@@ -49,7 +49,7 @@ $collRecord = mysqli_fetch_assoc($resultColl);*/
 
 
 
-$sql = "SELECT * FROM material";
+$sql = "SELECT * FROM material WHERE materialStatus='Available' AND materialID Not IN (SELECT materialID FROM registeredmaterial WHERE username='$username')";
 $result = $conn->query($sql);
 $arr_mat= [];
 
@@ -101,13 +101,13 @@ if(isset($_POST['materialID'])){
         <ul class="navbar-nav ml-3  my-lg-0 ">
 
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#recycle">My Collection</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
               </li>
 
       </div>

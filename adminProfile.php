@@ -93,7 +93,7 @@ if($result_user->num_rows > 0){
                               </div>
                               <div class="form-group">
                                 <label class="mb-2">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="******" value="******" required minlength="6" readonly>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="" value="******" required minlength="6" readonly>
                               </div>
                               <div class="form-group">
                                 <label class="mb-2">Fullname</label>
