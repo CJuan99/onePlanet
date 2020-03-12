@@ -32,7 +32,7 @@ if($result_user->num_rows > 0){
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="adminHome.html">ONEPLANET - ADMIN</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <a class="navbar-brand" href="maintainMaterial.php">ONEPLANET - ADMIN</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <div class="ml-auto">
               <!--empty-->
             </div>
