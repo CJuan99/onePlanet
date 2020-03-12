@@ -5,19 +5,19 @@ session_start();
 
 
 
-if(isset($_POST["regColl_btn"])){
+//if(isset($_POST["regColl_btn"])){
 
-$username = $_POST["username"];
-$password = $_POST["password"];
-$fullname = $_POST["fullname"];
-$address = $_POST['address'];
+$username = $_GET["username"];
+$password = $_GET["password"];
+$fullname = $_GET["fullname"];
+$address = $_GET['address'];
 $userType = "Collector";
 $totalPoints= "0";
 
 //$chk="";
 
-$matID = $_POST['materials'];
-$schedule = $_POST['time'];
+$matID = $_GET['materials'];
+$schedule = $_GET['time'];
 
  //var_dump($_POST);
 
@@ -34,16 +34,15 @@ if($results->num_rows > 0){
 }
 
 if($userExist){
-	echo '<script type="text/javascript">window.alert("Username has been taken. Please try again.");';
-	echo 'window.location.href="index.php";</script>'; //instead header(); because unable to alert
+	echo false;
 }else{
 
 	$password=md5($password);
 
   $for_day = '';
-  if(!empty($_POST['day']))
+  if(!empty($_GET['day']))
   {
-   foreach($_POST['day']as $day)
+   foreach($_GET['day']as $day)
    {
     $for_day .= $day . ' ';
    }
@@ -52,8 +51,7 @@ if($userExist){
    $queryMaterials = "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
 
    if( $conn->query($queryInsertUser) &&  $conn->query($queryMaterials)){
-     echo '<script type="text/javascript">window.alert("Account is successfully created");';
- 	  echo 'window.location.href="index.php";</script>';
+     echo true;
 
  	}
  	else{
@@ -62,6 +60,7 @@ if($userExist){
   }
   else
   {
+		//Did check by JS, this lines are not necessary
 		echo '<script type="text/javascript">window.alert("Please choose at least a day");';
 	 echo 'window.location.href="index.php";</script>';
   }
@@ -69,5 +68,5 @@ if($userExist){
 
 }
 
-}
+//}
 ?>

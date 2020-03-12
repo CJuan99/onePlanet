@@ -142,7 +142,7 @@ if(isset($_POST['materialID'])){
         <div class="modal-body">
           <div class="login px-2 mx-auto mw-100 ">
             <div class="signup-form profile">
-              <form action="login.php" method="POST" id="loginForm" name="loginForm">
+              <form action="javascript:void(0);" method="POST" name="loginForm" id="loginForm" name="loginForm">
                 <div class="form-group">
                   <!--  <label class="mb-2">Username</label>-->
                   <div class="input-group mb-2">
@@ -203,7 +203,7 @@ if(isset($_POST['materialID'])){
             <div class="tab-content">
               <div id="home" class="tab-pane active in">
                 <div class="signup-form profile">
-                  <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
+                  <form action="javascript:void(0);" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
                       <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric with at least ">
@@ -234,7 +234,7 @@ if(isset($_POST['materialID'])){
               <!--Collector-->
               <div id="menu1" class="tab-pane fade">
                 <div class="signup-form profile">
-                  <form action="signUpColl.php" method="post" name="registration" id="c-registration">
+                  <form action="javascript:void(0);" method="post" name="registration" id="c-registration">
                     <div class="form-group ">
                       <!--  <label for="name">Username</label>-->
                       <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
@@ -259,7 +259,7 @@ if(isset($_POST['materialID'])){
                     <div class="form-group ">
                       <!--<label for="materials">Materials</label>-->
 
-                      <select name="materials" class="form-control " required="true">
+                      <select id="cmat" name="materials" class="form-control " required="true">
                         <option disabled="disabled" selected="selected" value="">Choose materials </option>
                         <?php if(!empty($arr_mat)) { ?>
                             <?php foreach($arr_mat as $mat) {?>
@@ -278,11 +278,11 @@ if(isset($_POST['materialID'])){
                         <option value="Wednesday">Wednesday</option>
                         <option value="audi">Audi</option>
                      </select>-->
-                      Monday <input type="checkbox" name="day[]" id="day" value="Monday">
-                      Tuesday <input type="checkbox" name="day[]" id="day" value="Tuesday">
-                      Wednesday <input type="checkbox" name="day[]" id="day" value="Wednesday">
-                     Thursday <input type="checkbox" name="day[]" id="day" value="Thursday">
-                     Friday <input type="checkbox" name="day[]" id="day" value="Friday">
+                      Monday <input type="checkbox" name="day[]" id="day1" class="days" value="Monday">
+                      Tuesday <input type="checkbox" name="day[]" id="day2" class="days" value="Tuesday">
+                      Wednesday <input type="checkbox" name="day[]" id="day3" class="days" value="Wednesday">
+                     Thursday <input type="checkbox" name="day[]" id="day4" class="days" value="Thursday">
+                     Friday <input type="checkbox" name="day[]" id="day5" class="days" value="Friday">
 
 
                     </div>
@@ -310,7 +310,7 @@ if(isset($_POST['materialID'])){
                           return $output;
                       } ?>
 
-                      <select name="time" class="form-control " required="true">
+                      <select id="ctime" name="time" class="form-control " required="true">
                         <option disabled="disabled" selected="selected" value="">Choose schedule</option>
                         <?php echo get_times(); ?>
                       </select>
@@ -648,6 +648,117 @@ if(isset($_POST['materialID'])){
 
   <script src="js/cj.js"></script>
   <script src="js/login-registration.js"></script>
+
+  <script type="text/javascript">
+  jQuery(document).ready(function(){
+      $('#loginForm').submit(function(){
+
+      var username=document.getElementById("username").value;
+      var pwd=document.getElementById("password").value;
+      var loginSuccess=false;
+      var userType;
+
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var resp=this.responseText.split(",");
+        loginSuccess=resp[0];
+        userType=resp[1];
+        if (loginSuccess){
+          if(userType=="Recycler")
+            window.location.href="index.php";
+          else if(userType=="Collector")
+            window.location.href="index.php";
+          else
+            window.location.href="maintainMaterial.php";
+        }else{
+          alert("Incorrect username or password. Please try again.");
+        }
+      }
+      };
+
+
+      xmlhttp.open("GET", "login.php?username="+username+"&password="+pwd, true);
+      xmlhttp.send();
+    });
+  });
+
+  jQuery(document).ready(function(){
+      $('#registration').submit(function(){
+
+      var rusername=document.getElementById("runame").value;
+      var rpwd=document.getElementById("rpassword").value;
+      var rfullname=document.getElementById("rfullname").value;
+      var registerSuccess=false;
+
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        registerSuccess=this.responseText;
+        if (registerSuccess){
+          alert("Account is successfully created.")
+          location.reload();
+        }else{
+          alert("Username has been taken. Please try again.");
+        }
+      }
+      };
+
+
+      xmlhttp.open("GET", "signUp.php?username="+rusername+"&password="+rpwd+"&fullname="+rfullname, true);
+      xmlhttp.send();
+    });
+  });
+
+  jQuery(document).ready(function(){
+      $('#c-registration').submit(function(){
+
+      var cusername=document.getElementById("cname").value;
+      var cpwd=document.getElementById("cpassword").value;
+      var cfullname=document.getElementById("cfullname").value;
+      var caddress=document.getElementById("caddress").value;
+      var cmat=document.getElementById("cmat").value;
+      var days = document.getElementsByClassName("days");
+      var dayArr_GET="";
+      var ctime=document.getElementById("ctime").value;
+
+      var cregisterSuccess=false;
+
+      for(var i=0; i<5; i++){
+        if(days[i].checked){
+          dayArr_GET += "&day%5B%5D=" + days[i].value; //sample result: &day%5B%5D=Monday
+        }
+      }
+
+      if(days[0].checked || days[1].checked || days[2].checked || days[3].checked || days[4].checked){
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          cregisterSuccess=this.responseText;
+          if (cregisterSuccess){
+            alert("Account is successfully created.")
+            location.reload();
+          }else{
+            alert("Username has been taken. Please try again.");
+          }
+        }
+        };
+
+
+        xmlhttp.open("GET", "signUpColl.php?username="+cusername+"&password="+cpwd+"&fullname="+cfullname+"&address="+caddress+"&materials="+cmat+"&time="+ctime+dayArr_GET, true);
+        xmlhttp.send();
+      }else{
+        alert("Please choose at least a day");
+      }
+
+    });
+  });
+
+
+  </script>
 <!--  <script type="text/javascript">
   $(document).ready(function(){
 
