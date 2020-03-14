@@ -33,7 +33,7 @@
                 <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="index.php#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="">My Collection</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
@@ -72,11 +72,17 @@
 
 <!--header-->
     <div class="jumbotron paral paralsec">
-    <h1 class="display-3">Welcome to <?php echo  $userRecord['username'];?> 's </h1>
+    <h1 class="display-3"> <?php echo  $userRecord['username'];?> 's collection </h1>
     <p class="lead">Profile</p>
     </div>
 
 <!--header--->
+
+
+
+
+
+
 
 
   <!--footer-->
