@@ -4,8 +4,8 @@ session_start();
 include("conn.php");
 
 $username = $_SESSION['username'];
-$matID = '4';//Paper -- must find by $_SESSION[] $sql_material
-$matName = "";
+$matID = $_POST["materialID"];
+$matName = $_POST["materialName"];
 
 ?>
 
@@ -183,6 +183,10 @@ $matName = "";
                         </div>
                       </div>';
               }
+            }else{
+              echo '<tr>
+                      <td colspan="3" class="text-muted">No available collector that not proposed yet to collect this material. Please try propose another material.</td>
+                    </tr>';
             }
             ?>
           </tbody>

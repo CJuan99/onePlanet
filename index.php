@@ -462,9 +462,11 @@ if(isset($_POST['materialID'])){
                                           <figure> <img alt="" src="images/material.jpg"> </figure>
                                         </div>
                                         <div class="item-box-blog-body">
+                                          <p class="d-none">'.$arr_mat[$c]["materialID"].'</p>
+                                          <p class="d-none">'.$arr_mat[$c]["materialName"].'</p>
                                           <!--Heading-->
                                           <div class="item-box-blog-heading">
-                                            <a href="#" tabindex="0">
+                                            <a class="recycleMat" href="javascript:void(0)" tabindex="0">
                                               <h5>'.$arr_mat[$c]["materialName"].'</h5>
                                             </a>
                                           </div>
@@ -472,7 +474,7 @@ if(isset($_POST['materialID'])){
                                           <div class="item-box-blog-text">
                                             <p>'.$arr_mat[$c]["description"].'</p>
                                           </div>
-                                          <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">Recycle</a> </div>
+                                          <div class="mt"> <a href="javascript:void(0)" tabindex="0" class="btn bg-blue-ui white read recycleMat">Recycle</a> </div>
                                           <!--Recycle Button-->
                                         </div>
                                       </div>
@@ -501,9 +503,11 @@ if(isset($_POST['materialID'])){
                                           <figure> <img alt="material icon" src="images/material.jpg"> </figure>
                                         </div>
                                         <div class="item-box-blog-body">
+                                          <p class="d-none">'.$arr_mat[$c]["materialID"].'</p>
+                                          <p class="d-none">'.$arr_mat[$c]["materialName"].'</p>
                                           <!--Heading-->
                                           <div class="item-box-blog-heading">
-                                            <a href="#" tabindex="0">
+                                            <a class="recycleMat" href="javascript:void(0)" tabindex="0">
                                               <h5>'.$arr_mat[$c]["materialName"].'</h5>
                                             </a>
                                           </div>
@@ -511,7 +515,7 @@ if(isset($_POST['materialID'])){
                                           <div class="item-box-blog-text">
                                             <p>'.$arr_mat[$c]["description"].'</p>
                                           </div>
-                                          <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">Recycle</a> </div>
+                                          <div class="mt"> <a href="javascript:void(0)" tabindex="0" class="btn bg-blue-ui white read recycleMat">Recycle</a> </div>
                                           <!--Recycle Button-->
                                         </div>
                                       </div>
@@ -642,7 +646,8 @@ if(isset($_POST['materialID'])){
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://github.com/mgalante/jquery.redirect/blob/master/jquery.redirect.js"></script>
+  <script src="js/jquery.redirect.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
@@ -755,6 +760,13 @@ if(isset($_POST['materialID'])){
       }
 
     });
+  });
+
+  $(".recycleMat").click(function(){
+    var matID = $(this).parent().parent().children("p")[0].innerHTML;
+    var matName = $(this).parent().parent().children("p")[1].innerHTML;
+
+    $.redirect("submitApp.php", {materialID: matID, materialName: matName});
   });
 
 
