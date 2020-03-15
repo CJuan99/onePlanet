@@ -774,10 +774,18 @@ if(isset($_POST['materialID'])){
   });
 
   $(".recycleMat").click(function(){
-    var matID = $(this).parent().parent().children("p")[0].innerHTML;
-    var matName = $(this).parent().parent().children("p")[1].innerHTML;
+    <?php if(!empty($_SESSION['username'])) { ?>
+      <?php if($_SESSION['userType']=='Recycler') { ?>
+              var matID = $(this).parent().parent().children("p")[0].innerHTML;
+              var matName = $(this).parent().parent().children("p")[1].innerHTML;
 
-    $.redirect("submitApp.php", {materialID: matID, materialName: matName});
+              $.redirect("submitApp.php", {materialID: matID, materialName: matName});
+      <?php }else{?>
+              alert('You must be "Recycler" to recycle material.');
+      <?php }
+          }else{?>
+          alert("You must login first to recycle material.");
+   <?php  } ?>
   });
 
 
