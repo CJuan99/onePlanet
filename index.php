@@ -298,17 +298,20 @@ if(isset($_POST['materialID'])){
                           $output = '';
 
                           $current = strtotime( '08:00' );
-                          $end = strtotime( '20:00' );
+                          $end = strtotime( '18:00' );
 
                           while( $current <= $end ) {
-                              $time = date( 'H:i', $current );
-                              $sel = ( $time == $default ) ? ' selected' : '';
+                              $time = date( 'h:i A', $current );
+                            //  $sel = ( $time == $default ) ? ' selected' : '';
                               $slotTime = date("h:i A", strtotime('+120 minutes', $current));
-                              $sel2 = ( $slottime == $default ) ? ' selected' : '';
+                          //    $sel2 = ( $slottime == $default ) ? ' selected' : '';
 
-                            /*  echo date ('l');
-                              echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
-                              $output .= "<option value=\"{$time}\"{$sel}\"{$slotTime}\"{$sel2}>" . date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
+
+                      //     $value= $time.$slotTime;
+
+                            //  echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
+                              $output .= '<option value="'.$time.' - '.$slotTime.'">'. date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
+                            //  $output .= "<option value="'$time.'-'.$slotTime'">" . date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
                               $current = strtotime( $interval, $current );
 
                           }
