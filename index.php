@@ -76,7 +76,7 @@ if(isset($_POST['materialID'])){
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
@@ -204,6 +204,7 @@ if(isset($_POST['materialID'])){
               <div id="home" class="tab-pane active in">
                 <div class="signup-form profile">
                   <form action="javascript:void(0);" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
+                     <h5>Personal Information</h5>
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
                       <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric with at least ">
@@ -235,6 +236,7 @@ if(isset($_POST['materialID'])){
               <div id="menu1" class="tab-pane fade">
                 <div class="signup-form profile">
                   <form action="javascript:void(0);" method="post" name="registration" id="c-registration">
+                       <h5>Personal Information</h5>
                     <div class="form-group ">
                       <!--  <label for="name">Username</label>-->
                       <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
@@ -278,42 +280,51 @@ if(isset($_POST['materialID'])){
                         <option value="Wednesday">Wednesday</option>
                         <option value="audi">Audi</option>
                      </select>-->
+                       <h5>Schedule</h5>
+                       <div>
                       Monday <input type="checkbox" name="day[]" id="day1" class="days" value="Monday">
                       Tuesday <input type="checkbox" name="day[]" id="day2" class="days" value="Tuesday">
                       Wednesday <input type="checkbox" name="day[]" id="day3" class="days" value="Wednesday">
                      Thursday <input type="checkbox" name="day[]" id="day4" class="days" value="Thursday">
                      Friday <input type="checkbox" name="day[]" id="day5" class="days" value="Friday">
-
+                   </div>
 
                     </div>
                     <div class="form-group ">
-                      <!--<label for="materials">Materials</label>-->
+
                       <?php
                       function get_times( $default = '08:00', $interval = '+30 minutes' ) {
-                          //$dates = array("", "Mon", "Tues", "Wed", "Thurs", "Fri", "Satur", "Sun");
 
                           $output = '';
 
                           $current = strtotime( '08:00' );
-                          $end = strtotime( '20:00' );
+                          $end = strtotime( '18:00' );
 
                           while( $current <= $end ) {
-                              $time = date( 'H:i', $current );
-                              $sel = ( $time == $default ) ? ' selected' : '';
+                              $time = date( 'h:i A', $current );
+                            //  $sel = ( $time == $default ) ? ' selected' : '';
+                              $slotTime = date("h:i A", strtotime('+120 minutes', $current));
+                          //    $sel2 = ( $slottime == $default ) ? ' selected' : '';
 
-                            /*  echo date ('l');
-                              echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
-                              $output .= "<option value=\"{$time}\"{$sel}>" . date( 'h.i A', $current ) .'</option>';
+
+                      //     $value= $time.$slotTime;
+
+                            //  echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
+                              $output .= '<option value="'.$time.' - '.$slotTime.'">'. date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
+                            //  $output .= "<option value="'$time.'-'.$slotTime'">" . date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
                               $current = strtotime( $interval, $current );
+
                           }
 
                           return $output;
                       } ?>
 
                       <select id="ctime" name="time" class="form-control " required="true">
-                        <option disabled="disabled" selected="selected" value="">Choose schedule</option>
+                        <option disabled="disabled" selected="selected" value="">Choose your duration</option>
                         <?php echo get_times(); ?>
                       </select>
+
+
 
 
                     </div>
