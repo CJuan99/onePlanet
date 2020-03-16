@@ -50,3 +50,16 @@
     margin:0px 20px 8px 20px;
   }
 }
+
+/*submitApplication*/
+.readOnlyColor{
+  background-color:#e5e5e5 !important;
+}
+
+.fs-12{
+  font-size:12px !important;
+}
+
+.minHeight{
+  min-height:100px !important;
+}
