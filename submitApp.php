@@ -20,7 +20,6 @@ $matName = $_POST["materialName"];
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <link rel="stylesheet" type="text/css" href="css/ricky.css">
   <title>Collector Profile</title>
-  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -138,8 +137,8 @@ $matName = $_POST["materialName"];
                                         <div class="input-group-prepend">
                                           <div class="input-group-text"><i class="fas fa-people-carry fa-sm"></i></div>
                                         </div>
-                                        <input type="text" class="form-control readOnlyColor d-none" name="collectorID" id="collectorID" placeholder="CollectorID" value="'.$row["username"].'" required readonly>
-                                        <input type="text" class="form-control readOnlyColor" name="collector" id="collector" placeholder="Collector" value="'.$row["fullname"].'" required readonly>
+                                        <input type="text" class="form-control readOnlyColor d-none" name="collectorID" placeholder="CollectorID" value="'.$row["username"].'" required readonly>
+                                        <input type="text" class="form-control readOnlyColor" name="collector" placeholder="Collector" value="'.$row["fullname"].'" required readonly>
                                       </div>
                                     </div>
                                     <div class="form-group">
@@ -148,8 +147,8 @@ $matName = $_POST["materialName"];
                                         <div class="input-group-prepend">
                                           <div class="input-group-text"><i class="fas fa-street-view"></i></div>
                                         </div>
-                                        <input type="text" class="form-control readOnlyColor d-none" name="recyclerID" id="recyclerID" placeholder="RecyclerID" value="'.$recycler["username"].'" required readonly>
-                                        <input type="text" class="form-control readOnlyColor" name="recycler" id="recycler" placeholder="Recycler" value="'.$recycler["fullname"].'" required readonly>
+                                        <input type="text" class="form-control readOnlyColor d-none" name="recyclerID" placeholder="RecyclerID" value="'.$recycler["username"].'" required readonly>
+                                        <input type="text" class="form-control readOnlyColor" name="recycler" placeholder="Recycler" value="'.$recycler["fullname"].'" required readonly>
                                       </div>
                                     </div>
                                     <div class="form-group">
@@ -158,17 +157,27 @@ $matName = $_POST["materialName"];
                                         <div class="input-group-prepend">
                                           <div class="input-group-text"><i class="fas fa-box"></i></div>
                                         </div>
-                                        <input type="text" class="form-control readOnlyColor d-none" name="materialID" id="materialID" placeholder="MaterialID" value="'.$row["materialID"].'" required readonly>
-                                        <input type="text" class="form-control readOnlyColor" name="material" id="material" placeholder="Material" value="'.$row["materialName"].'" required readonly>
+                                        <input type="text" class="form-control readOnlyColor d-none" name="materialID" placeholder="MaterialID" value="'.$row["materialID"].'" required readonly>
+                                        <input type="text" class="form-control readOnlyColor" name="material" placeholder="Material" value="'.$row["materialName"].'" required readonly>
                                       </div>
                                     </div>
                                     <div class="form-group">
-                                      <p class="text-muted p-0 mb-0 fs-12">Schedule</p>
+                                      <p class="text-muted p-0 mb-0 fs-12">Schedule Date</p>
                                       <div class="input-group">
                                         <div class="input-group-prepend">
                                           <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
                                         </div>
-                                        <input type="text" class="form-control readOnlyColor" name="schedule" id="schedule" placeholder="Schedule" value="Schedule" required readonly>
+                                        <label class="d-none">'.$row["day"].'</label>
+                                        <input type="text" class="form-control readOnlyColor schedule" name="schedule" placeholder="Please select a date" required readonly>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <p class="text-muted p-0 mb-0 fs-12">Schedule Time</p>
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                                        </div>
+                                        <input type="text" class="form-control readOnlyColor" name="time" placeholder="Time" value="'.$row["schedule"].'" required readonly>
                                       </div>
                                     </div>
                                     <div class="text-center mb-3">
@@ -196,7 +205,60 @@ $matName = $_POST["materialName"];
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- datepicker links -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script type="text/javascript">
+
+    var noDays=[];
+    $('.schedule').click(function(){
+      $("#ui-datepicker-div").css('zIndex', '1060'); //set z-index of datepicker to fix the un-showing bug
+
+      //find days that collector pick and convert (days "Text") to (days "Number")
+      noDays=[];
+      var dayPick = $(this).parent().find("label")[0].innerHTML;
+      var days = dayPick.split(" ");
+      for (var i = 0; i < days.length; i++) {
+        switch($.trim(days[i])){
+          case "Monday":
+          noDays.push(1);
+          break;
+          case "Tuesday":
+          noDays.push(2);
+          break;
+          case "Wednesday":
+          noDays.push(3);
+          break;
+          case "Thursday":
+          noDays.push(4);
+          break;
+          case "Friday":
+          noDays.push(5);
+          break;
+          case "Saturday":
+          noDays.push(6);
+          break;
+          case "Sunday":
+          noDays.push(7);
+          break;
+        }
+      }
+    });
+
+    $('.schedule').datepicker({
+      dateFormat: 'yy-mm-dd',
+      changeMonth: true,
+      // changeYear: true,
+      minDate: 0,
+      beforeShowDay: function (date) {
+        $(this).click(); //to trigger the click event in progress of datepicker (Because .datepicker() will be triggered before .click()) -- But would cause to click many times
+        var day = date.getDay();
+        return [$.inArray(day, noDays)!=-1];
+      }
+    });
+
 
     jQuery(document).ready(function(){
         $('form[name="submissionForm"]').submit(function(){ //not direcly use $(this).find("input") is bcuz it can't access the child but can access parent. (This problem can be caused by dynamic created element (with php/java/so on) )
