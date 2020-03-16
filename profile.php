@@ -103,7 +103,7 @@ if(isset($_POST['materialID'])){
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
