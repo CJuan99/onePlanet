@@ -49,7 +49,7 @@ $collRecord = mysqli_fetch_assoc($resultColl);*/
 
 
 
-$sql = "SELECT * FROM material";
+$sql = "SELECT * FROM material WHERE materialStatus='Available' AND materialID Not IN (SELECT materialID FROM registeredmaterial WHERE username='$username')";
 $result = $conn->query($sql);
 $arr_mat= [];
 
@@ -60,14 +60,14 @@ if ($result->num_rows > 0) {
 
 
 
-/*if ($resultset->num_rows > 0) {
-    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
+$sqlSub = "SELECT material.materialID, materialName, description, pointsPerKg FROM submission, material WHERE submission.materialID = material.materialID AND collector='$username'";
+$resultSub = $conn->query($sqlSub);
+$arr_sub= [];
+
+if ($resultSub->num_rows > 0) {
+    $arr_sub = $resultSub->fetch_all(MYSQLI_ASSOC);
 }
 
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']= $matID;
-}*/
 
 ?>
 
@@ -80,7 +80,8 @@ if(isset($_POST['materialID'])){
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>Collector Profile</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -100,13 +101,13 @@ if(isset($_POST['materialID'])){
         <ul class="navbar-nav ml-3  my-lg-0 ">
 
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
               </li>
 
       </div>
@@ -117,7 +118,7 @@ if(isset($_POST['materialID'])){
       	<?php if(!empty($_SESSION['username'])) { ?>
 			<?php if($_SESSION['userType']=='Recycler') { ?>
 				  <li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="profile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="recprofile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } else{?>
 				<li class="nav-item">
@@ -161,10 +162,10 @@ if(isset($_POST['materialID'])){
                         <ul class="list-group px-2 py-3">
                           <li class="list-group-item text-white bg-success">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                           <li class="list-group-item text-left"><span class="pull-left"><strong>Collection</strong></span> <span class="badge bg-warning text-white"><?php $count ?></span></li>
-                          <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">2</span></li>
+                          <li class="list-group-item text-left"><span class="pull-left"><strong>Materials</strong></span> <span class="badge bg-primary text-white ">1</span></li>
 
                         </ul>
-                        <!--<div class="profile-work">
+                      <!--  <div class="profile-work">
                             <p>WORK LINK</p>
                             <a href="">Website Link</a><br/>
                             <a href="">Bootsnipp Profile</a><br/>
@@ -175,11 +176,20 @@ if(isset($_POST['materialID'])){
                             <a href="">WordPress</a><br/>
                             <a href="">WooCommerce</a><br/>
                             <a href="">PHP, .Net</a><br/>
+                        </div>
+                        <div class="profile-head mx-5">
+                                    <h4 class="py-2">
+                                      <?php echo  $userRecord['fullname'];?>
+                                    </h4>
+                                    <h5 >
+                                        <?php echo  $userRecord['userType'];?>
+                                    </h5 >
+                                    <h6 class="proile-rating lead pt-3 ">Total Points: <span>  <?php echo  $userRecord['totalPoints'];?></span></h6>
                         </div>-->
                       </div>
                       <div class="col-md-9">
                           <div class="profile-head">
-                                      <h4 class="py-2">
+                                     <h4 class="py-2">
                                         <?php echo  $userRecord['fullname'];?>
                                       </h4>
                                       <h5 >
@@ -236,7 +246,7 @@ if(isset($_POST['materialID'])){
                                      </div>
                                        <div class="col-sm-7 col-md-7 col-5">
                                          <h5 id="txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" >
+                                           <input type="text"  class="form-control-plaintext d-none" id="myFn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters" >
 
                                        </div>
                                          <div  class="col-sm-2 col-md-2 col-2">
@@ -245,6 +255,22 @@ if(isset($_POST['materialID'])){
 
                                          </div>
                                      </div>
+
+                                     <div class="row py-3">
+                                      <div class="col-sm-3 col-md-3 col-5">
+                                      <label class="font-weight-bold">Address</label>
+                                    </div>
+                                      <div class="col-sm-7 col-md-7 col-5">
+                                        <h5 id="txtFn"><?php echo  $userRecord['address'];?></h5>
+                                          <input type="text"  class="form-control-plaintext d-none" id="myAdd" name="address" required minlength="5" value="<?php echo  $userRecord['address'];?>" required minlength="10"  >
+
+                                      </div>
+                                      <!--<div  class="col-sm-2 col-md-2 col-2">
+                                         <!-- <a href="" id="edit" >Edit</a>
+                                         <input id="editAdd" type="button" value="Edit">
+
+                                       </div>-->
+                                    </div>
 
                                        <div class="row py-3">
                                         <div class="col-sm-3 col-md-3 col-5">
@@ -286,11 +312,14 @@ if(isset($_POST['materialID'])){
                                         </div>
 
                                         <div class="row " >
-                                          <div class="text-center d-inline  w-50  ">
+                                          <div class="text-center w-100 pt-4">
                                             <button class="btn btn-secondary py-2 px-3 text-uppercase d-none mx-3 float-right" id="btncancelColl" name="btncancelColl" type="button" value="Cancel"  >Cancel</button>
                                             <button class="btn btn-success py-2 px-3 text-uppercase d-none ml-auto float-right" id="btnsave" name="btnsubmitColl" type="submit" value="Submit"  >Save</button>
                                         </div>
                                       </div>
+
+
+
                                       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
                                        <script type="text/javascript">
                                         var el  = document.getElementById('edit');
@@ -356,22 +385,28 @@ if(isset($_POST['materialID'])){
                                        var xmlhttp = new XMLHttpRequest();
 
                                       xmlhttp.onreadystatechange = function() {
-                                          if (this.readyState == 4 && this.status == 200) {
-                                            error=this.responseText;
-
+                                        if (this.readyState == 4 && this.status == 200) {
+                                          error=this.responseText;
+                                          if (error){
+                                            alert("Account is successfully updated");
+                                            window.location.reload();
+                                          }else{
+                                            alert("Cannot update");
+                                            window.location.reload();
                                           }
+                                        }
                                         };
 
 
-                                        xmlhttp.open("GET", "backupupdate.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
+                                        xmlhttp.open("GET", "update.php?fullname="+fullname+"&password="+pwd + "&materialID="+mat, true);
                                         xmlhttp.send();
-                                        if (error="true"){
+                                      /*  if (error="true"){
                                           alert("Account is successfully updated");
                                            window.location.reload();
                                         }else{
                                           alert("Cannot update");
                                            window.location.reload();
-                                        }
+                                        }*/
 
 
 
@@ -396,61 +431,35 @@ if(isset($_POST['materialID'])){
                                     </form>
                               </div>
                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                      <!--    <div class="row">
+                                       <div class="row">
                                               <div class="col-md-6">
-                                                  <label>Experience</label>
+                                                  <label>Choose the submitted materials</label>
                                               </div>
                                               <div class="col-md-6">
-                                                  <p>Expert</p>
-                                              </div>
-                                          </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Hourly Rate</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>10$/hr</p>
-                                              </div>
-                                          </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Total Projects</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>230</p>
+                                                <select name="materials" class="form-control "  id="selectMat">
+                                                  <option disabled="disabled" selected="selected" value="">Choose materials </option>
+                                                  <?php if(!empty($arr_sub)) { ?>
+                                                      <?php foreach($arr_sub as $sub) {?>
+                                                          <?php
+                                                                    echo "<option value='". $sub['materialID']."'>" . $sub['materialID']. ", ".$sub['materialName']. ", ".$sub['description'].", ".$sub['pointsPerKg'].'</option>'; ?>
+
+                                                                   $sub['materialID'] = $_SESSION['materialID'];
+                                                                   $sub['materialName']=$_SESSION['materialName'];
+                                                        <?php } ?>
+                                                      <?php }  ?>
+
+                                                </select>
                                               </div>
                                           </div>
                                           <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>English Level</label>
+                                              <div class="col-md-12 py-3">
+                                                    <button class="btn btn-success py-2 px-3 text-uppercase ml-auto float-right" id="btnOk" name="btnOk" type="submit" value="Ok"  onclick="window.location.href='viewHistory.php'">Ok</button>
                                               </div>
-                                              <div class="col-md-6">
-                                                  <p>Expert</p>
-                                              </div>
+
                                           </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Availability</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>6 months</p>
-                                              </div>
-                                          </div>
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <label>Your Bio</label><br/>
-                                          <p>Your detail description</p>
-                                      </div>
-                                  </div>-->
                               </div>
                           </div>
-
-                        <!--details-->
-
                       </div>
-                      <!--<div class="col-md-2">
-                          <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                      </div>-->
                   </div>
 
                 </div>

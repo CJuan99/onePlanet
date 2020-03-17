@@ -45,14 +45,14 @@ if ($result->num_rows > 0) {
 
 
 
-/*if ($resultset->num_rows > 0) {
-    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
-}
 
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']= $matID;
-}*/
+$sqlSub = "SELECT material.materialID, materialName, description, pointsPerKg FROM submission, material WHERE submission.materialID = material.materialID AND recycler='$username'";
+$resultSub = $conn->query($sqlSub);
+$arr_sub= [];
+
+if ($resultSub->num_rows > 0) {
+    $arr_sub = $resultSub->fetch_all(MYSQLI_ASSOC);
+}
 
 ?>
 
@@ -99,7 +99,7 @@ if(isset($_POST['materialID'])){
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
@@ -354,52 +354,31 @@ if(isset($_POST['materialID'])){
                                     </form>
                               </div>
                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                      <!--    <div class="row">
+                                       <div class="row">
                                               <div class="col-md-6">
-                                                  <label>Experience</label>
+                                                  <label>Choose the submitted materials</label>
                                               </div>
                                               <div class="col-md-6">
-                                                  <p>Expert</p>
-                                              </div>
-                                          </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Hourly Rate</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>10$/hr</p>
-                                              </div>
-                                          </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Total Projects</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>230</p>
+                                                <select name="materials" class="form-control "  id="selectMat">
+                                                  <option disabled="disabled" selected="selected" value="">Choose materials </option>
+                                                  <?php if(!empty($arr_sub)) { ?>
+                                                      <?php foreach($arr_sub as $sub) {?>
+                                                          <?php
+                                                                    echo "<option value='". $sub['materialID']."'>" . $sub['materialID']. ", ".$sub['materialName']. ", ".$sub['description'].", ".$sub['pointsPerKg'].'</option>'; ?>
+                                                                    $sub['materialID'] = $_SESSION['materialID'];
+                                                                    $sub['materialName']=$_SESSION['materialName'];
+                                                        <?php } ?>
+                                                      <?php }  ?>
+
+                                                </select>
                                               </div>
                                           </div>
                                           <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>English Level</label>
+                                              <div class="col-md-12 py-3">
+                                                    <button class="btn btn-success py-2 px-3 text-uppercase ml-auto float-right" id="btnOk" name="btnOk" type="submit" value="Ok"  onclick="window.location.href='viewHistory.php'">Ok</button>
                                               </div>
-                                              <div class="col-md-6">
-                                                  <p>Expert</p>
-                                              </div>
+
                                           </div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <label>Availability</label>
-                                              </div>
-                                              <div class="col-md-6">
-                                                  <p>6 months</p>
-                                              </div>
-                                          </div>
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <label>Your Bio</label><br/>
-                                          <p>Your detail description</p>
-                                      </div>
-                                  </div>-->
                               </div>
                           </div>
 
