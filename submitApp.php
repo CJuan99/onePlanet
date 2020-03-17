@@ -197,7 +197,7 @@ $matName = $_POST["materialName"];
                                       <p class="text-muted p-0 mb-0 fs-12">Schedule Time</p>
                                       <div class="input-group">
                                         <div class="input-group-prepend">
-                                          <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                                          <div class="input-group-text"><i class="fas fa-clock"></i></div>
                                         </div>
                                         <input type="text" class="form-control readOnlyColor" name="time" placeholder="Time" value="'.$row["schedule"].'" required readonly>
                                       </div>
