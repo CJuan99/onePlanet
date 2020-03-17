@@ -37,17 +37,39 @@ $matName = $_POST["materialName"];
 
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
-
+        <?php if(!empty($_SESSION['username'])) { ?>
+			    <?php if($_SESSION['userType']=='Recycler') { ?>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                  </li>
+          <?php }else { ?>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="index.php#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
               </li>
-
+            <?php } ?>
+        <?php }else { ?>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+              </li>
+        <?php } ?>
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
 
@@ -168,7 +190,7 @@ $matName = $_POST["materialName"];
                                           <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
                                         </div>
                                         <label class="d-none">'.$row["day"].'</label>
-                                        <input type="text" class="form-control readOnlyColor schedule" name="schedule" placeholder="Please select a date" required readonly>
+                                        <input type="text" class="form-control schedule" name="schedule" placeholder="Please select a date" required autocomplete="off" onkeydown="return false;">
                                       </div>
                                     </div>
                                     <div class="form-group">
@@ -257,6 +279,10 @@ $matName = $_POST["materialName"];
         var day = date.getDay();
         return [$.inArray(day, noDays)!=-1];
       }
+    });
+
+    $('.schedule').focus(function(){
+      $("#ui-datepicker-div").css('zIndex', '1060'); //set z-index of datepicker to fix the un-showing bug
     });
 
 

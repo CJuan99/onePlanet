@@ -63,3 +63,8 @@
 .minHeight{
   min-height:100px !important;
 }
+
+.schedule{
+  border:2px solid #e5e5e5 !important;
+  background-color:#f2f2f2 !important;
+}
