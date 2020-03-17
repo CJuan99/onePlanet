@@ -31,125 +31,6 @@ if(isset($_POST['materialID'])){
 }
 
 
-/*$time_start = '10:00';
- $time_end   = '22:00';
-
- # use date function with the time variables to create a timestamp to use in the while loop
- $timestamp_start = strtotime(date('d-m-Y').' '.$time_start);
- $timestamp_end   = strtotime(date('d-m-Y').' '.$time_end);
-
- # create array to fill with the options
- $options_array = array();
-
- # loop through until the end timestamp is reached
- while($timestamp_start <= $timestamp_end){
-     $options_array[] = date('H:i', $timestamp_start);
-     $timestamp_start = $timestamp_start+900; //Adds 15 minutes
- }*/
-
-
-
-
-/*$urerr = $perr = $fnerr = $aderr = " ";
-$username = $password = $fullname = $add =  "";
-
-$boolen  = false;
-
-
-if(isset($_POST["regRec_btn"])){
-
-    if(empty($_POST["username"])){
-       $urerr = "Username Required...!";
-        $boolen  = false;
-    }elseif(ctype_alnum($_POST["username"])) {
-       $username = validate_input($_POST["username"]);
-        $boolen  = true;
-    }else{
-       $urerr = "Username must be alphanumeric";
-        $boolen  = false;
-    }
-
-
-    $length = strlenght($_POST["password"]);
-
-    if(empty($_POST["password"])){
-        $perr = "Password Field Required...!";
-        $boolen  = false;
-    }elseif($length){
-        $perr = $length;
-        $boolen  = false;
-    }else{
-            $passwd = validate_input($_POST["password"]);
-        $boolen  = true;
-    }
-
-    if(empty($_POST["fullname"])){
-        $fnerr = "Fullname Field Required...!";
-        $boolen  = false;
-    }elseif( ctype_alpha($_POST["fullname"])){
-      $fullname = validate_input($_POST["fullname"]);
-      $boolen  = true;
-    }else{
-        $fnerr = "Fullname must be all letters";
-        $boolen  = false;
-    }
-
-
-    if(empty($_POST["address"])){
-       $aderr = "Address Required...!";
-        $boolen  = false;
-    }else{
-       $add= validate_input($_POST["address"]);
-        $boolen  = true;
-    }
-
-  /*  if(empty($_POST["cpasswd"])){
-        $cperr = "Confirm Password Required...!";
-        $boolen  = false;
-    }
-    elseif($_POST["cpasswd"]!=$passwd){
-        $cperr = "Password Not Match...!";
-        $boolen  = false;
-    }
-
-    if(empty($_POST["fname"]) || empty($_POST["lname"])){
-        $fnerr = "First &amp; Last Name Required...!";
-        $boolen  = false;
-    }else{
-        $name = validate_input($_POST["fname"]);
-        $boolen  = true;
-    }
-
-    if(empty($_POST["gender"])){
-        $gerr = "Gender Required...!";
-        $boolen  = false;
-    }else{
-        $gender = validate_input($_POST["gender"]);
-        $boolen  = true;
-    }
-
-    if(isset($_POST["ck1"])){
-        $boolen  = true;
-    }else{
-        $boolen  = false;
-    }
-}/*
-function strlenght($str){
-    $ln = strlen($str);
-    if($ln > 18){
-        return "Passwod should less than 18 characters";
-    }elseif($ln < 5 && $ $ln >= 1){
-        return "Password should greater then 3 characters";
-    }
-    return;
-}
-function validate_input($data){
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}*/
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +41,8 @@ function validate_input($data){
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>OnePlanet</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top">
@@ -194,7 +76,7 @@ function validate_input($data){
                 <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">My Collection</a>
+                <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
@@ -216,16 +98,20 @@ function validate_input($data){
 
         <ul class="nav navbar-nav ml-auto my-2 my-lg-0 ">
 
-      	<?php if(!empty($_SESSION['username'])) { ?>
+      <?php if(!empty($_SESSION['username'])) {?>
 			<?php if($_SESSION['userType']=='Recycler') { ?>
 				  <li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="profile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="recprofile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
-			<?php } else{?>
-				<li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="profile.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
-				  </li>
-			<?php } ?>
+  			<?php } elseif($_SESSION['userType']=='Admin'){?>
+  				<li class="nav-item">
+  					<a class="nav-link js-scroll-trigger" href="maintainMaterial.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+  				  </li>
+  			<?php } else {?>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="profile.php" > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+            </li>
+        	<?php } ?>
 		   <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="logout.php"><span class="fas fa-sign-out-alt mx-3" aria-hidden="true"></span>Logout</a>
           </li>
@@ -256,14 +142,14 @@ function validate_input($data){
         <div class="modal-body">
           <div class="login px-2 mx-auto mw-100 ">
             <div class="signup-form profile">
-              <form action="login.php" method="POST" id="loginForm" name="loginForm">
+              <form action="javascript:void(0);" method="POST" name="loginForm" id="loginForm" name="loginForm">
                 <div class="form-group">
                   <!--  <label class="mb-2">Username</label>-->
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fas fa-user-tie text-default"></i></div>
                     </div>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required="">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
                   </div>
                 </div>
                 <div class="form-group">
@@ -317,10 +203,11 @@ function validate_input($data){
             <div class="tab-content">
               <div id="home" class="tab-pane active in">
                 <div class="signup-form profile">
-                  <form action="signUp.php" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
+                  <form action="javascript:void(0);" method="POST" enctype="multipart/form-data" name="registration" id="registration" >
+                     <h5>Personal Information</h5>
                     <div class="form-group ">
                       <!--<label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4">
+                      <input type="text" class="form-control" id="runame" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric with at least ">
                     <!--  <span id="span"> </span>-->
                     </div>
                     <div class="form-group">
@@ -330,11 +217,11 @@ function validate_input($data){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5">
+                      <input type="fullname" class="form-control" id="rfullname" placeholder="Full Name" name="fullname" required minlength="5" pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters">
 
                     </div>
                     <div class="text-center">
-                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up" onclick="ajaxRegistration()">
+                      <input type="submit" name="regRec_btn" class="btn btn-success submit mb-4 px-5" value="sign Up">
                     </div>
                   </form>
                   <div class="success-message" id="register-success-message"
@@ -348,10 +235,11 @@ function validate_input($data){
               <!--Collector-->
               <div id="menu1" class="tab-pane fade">
                 <div class="signup-form profile">
-                  <form action="signUpColl.php" method="post" name="registration" id="c-registration">
+                  <form action="javascript:void(0);" method="post" name="registration" id="c-registration">
+                       <h5>Personal Information</h5>
                     <div class="form-group ">
                       <!--  <label for="name">Username</label>-->
-                      <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4">
+                      <input type="text" class="form-control" id="cname" placeholder="Username" name="username" required minlength="4" pattern="[A-Za-z0-9]+" title="Username must be alphanumeric">
                       <!--<span id="span"> </span>-->
                     </div>
                     <div class="form-group">
@@ -362,18 +250,18 @@ function validate_input($data){
                     </div>
                     <div class="form-group">
                       <!--  <label for="fullname">Full Name</label>-->
-                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required="">
+                      <input type="text" class="form-control" id="cfullname" placeholder="Full Name" name="fullname" required minlength="5" pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters">
                     <!--<span id="span" class="error"></span>-->
                     </div>
                     <div class="form-group">
                       <!--<label for="email">Address</label>-->
-                      <input type="text" class="form-control" id="caddress" placeholder="Address" name="address" required="">
+                      <input type="text" class="form-control" id="caddress" placeholder="Address" name="address" required minlength="10">
 
                     </div>
                     <div class="form-group ">
                       <!--<label for="materials">Materials</label>-->
 
-                      <select name="materials" class="form-control " required="true">
+                      <select id="cmat" name="materials" class="form-control " required="true">
                         <option disabled="disabled" selected="selected" value="">Choose materials </option>
                         <?php if(!empty($arr_mat)) { ?>
                             <?php foreach($arr_mat as $mat) {?>
@@ -392,42 +280,51 @@ function validate_input($data){
                         <option value="Wednesday">Wednesday</option>
                         <option value="audi">Audi</option>
                      </select>-->
-                      Monday <input type="checkbox" name="day[]" id="day" value="Monday">
-                      Tuesday <input type="checkbox" name="day[]" id="day" value="Tuesday">
-                      Wednesday <input type="checkbox" name="day[]" id="day" value="Wednesday">
-                     Thursday <input type="checkbox" name="day[]" id="day" value="Thursday">
-                     Friday <input type="checkbox" name="day[]" id="day" value="Friday">
-
+                       <h5>Schedule</h5>
+                       <div>
+                      Monday <input type="checkbox" name="day[]" id="day1" class="days" value="Monday">
+                      Tuesday <input type="checkbox" name="day[]" id="day2" class="days" value="Tuesday">
+                      Wednesday <input type="checkbox" name="day[]" id="day3" class="days" value="Wednesday">
+                     Thursday <input type="checkbox" name="day[]" id="day4" class="days" value="Thursday">
+                     Friday <input type="checkbox" name="day[]" id="day5" class="days" value="Friday">
+                   </div>
 
                     </div>
                     <div class="form-group ">
-                      <!--<label for="materials">Materials</label>-->
+
                       <?php
                       function get_times( $default = '08:00', $interval = '+30 minutes' ) {
-                          //$dates = array("", "Mon", "Tues", "Wed", "Thurs", "Fri", "Satur", "Sun");
 
                           $output = '';
 
                           $current = strtotime( '08:00' );
-                          $end = strtotime( '20:00' );
+                          $end = strtotime( '18:00' );
 
                           while( $current <= $end ) {
-                              $time = date( 'H:i', $current );
-                              $sel = ( $time == $default ) ? ' selected' : '';
+                              $time = date( 'h:i A', $current );
+                            //  $sel = ( $time == $default ) ? ' selected' : '';
+                              $slotTime = date("h:i A", strtotime('+120 minutes', $current));
+                          //    $sel2 = ( $slottime == $default ) ? ' selected' : '';
 
-                            /*  echo date ('l');
-                              echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
-                              $output .= "<option value=\"{$time}\"{$sel}>" . date( 'h.i A', $current ) .'</option>';
+
+                      //     $value= $time.$slotTime;
+
+                            //  echo '<option value="'.$optionvalue .'">'.$optionvalue.'</option>';*/
+                              $output .= '<option value="'.$time.' - '.$slotTime.'">'. date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
+                            //  $output .= "<option value="'$time.'-'.$slotTime'">" . date( 'h.i A', $current ) . " - " .$slotTime.'</option>';
                               $current = strtotime( $interval, $current );
+
                           }
 
                           return $output;
                       } ?>
 
-                      <select name="time" class="form-control " required="true">
-                        <option disabled="disabled" selected="selected" value="">Choose schedule</option>
+                      <select id="ctime" name="time" class="form-control " required="true">
+                        <option disabled="disabled" selected="selected" value="">Choose your duration</option>
                         <?php echo get_times(); ?>
                       </select>
+
+
 
 
                     </div>
@@ -533,169 +430,117 @@ function validate_input($data){
             <div class="col-md-12">
               <div id="blogCarousel" class="carousel slide container-blog" data-ride="carousel">
                 <ol class="carousel-indicators">
-                  <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
-                  <li data-target="#blogCarousel" data-slide-to="1"></li>
+                  <?php
+                  if(!empty($arr_mat)){
+                    $first_dot=true;
+                    $c=0;
+                    for($i=0;$i<sizeof($arr_mat);$i+=3){
+                      if($first_dot){
+                        $first_dot=false;
+                        echo '<li data-target="#blogCarousel" data-slide-to="'.$c.'" class="active"></li>';
+                      }else{
+                        echo '<li data-target="#blogCarousel" data-slide-to="'.$c.'"></li>';
+                      }
+                      $c++;
+                    }
+                  }
+                  ?>
                 </ol>
                 <!-- Carousel items -->
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="item-box-blog">
-                          <div class="item-box-blog-image">
-                            <!--Date-->
-                            <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                            <!--Image-->
-                            <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                          </div>
-                          <div class="item-box-blog-body">
-                            <!--Heading-->
-                            <div class="item-box-blog-heading">
-                              <a href="#" tabindex="0">
-                                <h5>News Title</h5>
-                              </a>
-                            </div>
-                            <!--Data-->
-                            <div class="item-box-blog-data" style="padding: px 15px;">
-                              <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                            </div>
-                            <!--Text-->
-                            <div class="item-box-blog-text">
-                              <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer
-                                adipiscing. Lorem ipsum dolor.</p>
-                            </div>
-                            <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                            <!--Read More Button-->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="item-box-blog">
-                          <div class="item-box-blog-image">
-                            <!--Date-->
-                            <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                            <!--Image-->
-                            <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                          </div>
-                          <div class="item-box-blog-body">
-                            <!--Heading-->
-                            <div class="item-box-blog-heading">
-                              <a href="#" tabindex="0">
-                                <h5>News Title</h5>
-                              </a>
-                            </div>
-                            <!--Data-->
-                            <div class="item-box-blog-data" style="padding: px 15px;">
-                              <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                            </div>
-                            <!--Text-->
-                            <div class="item-box-blog-text">
-                              <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer
-                                adipiscing. Lorem ipsum dolor.</p>
-                            </div>
-                            <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                            <!--Read More Button-->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="item-box-blog">
-                          <div class="item-box-blog-image">
-                            <!--Date-->
-                            <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                            <!--Image-->
-                            <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                          </div>
-                          <div class="item-box-blog-body">
-                            <!--Heading-->
-                            <div class="item-box-blog-heading">
-                              <a href="#" tabindex="0">
-                                <h5>News Title</h5>
-                              </a>
-                            </div>
-                            <!--Data-->
-                            <div class="item-box-blog-data" style="padding: px 15px;">
-                              <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                            </div>
-                            <!--Text-->
-                            <div class="item-box-blog-text">
-                              <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer
-                                adipiscing. Lorem ipsum dolor.</p>
-                            </div>
-                            <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                            <!--Read More Button-->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!--.row-->
-                  </div>
-                  <!--.item-->
-                  <div class="carousel-item ">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="item-box-blog">
-                          <div class="item-box-blog-image">
-                            <!--Date-->
-                            <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                            <!--Image-->
-                            <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                          </div>
-                          <div class="item-box-blog-body">
-                            <!--Heading-->
-                            <div class="item-box-blog-heading">
-                              <a href="#" tabindex="0">
-                                <h5>News Title</h5>
-                              </a>
-                            </div>
-                            <!--Data-->
-                            <div class="item-box-blog-data" style="padding: px 15px;">
-                              <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                            </div>
-                            <!--Text-->
-                            <div class="item-box-blog-text">
-                              <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer
-                                adipiscing. Lorem ipsum dolor.</p>
-                            </div>
-                            <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                            <!--Read More Button-->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="item-box-blog">
-                          <div class="item-box-blog-image">
-                            <!--Date-->
-                            <div class="item-box-blog-date bg-blue-ui white"> <span class="mon">Augu 01</span> </div>
-                            <!--Image-->
-                            <figure> <img alt="" src="https://cdn.pixabay.com/photo/2017/02/08/14/25/computer-2048983_960_720.jpg"> </figure>
-                          </div>
-                          <div class="item-box-blog-body">
-                            <!--Heading-->
-                            <div class="item-box-blog-heading">
-                              <a href="#" tabindex="0">
-                                <h5>News Title</h5>
-                              </a>
-                            </div>
-                            <!--Data-->
-                            <div class="item-box-blog-data" style="padding: px 15px;">
-                              <p><i class="fa fa-user-o"></i> Admin, <i class="fa fa-comments-o"></i> Comments(3)</p>
-                            </div>
-                            <!--Text-->
-                            <div class="item-box-blog-text">
-                              <p>Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, adipiscing. Lorem ipsum dolor sit amet, consectetuer
-                                adipiscing. Lorem ipsum dolor.</p>
-                            </div>
-                            <div class="mt"> <a href="#" tabindex="0" class="btn bg-blue-ui white read">read more</a> </div>
-                            <!--Read More Button-->
-                          </div>
-                        </div>
-                      </div>
+                  <?php
+                  if(!empty($arr_mat)){
+                    $first_item=true;
+                    for($i=0;$i<sizeof($arr_mat);$i+=3){
+                      if($first_item){
+                        $first_item=false;
 
-                    </div>
-                    <!--.row-->
-                  </div>
-                  <!--.item-->
+                        echo '<div class="carousel-item active">
+                                <div class="row">';
+
+                        if( (sizeof($arr_mat)-$i) < 3){
+                          $num_loop = sizeof($arr_mat) % 3;
+                        }else{
+                          $num_loop = 3;
+                        }
+
+                        for($j=$i;$j<$num_loop;$j++){
+                          $c = $i+$j;
+                          echo     '<div class="col-md-4">
+                                      <div class="item-box-blog">
+                                        <div class="item-box-blog-image">
+                                          <!--Image-->
+                                          <figure> <img alt="" src="images/material.jpg"> </figure>
+                                        </div>
+                                        <div class="item-box-blog-body">
+                                          <p class="d-none">'.$arr_mat[$c]["materialID"].'</p>
+                                          <p class="d-none">'.$arr_mat[$c]["materialName"].'</p>
+                                          <!--Heading-->
+                                          <div class="item-box-blog-heading">
+                                            <a class="recycleMat" href="javascript:void(0)" tabindex="0">
+                                              <h5>'.$arr_mat[$c]["materialName"].'</h5>
+                                            </a>
+                                          </div>
+                                          <!--Text-->
+                                          <div class="item-box-blog-text">
+                                            <p>'.$arr_mat[$c]["description"].'</p>
+                                          </div>
+                                          <div class="mt"> <a href="javascript:void(0)" tabindex="0" class="btn bg-blue-ui white read recycleMat">Recycle</a> </div>
+                                          <!--Recycle Button-->
+                                        </div>
+                                      </div>
+                                    </div>';
+                        }
+
+                        echo     '</div>
+                                <!--.row-->
+                              </div>';
+                      }else{
+                        echo '<div class="carousel-item">
+                                <div class="row">';
+
+                        if( (sizeof($arr_mat)-$i) < 3){
+                          $num_loop = sizeof($arr_mat) % 3;
+                        }else{
+                          $num_loop = 3;
+                        }
+
+                        for($j=0;$j<$num_loop;$j++){
+                          $c = $i+$j;
+                          echo     '<div class="col-md-4">
+                                      <div class="item-box-blog">
+                                        <div class="item-box-blog-image">
+                                          <!--Image-->
+                                          <figure> <img alt="material icon" src="images/material.jpg"> </figure>
+                                        </div>
+                                        <div class="item-box-blog-body">
+                                          <p class="d-none">'.$arr_mat[$c]["materialID"].'</p>
+                                          <p class="d-none">'.$arr_mat[$c]["materialName"].'</p>
+                                          <!--Heading-->
+                                          <div class="item-box-blog-heading">
+                                            <a class="recycleMat" href="javascript:void(0)" tabindex="0">
+                                              <h5>'.$arr_mat[$c]["materialName"].'</h5>
+                                            </a>
+                                          </div>
+                                          <!--Text-->
+                                          <div class="item-box-blog-text">
+                                            <p>'.$arr_mat[$c]["description"].'</p>
+                                          </div>
+                                          <div class="mt"> <a href="javascript:void(0)" tabindex="0" class="btn bg-blue-ui white read recycleMat">Recycle</a> </div>
+                                          <!--Recycle Button-->
+                                        </div>
+                                      </div>
+                                    </div>';
+                        }
+
+                        echo     '</div>
+                                <!--.row-->
+                              </div>';
+                      }
+                    }
+                  }
+                  ?>
+
                 </div>
                 <!--.carousel-inner-->
               </div>
@@ -812,12 +657,139 @@ function validate_input($data){
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://github.com/mgalante/jquery.redirect/blob/master/jquery.redirect.js"></script>
+  <script src="js/jquery.redirect.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <script src="js/cj.js"></script>
   <script src="js/login-registration.js"></script>
+
+  <script type="text/javascript">
+  jQuery(document).ready(function(){
+      $('#loginForm').submit(function(){
+
+      var username=document.getElementById("username").value;
+      var pwd=document.getElementById("password").value;
+      var loginSuccess=false;
+      var userType;
+
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var resp=this.responseText.split(",");
+        loginSuccess=resp[0];
+        userType=resp[1];
+        if (loginSuccess){
+          if(userType=="Recycler")
+            window.location.href="index.php";
+          else if(userType=="Collector")
+            window.location.href="index.php";
+          else
+            window.location.href="maintainMaterial.php";
+        }else{
+          alert("Incorrect username or password. Please try again.");
+        }
+      }
+      };
+
+
+      xmlhttp.open("GET", "login.php?username="+username+"&password="+pwd, true);
+      xmlhttp.send();
+    });
+  });
+
+  jQuery(document).ready(function(){
+      $('#registration').submit(function(){
+
+      var rusername=document.getElementById("runame").value;
+      var rpwd=document.getElementById("rpassword").value;
+      var rfullname=document.getElementById("rfullname").value;
+      var registerSuccess=false;
+
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        registerSuccess=this.responseText;
+        if (registerSuccess){
+          alert("Account is successfully created.")
+          location.reload();
+        }else{
+          alert("Username has been taken. Please try again.");
+        }
+      }
+      };
+
+
+      xmlhttp.open("GET", "signUp.php?username="+rusername+"&password="+rpwd+"&fullname="+rfullname, true);
+      xmlhttp.send();
+    });
+  });
+
+  jQuery(document).ready(function(){
+      $('#c-registration').submit(function(){
+
+      var cusername=document.getElementById("cname").value;
+      var cpwd=document.getElementById("cpassword").value;
+      var cfullname=document.getElementById("cfullname").value;
+      var caddress=document.getElementById("caddress").value;
+      var cmat=document.getElementById("cmat").value;
+      var days = document.getElementsByClassName("days");
+      var dayArr_GET="";
+      var ctime=document.getElementById("ctime").value;
+
+      var cregisterSuccess=false;
+
+      for(var i=0; i<5; i++){
+        if(days[i].checked){
+          dayArr_GET += "&day%5B%5D=" + days[i].value; //sample result: &day%5B%5D=Monday
+        }
+      }
+
+      if(days[0].checked || days[1].checked || days[2].checked || days[3].checked || days[4].checked){
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          cregisterSuccess=this.responseText;
+          if (cregisterSuccess){
+            alert("Account is successfully created.")
+            location.reload();
+          }else{
+            alert("Username has been taken. Please try again.");
+          }
+        }
+        };
+
+
+        xmlhttp.open("GET", "signUpColl.php?username="+cusername+"&password="+cpwd+"&fullname="+cfullname+"&address="+caddress+"&materials="+cmat+"&time="+ctime+dayArr_GET, true);
+        xmlhttp.send();
+      }else{
+        alert("Please choose at least a day");
+      }
+
+    });
+  });
+
+  $(".recycleMat").click(function(){
+    <?php if(!empty($_SESSION['username'])) { ?>
+      <?php if($_SESSION['userType']=='Recycler') { ?>
+              var matID = $(this).parent().parent().children("p")[0].innerHTML;
+              var matName = $(this).parent().parent().children("p")[1].innerHTML;
+
+              $.redirect("submitApp.php", {materialID: matID, materialName: matName});
+      <?php }else{?>
+              alert('You must be "Recycler" to recycle material.');
+      <?php }
+          }else{?>
+          alert("You must login first to recycle material.");
+   <?php  } ?>
+  });
+
+
+  </script>
 <!--  <script type="text/javascript">
   $(document).ready(function(){
 

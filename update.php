@@ -8,34 +8,68 @@ session_start();
   $fullname = $_REQUEST["fullname"];
   $password= $_REQUEST["password"];
 
+	$password=md5($password);
   $sql_update = "UPDATE users SET fullname='$fullname' WHERE username= '$username'";
 
   $sql_updatePwd = "UPDATE users SET password='$password' WHERE username= '$username'";
-  $conn->query($sql_update);
-  $conn->query($sql_updatePwd);
 
-var_dump($_GET);
-if(isset($_REQUEST["materialID"])){
+//var_dump($_GET);
+if($_REQUEST["password"]!="******"){
+  if(strlen($_REQUEST["materialID"])>0){
 
+    $matID = $_REQUEST["materialID"];
 
-  $matID = $_REQUEST["materialID"];
+    $sql_updateMat= "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
 
-  $sql_updateMat= "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
+    if( $conn->query($sql_update) && $conn->query($sql_updatePwd) && $conn->query($sql_updateMat) ){
+       echo true;
+     }
+     else{
+       echo false;
+     }
 
-  $conn->query($sql_updateMat);
+  }else{
+    if( $conn->query($sql_update) && $conn->query($sql_updatePwd) ){
+     /*  echo '<script type="text/javascript"> window.alert("Account is successfully updated");';
+       echo 'window.location.href="profile.php";</script>';
+     //  header("Location:profile.php");
+       $_SESSION['username']=$username;*/
+       echo true;
+     }
+     else{
+       echo false;
+     }
+  }
+}else{
+  if(strlen($_REQUEST["materialID"])>0){
+
+    $matID = $_REQUEST["materialID"];
+
+    $sql_updateMat= "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
+
+    if( $conn->query($sql_update) && $conn->query($sql_updateMat) ){
+       echo true;
+     }
+     else{
+       echo false;
+     }
+
+  }else{
+    if( $conn->query($sql_update) ){
+     /*  echo '<script type="text/javascript"> window.alert("Account is successfully updated");';
+       echo 'window.location.href="profile.php";</script>';
+     //  header("Location:profile.php");
+       $_SESSION['username']=$username;*/
+       echo true;
+     }
+     else{
+       echo false;
+     }
+  }
 }
+
 //}
 
- if( $conn->query($sql_update) || $conn->query($queryMaterials) || $conn->query($sql_updateMat)){
-  /*  echo '<script type="text/javascript"> window.alert("Account is successfully updated");';
-    echo 'window.location.href="profile.php";</script>';
-  //  header("Location:profile.php");
-    $_SESSION['username']=$username;*/
-    echo 'true';
-  }
-  else{
-    echo 'false';
-  }
 
 //Recycler
 

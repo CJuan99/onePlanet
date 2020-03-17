@@ -1,0 +1,70 @@
+.squareBtn{
+  width:33px;
+  height:30px;
+}
+
+.margin-r{
+  margin-right:8px;
+}
+
+.buttonGroup{
+  width:150px;
+}
+
+.profile-img{
+      margin:auto;
+      margin-top: 35px;
+      text-align: center;
+      position:relative;
+      width: 70%;
+  }
+  .profile-img img{
+      width:100%;
+  }
+  .profile-img .file {
+      position: absolute;
+      overflow: hidden;
+      bottom:0;
+      left:0;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+      font-size: 15px;
+      background: #212529b8;
+  }
+  .profile-img .file input {
+      position: absolute;
+      opacity: 0;
+      right: 0;
+      top: 0;
+  }
+
+@media (max-width: 992px) {
+  .margin-r{
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 685px) {
+  .margin-r{
+    margin:0px 20px 8px 20px;
+  }
+}
+
+/*submitApplication*/
+.readOnlyColor{
+  background-color:#e5e5e5 !important;
+}
+
+.fs-12{
+  font-size:12px !important;
+}
+
+.minHeight{
+  min-height:100px !important;
+}
+
+.schedule{
+  border:2px solid #e5e5e5 !important;
+  background-color:#f2f2f2 !important;
+}

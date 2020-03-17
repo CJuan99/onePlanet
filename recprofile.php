@@ -9,15 +9,6 @@ $username = $_SESSION['username'];
 $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
-/*$result = $conn->query($sql);
-$arr_mat= [];*/
-
-/*$schsql ="SELECT format(schedule,'hh:mm') from users WHERE username ='$username'";
-$resultsch = mysqli_query($conn, $schsql);
-$time= mysqli_fetch_assoc($resultsch);
-var_dump($time);*/
-
-
 
 $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  WHERE registeredmaterial.materialID= material.materialID AND registeredmaterial.username ='$username'";
@@ -29,9 +20,6 @@ $sqlCollMat = "SELECT materialName FROM registeredmaterial, material
  if ($resultColl->num_rows > 0) {
      $arr_coll = $resultColl->fetch_all(MYSQLI_ASSOC);
  }
-/*$resultColl = mysqli_query($conn, $sqlCollMat);
-$collRecord = mysqli_fetch_assoc($resultColl);*/
-
 
 
 $sql = "SELECT * FROM material";
@@ -65,7 +53,8 @@ if ($resultSub->num_rows > 0) {
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  <title>Home</title>
+  <title>Recycler Profile</title>
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -83,39 +72,17 @@ if ($resultSub->num_rows > 0) {
 
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
-        <?php if(!empty($_SESSION['username'])) { ?>
-			    <?php if($_SESSION['userType']=='Recycler') { ?>
+
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                    <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#recycle">Recycle Now</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
                   </li>
-          <?php }else { ?>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-              </li>
-            <?php } ?>
-        <?php }else { ?>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
-              </li>
-        <?php } ?>
+
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
 
@@ -124,7 +91,7 @@ if ($resultSub->num_rows > 0) {
       	<?php if(!empty($_SESSION['username'])) { ?>
 			<?php if($_SESSION['userType']=='Recycler') { ?>
 				  <li class="nav-item">
-					<a class="nav-link js-scroll-trigger" href="profile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
+					<a class="nav-link js-scroll-trigger" href="recprofile.php " > <span class="fa fa-user mx-3" aria-hidden="true"></span><?php echo $_SESSION['username']; ?></a>
 				  </li>
 			<?php } else{?>
 				<li class="nav-item">
@@ -225,7 +192,7 @@ if ($resultSub->num_rows > 0) {
                                           <label class="font-weight-bold">Password</label>
                                         </div>
                                           <div class="col-sm-7 col-md-7 col-5">
-                                            <input type="password"  readonly class="form-control-plaintext" id="rec_password" required minlength="6" name="password" value="<?php echo  $userRecord['password'];?>">
+                                            <input type="password"  readonly class="form-control-plaintext" id="rec_password" required minlength="6" name="password" value="******">
                                           </div>
                                             <div class="col-sm-2 col-md-2 col-2" >
                                               <input id="pd_edit" type="button" value="Edit">
@@ -242,7 +209,7 @@ if ($resultSub->num_rows > 0) {
                                        </div>
                                          <div class="col-sm-7 col-md-7 col-5">
                                            <h5 id="rec_txtFn"><?php echo  $userRecord['fullname'];?></h5>
-                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>" >
+                                             <input type="text"  class="form-control-plaintext d-none" id="rec_Fn" name="fullname" required minlength="5" value="<?php echo  $userRecord['fullname'];?>"  pattern="[A-Za-z ]{5,}" title="Fullname must be all alphabets with at least 5 characters" >
 
                                          </div>
                                            <div  class="col-sm-2 col-md-2 col-2">
@@ -252,9 +219,9 @@ if ($resultSub->num_rows > 0) {
                                            </div>
                                        </div>
                                        <div class="row " >
-                                        <div class="text-center d-inline  w-50  ">
-                                           <button class="btn btn-secondary py-2 px-4 mx-3 text-uppercase float-right d-none" id="btncancelRec" name="btncancelRec" type="button" value="Cancel"  >Cancel</button>
-                                           <button class="btn btn-success py-2 px-4 ml-5 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmitRec" type="submit" value="Submit"  >Save</button>
+                                        <div class="text-center w-100 pt-4">
+                                           <button class="btn btn-secondary py-2 px-4 mr-5 text-uppercase float-right d-none" id="btncancelRec" name="btncancelRec" type="button" value="Cancel"  >Cancel</button>
+                                           <button class="btn btn-success py-2 px-4 mr-5 text-uppercase float-right d-none" id="btnsaveRec" name="btnsubmitRec" type="submit" value="Submit"  >Save</button>
 
                                          </div>
                                          </div>
@@ -275,7 +242,7 @@ if ($resultSub->num_rows > 0) {
 
                                         ebtn.addEventListener('click', function(){
                                             recp.readOnly=false;
-                                              ///inp.value='';
+                                            recp.value='';
                                             saveRec.style.display="inline";
 
                                             recp.focus(); // set the focus on the editable field
@@ -324,19 +291,25 @@ if ($resultSub->num_rows > 0) {
                                       xmlhttp.onreadystatechange = function() {
                                           if (this.readyState == 4 && this.status == 200) {
                                             error=this.responseText;
-
+                                            if (error){
+                                              alert("Account is successfully updated");
+                                              window.location.reload();
+                                            }else{
+                                              alert("Cannot update");
+                                              window.location.reload();
+                                            }
                                           }
                                         };
 
-                                        xmlhttp.open("GET", "backupupdate.php?fullname="+fullname+"&password="+pwd , true);
+                                        xmlhttp.open("GET", "update.php?fullname="+fullname+"&password="+pwd , true);
                                         xmlhttp.send();
-                                        if (error="true"){
+                                      /*  if (error="true"){
                                           alert("Account is successfully updated");
                                            //window.location.reload();
                                         }else{
                                           alert("Cannot update");
                                            //window.location.reload();
-                                        }
+                                        }*/
                                       });
                                     });
 

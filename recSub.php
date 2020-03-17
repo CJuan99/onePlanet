@@ -100,15 +100,15 @@ if(isset($_POST['materialID'])){
       <div class="collapse navbar-collapse" id="navBarResponsive">
         <ul class="navbar-nav ml-3  my-lg-0 ">
 
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="index.php#recycle">My Collection</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
-                  </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="">My Collection</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
+              </li>
 
       </div>
       <div class="collapse navbar-collapse" id="navBarUser">
