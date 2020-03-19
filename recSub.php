@@ -31,38 +31,74 @@ if ($resultRec->num_rows > 0) {
     $arr_rec = $resultRec->fetch_all(MYSQLI_ASSOC);
 }
 
-/*$sqlColl = "SELECT submissionID, materialName, proposedDate FROM submission, material
- WHERE submission.submissionID= material.submissionID
- AND collector ='$username'";
+  $output ='';
 
-
- $resultColl = $conn->query($sqlColl);
- $arr_coll= [];
-
- if ($resultColl->num_rows > 0) {
-     $arr_coll = $resultColl->fetch_all(MYSQLI_ASSOC);
- }
-*/
-
-/*$sql = "SELECT materialName FROM material where materialID";
-$result = $conn->query($sql);
-$arr_mat= [];
-
-if ($result->num_rows > 0) {
-    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
-}*/
+if(isset($_POST['search'])){
+  $searchq= $_POST['search'];
+  $searchq= preg_replace("#[^0-9a-z]#i","",$searchq);
+  $sqlSearch= "SELECT * FROM submission, material WHERE submission.materialID = material.materialID AND recycler LIKE '%".$searchq."%'";
 
 
 
+  $resultSearch =  $conn->query($sqlSearch);
 
-/*if ($resultset->num_rows > 0) {
-    $arr_mat = $result->fetch_all(MYSQLI_ASSOC);
+
+  if($resultSearch->num_rows > 0){
+    $output .= '
+    <h5>Searching "'.$searchq.'" </h5>
+     <div class="table-responsive">
+      <table class="table table bordered table-hover table-light">
+       <thead class="thead-dark">
+       <tr>
+        <th>Recycler Username</th>
+         <th>Submission ID</th>
+        <th>Material Name</th>
+        <th>Proposed Date</th>
+        <th>Status</th>
+         <th>Action</th>
+
+       </tr>
+        </thead>
+    ';
+    while($row = $resultSearch->fetch_assoc()){
+
+    $output .= '
+     <tr>
+      <td>'.$row["recycler"].'</td>
+      <td>'.$row["submissionID"].'</td>
+      <td>'.$row["materialName"].'</td>
+      <td>'.$row["proposedDate"].'</td>
+      <td>'.$row["status"].'</td>
+
+      <td class="buttonGroup text-center">
+        <button class="btn btn-success px-3 py-1" data-toggle="modal" data-target="#acceptSub"><i class="far fa-check-circle"></i> Accept</button>
+        <button class="btn btn-warning px-3 py-1" data-toggle="modal" data-target="#updateSub"><i class="far fa-edit"></i>Update</button>
+      </td>
+
+     </tr>
+
+
+    ';
+   }
+
+  }
+  else
+  {
+   $output ='
+     <h5>Searching "'.$searchq.'" </h5>
+   <div class="bg-light py-3 px-3" ><h5> Data Not Found</h5></div>
+   <div class="container ">
+   <div class="row py-4 ">
+       <h5 class="pr-3">Unable to find the submission?</h5>
+       <button class="btn btn-primary px-3" data-toggle="modal" data-target="#newSub"><i class="fas fa-plus-circle"></i> New submission </button>
+   </div>
+   </div>
+  ';
+  }
+
+
 }
 
-if(isset($_POST['materialID'])){
-	$matID= $_POST['materialID'];
-	$_SESSION['materialID']= $matID;
-}*/
 
 ?>
 
@@ -77,11 +113,7 @@ if(isset($_POST['materialID'])){
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <title>My Collection</title>
   <link rel="icon" href="images/favicon.ico" type="image/ico">
-  <link href="css/styles.css" rel="stylesheet" />
-  <link href="css/ricky.css" rel="stylesheet" />
 
-  <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -142,98 +174,63 @@ if(isset($_POST['materialID'])){
   </nav>
 
 <!--header-->
-    <div class="jumbotron paral paralsec">
+<div class="jumbotron paral paralsec">
     <h1 class="display-3"><?php echo  $userRecord['username'];?> 's </h1>
     <p class="lead">Collection</p>
-    </div>
-
-    <!--profile-->
-
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid">
-                  <!--    <h2 class="mt-4">Maintain Material Type</h2>-->
-                <!--  <div class="d-flex justify-content-center h-100">
-                 <div class="searchbar">
-                   <input class="search_input" type="text" name="" placeholder="Search...">
-                   <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-                 </div>
-               </div>-->
-                <!--  <div class="container">-->
-
-                  	<div class="row justify-content-center">
-                      <div class="col-12 col-md-10 col-lg-8">
-                          <form class="card card-sm searchB bg-transparent">
-                              <div class="card-body row align-items-center">
-                                  <div class="col-auto">
-                                      <i class="fas fa-search h4 text-body"></i>
-                                  </div>
-                                  <!--end of col-->
-                                  <div class="col">
-                                      <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search reycler username">
-                                  </div>
-                                  <!--end of col-->
-                                  <div class="col-auto">
-                                      <button class="btn btn-lg btn-success" type="submit">Search</button>
-                                  </div>
-                                  <!--end of col-->
-                              </div>
-                          </form>
-                      </div>
-                      <!--end of col-->
-                  </div>
-              <!--  </div>-->
-                      <div class="card mb-4 mt-3">
-                      <!--    <div class="card-header"><i class="fas fa-table mr-1"></i>My Collection   <button class="btn btn-success squareBtn py-0 px-2 float-right" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button></div>-->
-                          <div class="card-body">
-                              <div class="table-responsive">
-                                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                      <thead>
-                                          <tr>
-                                              <th>Submission ID</th>
-                                              <th>Material Name</th>
-                                              <th>Proposed Date</th>
-                                              <th>Actions</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                        <?php
-                                          $sql_Materials = "SELECT submissionID, materialName, proposedDate FROM submission, material
-                                           WHERE submission.materialID= material.materialID
-                                           AND collector ='$username'";
-                                          $results = $conn->query($sql_Materials);
-                                          if($results->num_rows > 0){
-                                            while($row = $results->fetch_assoc()){
-                                              echo '<tr>
-                                                        <td class="w-25 p-1">'.$row["submissionID"].'</td>
-                                                        <td class="w-25 p-3">'.$row["materialName"].'</td>
-                                                        <td  class="w-25 p-3" >'.$row["proposedDate"].'</td>
-
-                                                        <td class="buttonGroup text-center">
-                                                          <button class="btn btn-success px-3 py-1" data-toggle="modal" data-target="#acceptSub"><i class="far fa-check-circle"></i> Accept</button>
-                                                          <button class="btn btn-warning px-3 py-1" data-toggle="modal" data-target="#updateSub"><i class="far fa-edit"></i>Update</button>
-                                                        </td>
-                                                    </tr>';
-                                            }
-                                          }
-                                        ?>
-                                      </tbody>
-                                  </table>
-                              </div>
-                          </div>
-                          <div class="row py-3 px-3">
-                              <h5 class="px-3">Can't find the submission?</h5>
-                              <button class="btn btn-primary px-3 py-1" data-toggle="modal" data-target="#newSub"><i class="fas fa-plus-circle"></i> New submission </button>
-                          </div>
-                      </div>
-                    </div>
-                </main>
-            </div>
+</div>
 
 
-            <!--acceptModal-->
+<div class="container">
 
-            <div class="modal fade" id="acceptSub" tabindex="-1" role="dialog" aria-hidden="true">
+ <h2 align="center" class="py-3">Record Submission</h2>
+ <form  action="recSub.php" method="POST">
+ <div class="row justify-content-center ">
+                       <div class="col-12 col-md-10 col-lg-8 bg-active">
+                           <form class="card card-sm">
+                               <div class="card-body row no-gutters align-items-center">
+
+                                   <!--end of col-->
+                                   <div class="col">
+                                  <input class="form-control form-control-lg form-control-borderless bg-light" type="text" name="search" placeholder="Search reycler username">
+                                   </div>
+                                   <!--end of col-->
+                                   <div class="col-auto">
+                                       <button class="btn btn-lg btn-success" type="submit" name="searchbtn"> <i class="fas fa-search "></i></button>
+                                   </div>
+                                   <!--end of col-->
+                               </div>
+                           </form>
+                       </div>
+                       <!--end of col-->
+                   </div>
+
+
+ <!--<div class="card-body row align-items-center">
+     <div class="col-auto">
+         <i class="fas fa-search h4 text-body"></i>
+     </div>
+
+     <div class="col">
+          <input class="form-control form-control-lg form-control-borderless" type="text" name="search" placeholder="Search reycler username">
+     </div>
+
+     <div class="col-auto">
+           <button class="btn btn-lg btn-success" type="submit" name="searchbtn">Search</button>
+     </div>
+ </div>-->
+
+ <div id="result" class="py-5"> <?php   echo ''.$output.'</table></div>'; ?></div>
+
+</form>
+
+
+</div>
+
+
+
+  <!--acceptModal-->
+
+  <div class="modal fade" id="acceptSub" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content shadow-lg rounded">
                   <div class=" text-center py-3 ">
@@ -283,7 +280,7 @@ if(isset($_POST['materialID'])){
                 </div>
               </div>
             </div>
-            <!--accpetModal>
+  <!--accpetModal>
 
 <!--updateModal-->
 
@@ -532,9 +529,9 @@ if(isset($_POST['materialID'])){
 
 
     <script src="js/cj.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+  <!--  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="js/datatables-demo.js"></script>
+    <script src="js/datatables-demo.js"></script-->
 
 
   </body>
