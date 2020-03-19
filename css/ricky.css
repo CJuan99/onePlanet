@@ -68,3 +68,34 @@
   border:2px solid #e5e5e5 !important;
   background-color:#f2f2f2 !important;
 }
+
+/* viewHistory */
+.w-95{
+  width: 95%;
+}
+
+.w-10{
+  width: 10%;
+}
+
+.btn-mint{
+  background-color:#0ac876;
+  color:#ffffff;
+}
+
+.btn-mint:hover{
+  background-color:#09A562;
+  color:#dcdcdc;
+}
+
+.bg-mint{
+  background-color:#0ac876;
+}
+
+.bg-container{
+  background-color:#505A55;
+}
+
+.bg-pale{
+  background-color:#f5f5dc;
+}
