@@ -33,7 +33,24 @@ if ($resultRec->num_rows > 0) {
 
   $output ='';
 
-if(isset($_POST['search'])){
+/*if(isset($_POST["recycler"])){
+    $result='';
+    $sqlSearch = "SELECT recycler FROM submission WHERE recycler LIKE '%".$_POST["recycler"]."%'";
+    $rec= mysqli_query($conn, $sqlSearch);
+    $result='<ul class="list-unstyled">';
+
+    if(mysqli_num_rows($result)>0){
+      while($row = mysqli_fetch_array($result)){
+        $result .='<li>'.$row['recycler'].'</li>';
+      }
+    }else{
+        $result .='<li> Username not found </li>';
+    }
+    $result .= '</ul>';
+    echo $result;
+  }*/
+
+/*if(isset($_POST['search'])){
   $searchq= $_POST['search'];
   $searchq= preg_replace("#[^0-9a-z]#i","",$searchq);
   $sqlSearch= "SELECT * FROM submission, material WHERE submission.materialID = material.materialID AND recycler LIKE '%".$searchq."%'";
@@ -97,7 +114,7 @@ if(isset($_POST['search'])){
   }
 
 
-}
+}*/
 
 
 ?>
@@ -183,45 +200,38 @@ if(isset($_POST['search'])){
 <div class="container">
 
  <h2 align="center" class="py-3">Record Submission</h2>
- <form  action="recSub.php" method="POST">
+
  <div class="row justify-content-center ">
-                       <div class="col-12 col-md-10 col-lg-8 bg-active">
-                           <form class="card card-sm">
+                       <div class="col-12 col-md-10 col-lg-8 ">
+
                                <div class="card-body row no-gutters align-items-center">
 
                                    <!--end of col-->
                                    <div class="col">
-                                  <input class="form-control form-control-lg form-control-borderless bg-light" type="text" name="search" placeholder="Search reycler username">
+                                  <input class="form-control form-control-lg form-control-borderless bg-light" type="text" name="recycler" id="recycler" placeholder="Search reycler username" required=""><i class="fas fa-exclamation-circle errspan fa-2x d-none" id="ico"></i>
+                                <!--  <div class="" id="reclist"> </div>-->
                                    </div>
                                    <!--end of col-->
-                                   <div class="col-auto">
-                                       <button class="btn btn-lg btn-success" type="submit" name="searchbtn"> <i class="fas fa-search "></i></button>
+                                   <div class="col-2">
+                                       <button class="btn btn-lg btn-success" type="submit" name="searchbtn" id="searchbtn"> <i class="fas fa-search "></i></button>
                                    </div>
                                    <!--end of col-->
                                </div>
-                           </form>
+
                        </div>
                        <!--end of col-->
                    </div>
 
 
- <!--<div class="card-body row align-items-center">
-     <div class="col-auto">
-         <i class="fas fa-search h4 text-body"></i>
-     </div>
+ <div id="info" class="py-5"></div>
 
-     <div class="col">
-          <input class="form-control form-control-lg form-control-borderless" type="text" name="search" placeholder="Search reycler username">
-     </div>
+<div class="container d-none" id="addSub">
+   <div class="row py-4 ">
+      <h5 class="pr-3">Unable to find the submission?</h5>
+      <button class="btn btn-primary px-3" data-toggle="modal" data-target="#newSub"><i class="fas fa-plus-circle"></i> New submission </button>
+   </div>
+</div>
 
-     <div class="col-auto">
-           <button class="btn btn-lg btn-success" type="submit" name="searchbtn">Search</button>
-     </div>
- </div>-->
-
- <div id="result" class="py-5"> <?php   echo ''.$output.'</table></div>'; ?></div>
-
-</form>
 
 
 </div>
@@ -254,8 +264,8 @@ if(isset($_POST['search'])){
                               <input type="text" class="form-control" name="weight" id="weightCon" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                             </div>
                           </div>
-                          <!--  <div class="form-group">
-                          <label class="mb-2">Password</label>
+                            <div class="form-group">
+                          <label class="mb-2">Password </label>
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-key icon text-default"></i></span>
@@ -263,7 +273,7 @@ if(isset($_POST['search'])){
                               <input type="password" class="form-control" name="password" id="password" placeholder="Password" required minlength="6">
                             </div>
 
-                          </div>-->
+                          </div>
                           <div class="text-center">
                             <input type="submit" name="acceptBtn" value="Submit">
                           </div>
@@ -526,12 +536,49 @@ if(isset($_POST['search'])){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script src="js/cj.js"></script>
-  <!--  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="js/datatables-demo.js"></script-->
+   <script >
+
+   /*$(document).ready(function(){
+     $('#recycler').keyup(function(){
+       var query =$(this).val();
+
+       if(query !=''){
+         $.ajax({
+           url:"recSub.php",
+           method:"POST",
+           data:{recycler:query},
+           success: function(data){
+             $('#reclist').html(data);
+           }
+         })
+       }
+     })
+   });*/
+   $('button#searchbtn').on('click',function(){
+
+    var name= $('input#recycler').val();
+    var add = document.getElementById('addSub');
+    var icon=  document.getElementById('ico');
+
+    if($.trim(name)!=""){
+      $.post('fetch.php', {recycler:name}, function(data){
+       $('div#info').html(data);
+        add.classList.remove("d-none");
+      //  icon.classList.add("d-none");
+
+
+      });
+    }else{
+      $('input#recycler').focus();
+    //  icon.classList.remove("d-none");
+    }
+
+   });
+
+   </script>
 
 
   </body>
