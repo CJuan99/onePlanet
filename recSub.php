@@ -4,6 +4,10 @@ session_start();
 include("conn.php");
 
 $username = $_SESSION['username'];
+/*
+$_SESSION['submissionID'] = array();
+print_r($_SESSION['submissionID']);
+*/
 
 
 $sql = "SELECT * FROM users WHERE username ='$username'";
@@ -228,7 +232,7 @@ if ($resultRec->num_rows > 0) {
 <div class="container d-none" id="addSub">
    <div class="row py-4 ">
       <h5 class="pr-3">Unable to find the submission?</h5>
-      <button class="btn btn-primary px-3" data-toggle="modal" data-target="#newSub"><i class="fas fa-plus-circle"></i> New submission </button>
+      <button class="btn btn-primary px-3 btnNew" data-toggle="modal" data-target="#newSub"><i class="fas fa-plus-circle"></i> New submission </button>
    </div>
 </div>
 
@@ -254,6 +258,35 @@ if ($resultRec->num_rows > 0) {
                     <div class="login px-2 mx-auto mw-100 ">
                       <div class="signup-form profile">
                         <form action="javascript:void(0);" method="POST" name="acceptForm" id="acceptForm">
+
+
+                            <div class="form-group">
+
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label class="mb-2 px-2">Recycler Username: </label>
+                              </div>
+                              <input id="txt_recUn" class="form-control" type="text" readonly>
+                            </div>
+
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label class=  <input id="txt_recUn" "mb-2 px-2">Submission ID: </label>
+                              </div>
+                              <input id="txt_sub"  class="form-control" type="text" readonly>
+
+                            </div>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label class="mb-2 px-2">Material Name: </label>
+                              </div>
+                            <!--  <label><?php echo  $_SESSION['materialName'];?></label>-->
+                              <input id="txt_mat" class="form-control" type="text" readonly>
+                            </div>
+
+                          </div>
+
+
                           <div class="form-group">
                             <h6 class='lead pb-2'>Please insert the weight of the submission</h6>
                             <!--  <label class="mb-2">Username</label>-->
@@ -261,21 +294,12 @@ if ($resultRec->num_rows > 0) {
                               <div class="input-group-prepend">
                                 <div class="input-group-text">Weight (kg)</div>
                               </div>
-                              <input type="text" class="form-control" name="weight" id="weightCon" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
+                              <input type="text" class="form-control" name="weight" id="weightAcc" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                             </div>
                           </div>
-                            <div class="form-group">
-                          <label class="mb-2">Password </label>
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-key icon text-default"></i></span>
-                              </div>
-                              <input type="password" class="form-control" name="password" id="password" placeholder="Password" required minlength="6">
-                            </div>
 
-                          </div>
                           <div class="text-center">
-                            <input type="submit" name="acceptBtn" value="Submit">
+                            <input type="submit" name="acceptBtn" id="acceptBtn" value="Submit">
                           </div>
                           <p class="text-center pb-4">
                             <span>Don't match the submission's material? </span>
@@ -369,7 +393,7 @@ if ($resultRec->num_rows > 0) {
       <div class="modal-body">
         <div class="login px-2 mx-auto mw-100 ">
           <div class="signup-form profile">
-            <form action="javascript:void(0);" method="POST" name="updateForm" id="updateForm" >
+            <form action="javascript:void(0);" method="POST" name="newSubForm" id="newSubForm" >
               <div class="form-group">
                 <h6 class='lead pb-2'>Please fill up the submission details as below:</h6>
                 <!--  <label class="mb-2">Username</label>-->
@@ -428,6 +452,7 @@ if ($resultRec->num_rows > 0) {
                 <a class="text-decoration-none text-success" href="#" data-toggle="modal" data-target="#newSub" data-dismiss="modal">Click here to add submission</a>
               </p>-->
             </form>
+            <span id="resultNew"></span>
           </div>
         </div>
       </div>
@@ -532,54 +557,100 @@ if ($resultRec->num_rows > 0) {
     <!-- Footer -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script type="text/javascript">
 
-    <script src="js/cj.js"></script>
-   <script >
 
-   /*$(document).ready(function(){
-     $('#recycler').keyup(function(){
-       var query =$(this).val();
 
-       if(query !=''){
-         $.ajax({
-           url:"recSub.php",
-           method:"POST",
-           data:{recycler:query},
-           success: function(data){
-             $('#reclist').html(data);
+       /*$(document).ready(function(){
+         $('#recycler').keyup(function(){
+           var query =$(this).val();
+
+           if(query !=''){
+             $.ajax({
+               url:"recSub.php",
+               method:"POST",
+               data:{recycler:query},
+               success: function(data){
+                 $('#reclist').html(data);
+               }
+             })
            }
          })
-       }
-     })
-   });*/
-   $('button#searchbtn').on('click',function(){
+       });*/
+       $('button#searchbtn').on('click',function(){
 
-    var name= $('input#recycler').val();
-    var add = document.getElementById('addSub');
-    var icon=  document.getElementById('ico');
+        var name= $('input#recycler').val();
+        var add = document.getElementById('addSub');
+        var icon=  document.getElementById('ico');
 
-    if($.trim(name)!=""){
-      $.post('fetch.php', {recycler:name}, function(data){
-       $('div#info').html(data);
-        add.classList.remove("d-none");
-      //  icon.classList.add("d-none");
+        if($.trim(name)!=""){
+          $.post('fetch.php', {recycler:name}, function(data){
+           $('div#info').html(data);
+            add.classList.remove("d-none");
+          //  icon.classList.add("d-none");
 
 
-      });
-    }else{
-      $('input#recycler').focus();
-    //  icon.classList.remove("d-none");
-    }
+          });
+        }else{
+          $('input#recycler').focus();
+        //  icon.classList.remove("d-none");
+        }
 
-   });
+       });
 
-   </script>
+       $('#info').on('click',".btnAccept",function(){
+                //get data from table row
 
+
+                //open modal
+                $("#acceptSub").modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function() {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#txt_recUn').val(data[0]);
+                $('#txt_sub').val(data[1]);
+                $('#txt_mat').val(data[2]);
+        });
+
+        $('form#acceptForm').on('submit',function(){
+
+        /* var rec= $('input#txt_recUn').val();
+         var sub= $('input#txt_sub').val();
+         var mat= $('input#txt_mat').val();
+         var weight= $('input#"weightAcc').val();*/
+
+         var sub = document.getElementById('addSub');
+         var icon=  document.getElementById('ico');
+
+         if($.trim(weight)!=""){
+           $.post('fetch.php', {recycler:name}, function(data){
+            $('div#info').html(data);
+             add.classList.remove("d-none");
+           //  icon.classList.add("d-none");
+
+
+           });
+         }
+
+        });
+
+
+
+       </script>
+
+
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+    <script src="js/cj.js"></script>
 
   </body>
 
