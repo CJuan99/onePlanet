@@ -266,22 +266,21 @@ if ($resultRec->num_rows > 0) {
                               <div class="input-group-prepend">
                                 <label class="mb-2 px-2">Recycler Username: </label>
                               </div>
-                              <input id="txt_recUn" class="form-control" type="text" readonly>
+                              <input id="txt_recUn" name="txt_recUn" class="form-control" type="text" readonly>
                             </div>
 
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                <label class=  <input id="txt_recUn" "mb-2 px-2">Submission ID: </label>
+                                <label class="mb-2 px-2">Submission ID: </label>
                               </div>
-                              <input id="txt_sub"  class="form-control" type="text" readonly>
+                              <input id="txt_sub" name="txt_sub"  class="form-control" type="text" readonly>
 
                             </div>
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <label class="mb-2 px-2">Material Name: </label>
                               </div>
-                            <!--  <label><?php echo  $_SESSION['materialName'];?></label>-->
-                              <input id="txt_mat" class="form-control" type="text" readonly>
+                              <input id="txt_mat" name="txt_mat" class="form-control" type="text" readonly>
                             </div>
 
                           </div>
@@ -294,7 +293,7 @@ if ($resultRec->num_rows > 0) {
                               <div class="input-group-prepend">
                                 <div class="input-group-text">Weight (kg)</div>
                               </div>
-                              <input type="text" class="form-control" name="weight" id="weightAcc" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
+                              <input type="text" class="form-control" name="weightAcc" id="weightAcc" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                             </div>
                           </div>
 
@@ -402,7 +401,7 @@ if ($resultRec->num_rows > 0) {
                   <div class="input-group-prepend">
                     <div class="input-group-text pr-4 ">Recycler</div>
                   </div>
-                  <select id="rec" name="recycler" class="form-control " required="true">
+                  <select id="recyclerNew" name="recyclerNew" class="form-control " required="true">
                     <option disabled="disabled" selected="selected" value="">Choose recycler </option>
                     <?php if(!empty($arr_rec)) { ?>
                         <?php foreach($arr_rec as $rec) {?>
@@ -410,17 +409,16 @@ if ($resultRec->num_rows > 0) {
                                       echo "<option value='". $rec['username']."'>" . $rec['username']. '</option>'; ?>
                           <?php } ?>
                         <?php }  ?>
-
                   </select>
                 </div>
+              <!--    <label id="lblNewRec" class="lead" style="color:red"></label>-->
               </div>
-
               <div class="form-group">
                 <div class="input-group ">
                   <div class="input-group-prepend">
                     <div class="input-group-text pr-4">Materials</div>
                   </div>
-                  <select id="mat" name="materials" class="form-control " required="true">
+                  <select id="materialNew" name="materialNew" class="form-control " required="true">
                     <option disabled="disabled" selected="selected" value="">Choose materials </option>
                     <?php if(!empty($arr_mat)) { ?>
                         <?php foreach($arr_mat as $mat) {?>
@@ -431,8 +429,8 @@ if ($resultRec->num_rows > 0) {
 
                   </select>
                 </div>
+                <!--  <label id="lblNewMat" class="lead" style="color:red"></label>-->
               </div>
-
 
               <div class="form-group">
                 <!--<label class="mb-2">Password</label>-->
@@ -440,19 +438,20 @@ if ($resultRec->num_rows > 0) {
                   <div class="input-group-prepend">
                     <span class="input-group-text pr-2">Weight (kg)</span>
                   </div>
-              <input type="text" class="form-control " name="weight" id="weight" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
+                <input type="text" class="form-control " name="weightNew" id="weightNew" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                 </div>
-
+              <!--  <label id="lblNewWgt" class="lead" style="color:red"></label>-->
               </div>
+              <span id="resultNew"></span>
               <div class="text-center">
-                <input type="submit" name="newBtn" value="Submit">
+                <input type="submit" name="newBtn" id="newBtn" value="Submit">
               </div>
             <!--  <p class="text-center pb-4">
                 <span>Don't match the submission? </span>
                 <a class="text-decoration-none text-success" href="#" data-toggle="modal" data-target="#newSub" data-dismiss="modal">Click here to add submission</a>
               </p>-->
             </form>
-            <span id="resultNew"></span>
+
           </div>
         </div>
       </div>
@@ -563,22 +562,38 @@ if ($resultRec->num_rows > 0) {
 
 
 
-       /*$(document).ready(function(){
-         $('#recycler').keyup(function(){
-           var query =$(this).val();
+       $(document).on('click','#newBtn',function(){
 
-           if(query !=''){
-             $.ajax({
-               url:"recSub.php",
-               method:"POST",
-               data:{recycler:query},
-               success: function(data){
-                 $('#reclist').html(data);
-               }
-             })
+          var name=$("select#recyclerNew").val();
+          var mat=$("select#materialNew").val();
+          var w=$("input#weightNew").val();
+
+          console.log(name,mat,w);
+
+          if(name==null){
+              alert("Please select a recycler");
+          }else if(mat==null){
+            alert("Please select a material");
+          }else if(w==""){
+          alert("Please enter weight in kg");
+          }else{
+
+            $.ajax({
+              url:"newSub.php",
+              type:"post",
+              data:{recycler:name, materialID:mat, weightInKg:w},
+              success: function(data){
+                  alert(data);
+              $('#newSub').modal('hide');
+
+
+              }
+            });
            }
-         })
-       });*/
+          });
+
+
+
        $('button#searchbtn').on('click',function(){
 
         var name= $('input#recycler').val();
@@ -619,25 +634,34 @@ if ($resultRec->num_rows > 0) {
                 $('#txt_mat').val(data[2]);
         });
 
-        $('form#acceptForm').on('submit',function(){
+        $('input#acceptBtn').on('click',function(){
 
-        /* var rec= $('input#txt_recUn').val();
+
+
+         var rec= $('input#txt_recUn').val();
          var sub= $('input#txt_sub').val();
          var mat= $('input#txt_mat').val();
-         var weight= $('input#"weightAcc').val();*/
+         var weight= $('input#weightAcc').val();
 
-         var sub = document.getElementById('addSub');
-         var icon=  document.getElementById('ico');
-
-         if($.trim(weight)!=""){
-           $.post('fetch.php', {recycler:name}, function(data){
-            $('div#info').html(data);
-             add.classList.remove("d-none");
-           //  icon.classList.add("d-none");
+        // var sub = document.getElementById('addSub');
+         //var icon=  document.getElementById('ico');
 
 
-           });
-         }
+
+         $.ajax({
+           url:'accept.php',
+           method:"post",
+           data: $('form').serialize(),
+           dataType:"text",
+           success:function(data){
+             if(data){
+               alert("Submission proposed successfully.");
+               location.reload();
+             }else{
+               alert("Submission not proposed successfully.");
+             }
+           }
+         });
 
         });
 
