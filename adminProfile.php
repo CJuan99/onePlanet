@@ -63,7 +63,7 @@ if($result_user->num_rows > 0){
                             <a class="nav-link" href="maintainMaterial.php"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                                 Maintain Material Type</a
-                            ><a class="nav-link" href="viewHistory.php"
+                            ><a class="nav-link" href="viewHistoryAdmin.php"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
                                 View Submission History</a
                             >
