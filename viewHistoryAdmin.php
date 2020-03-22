@@ -70,23 +70,32 @@ include("maintainMaterial_JS.php");
                     <div class="container-fluid">
                       <h2 class="mt-4">View Submission History</h2>
                       <div class="card mb-4 mt-3">
-                          <div class="card-header"><i class="fas fa-table mr-1"></i>Submission Table <button class="btn btn-success squareBtn py-0 px-2 float-right" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button></div>
+                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material List</div>
                           <div class="card-body">
-                              <h4>Material</h4>
-                              <select name="material" class="materialSelection mb-4 p-1">
-                                <option value="first">First</option>
-                                <option value="second">Second</option>
-                                <option value="third">Third</option>
-                                <option value="fourth">Fourth</option>
-                              </select>
-
-                              <h4>Submission</h4>
-
+                            <h5>Material</h5>
+                            <select id="select_material" name="material" class="materialSelection p-1">
+                              <
+                              <option disabled selected value="">Select a material</option>
+                              <?php
+                              $sql_material = "SELECT * FROM material";
+                              $result_material = $conn->query($sql_material);
+                              if($result_material->num_rows>0){
+                                while($row = $result_material->fetch_assoc()){
+                                  echo '<option value='.$row["materialID"].'>'.$row["materialName"].'</option>';
+                                }
+                              }
+                              ?>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="card mb-4 mt-3">
+                          <div class="card-header"><i class="fas fa-table mr-1"></i>Submission Table</div>
+                          <div class="card-body">
                               <div class="table-responsive">
                                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                       <thead>
                                           <tr>
-                                              <th colspan=8><span class="mr-5">Total Weight: 473</span><span>Total Points: 1234</span></th>
+                                              <th colspan=8><span id="totalWeight" class="ml-1 mr-5">Total Weight: 0</span><span id="totalPoints">Total Points: 0</span><button id="clearBtn" class="btn btn-primary squareBtn py-0 px-2 mr-2 float-right"><i class="fas fa-eraser"></i></button></th>
                                           </tr>
                                           <tr>
                                               <th>Submission ID</th>
@@ -98,54 +107,9 @@ include("maintainMaterial_JS.php");
                                               <th>Weight(kg)</th>
                                               <th>Points Awarded</th>
                                           </tr>
-                                          <tr>
-                                            <td><select class="w-100" ame="submissionID">
-                                              <option value="12">12</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="proposedDate">
-                                              <option value="date">Date</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="actualDate">
-                                              <option value="aDate">aDate</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="collector">
-                                              <option value="ricky">Ricky</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="recycler">
-                                              <option value="daihee">DaiHee</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="status">
-                                              <option value="proposed">Proposed</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="weight">
-                                              <option value="8">8</option>
-                                            </select></td>
-                                            <td><select class="w-100" name="pointsAwarded">
-                                              <option value="95">95</option>
-                                            </select></td>
-                                          </tr>
                                       </thead>
-                                      <tbody>
-                                        <?php
-                                          $sql_Materials = "SELECT * FROM material WHERE materialStatus='Available'";
-                                          $results = $conn->query($sql_Materials);
-                                          if($results->num_rows > 0){
-                                            while($row = $results->fetch_assoc()){
-                                              echo '<tr>
-                                                        <td>'.$row["materialID"].'</td>
-                                                        <td>'.$row["materialName"].'</td>
-                                                        <td>'.$row["description"].'</td>
-                                                        <td>'.$row["pointsPerKg"].'</td>
-                                                        <td class="buttonGroup text-center">
-                                                          <button onclick="editButton(this)" class="editBtn btn btn-info squareBtn py-0 px-2"><i class="fas fa-cog"></i></button>
-                                                          <button onclick="confirmButton(this)" class="confirmBtn btn btn-primary squareBtn py-0 px-2 margin-r d-none"><i class="fas fa-save"></i></button>
-                                                          <button onclick="deleteButton(this)" class="deleteBtn btn btn-danger squareBtn py-0 px-2 margin-r d-none"><i class="fas fa-trash-alt"></i></button>
-                                                          <button onclick="cancelButton(this)" class="cancelBtn btn btn-warning squareBtn text-light py-0 px-2 d-none"><i class="fas fa-times"></i></button>
-                                                        </td>
-                                                    </tr>';
-                                            }
-                                          }
-                                        ?>
+                                      <tbody id="submissionContent">
+
                                       </tbody>
                                   </table>
                               </div>
@@ -196,6 +160,153 @@ include("maintainMaterial_JS.php");
             </div>
           </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+
+        // To prevent the sort button set beside this element (select tag)
+        setTimeout(function(){
+          $('#dataTable thead').append(`<tr>
+            <td><select class="w-100" name="submissionID" id="submissionID_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="proposedDate" id="proposedDate_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="actualDate" id="actualDate_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="collector" id="collector_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="recycler" id="recycler_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="status" id="status_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="weight" id="weight_select">
+              <option selected value=""></option>
+            </select></td>
+            <td><select class="w-100" name="pointsAwarded" id="pointsAwarded_select">
+              <option selected value=""></option>
+            </select></td>
+          </tr>`);
+        }, 200);
+
+        $("#select_material").change(function(){
+          $.post("distinctSubmissionAdmin.php", {materialID: $(this).val()})
+          .done(function(data){
+            var distinct_submission_columns = JSON.parse(data);
+            var distinct_submissionID = distinct_submission_columns[0];
+            var distinct_proposedDate = distinct_submission_columns[1];
+            var distinct_actualDate = distinct_submission_columns[2];
+            var distinct_collector = distinct_submission_columns[3];
+            var distinct_recycler = distinct_submission_columns[4];
+            var distinct_status = distinct_submission_columns[5];
+            var distinct_weight = distinct_submission_columns[6];
+            var distinct_pointsAwarded = distinct_submission_columns[7];
+
+            var dataExist = false;
+
+            $.each(distinct_submission_columns, function(index, distinct_column){
+              dataExist = true;
+              var options='<option selected value=""></option>';
+              $.each(distinct_column, function(index2, value){
+                if(value!=null){
+                  options += '<option value="'+value+'">'+value+'</option>';
+                }
+              });
+              $("#dataTable thead").find("select")[index].innerHTML = options;
+            });
+
+            if(dataExist==true){
+              dataExist=false;
+            }else{
+              $.each($("#dataTable thead").find("select"), function(index, selectTag){
+                selectTag.innerHTML = '<option selected value=""></option>';
+              });
+            }
+          });
+
+          $.post("retrieveSubmissionAdmin.php", {materialID: $(this).val()})
+          .done(function(data){
+            if(data.length>0){
+              var three_data = JSON.parse(data);
+              var data_rows = three_data[0];
+              var totalWeight = three_data[1];
+              var totalPoints = three_data[2];
+
+              var table = $("#submissionContent").parent().DataTable();
+
+              table.rows().remove()
+
+              for (var i = 0; i < data_rows.length; i++) {
+                var row = data_rows[i];
+                table.row.add([row["submissionID"], row["proposedDate"], row["actualDate"], row["collector"], row["recycler"], row["status"], row["weightInKg"], row["pointsAwarded"]]);
+                table.draw();
+              }
+              // $("#submissionContent").html(rowsElement);
+              $("#totalWeight").html("Total Weight: "+totalWeight);
+              $("#totalPoints").html("Total Points: "+totalPoints);
+            }else{
+              var table = $("#submissionContent").parent().DataTable();
+              table.rows().remove().draw();
+
+            }
+          });
+        });
+
+        $(document).on("change", "#dataTable thead tr td select", function(){
+          var table = $("#submissionContent").parent().DataTable();
+          var selectTags = $("#dataTable thead tr td select");
+          var selectTags_id = [];
+          $.each(selectTags, function(index, tag){
+            selectTags_id.push(tag.id);
+          });
+
+          var i = $.inArray($(this).attr("id"), selectTags_id);
+
+          if(table.column(i).search() !== $(this).val()){
+            table
+                .column(i)
+                .search( $(this).val() )
+                .draw();
+          }
+        });
+
+        $(document).ready(function(){
+          var table = $("#submissionContent").parent().DataTable();
+          table.on('search.dt', function(){
+            var totalWeight=0;
+            var totalPoints=0;
+            var data = table.rows({search: 'applied'}).data();
+            $.each(data, function(index, value){
+              totalWeight+=parseFloat(value[6]);
+              totalPoints+=parseFloat(value[7]);
+            });
+            $("#totalWeight").html("Total Weight: "+totalWeight);
+            $("#totalPoints").html("Total Points: "+totalPoints);
+          });
+        });
+
+        $("#clearBtn").click(function(){
+          var table = $("#submissionContent").parent().DataTable();
+
+          var selectTags = $("#dataTable thead").find("select");
+          $.each(selectTags, function(index, tag){
+            tag.value = "";
+            if(table.column(index).search() !== tag.value){
+              table
+                  .column(index)
+                  .search( tag.value )
+                  .draw();
+            }
+          });
+
+          table.search("").draw();
+        });
+        </script>
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
