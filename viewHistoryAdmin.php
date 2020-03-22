@@ -12,7 +12,7 @@ include("maintainMaterial_JS.php");
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Maintain Material Type - Admin</title>
+        <title>View Submission History - Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/ricky.css" rel="stylesheet" />
 
@@ -68,19 +68,61 @@ include("maintainMaterial_JS.php");
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                      <h2 class="mt-4">Maintain Material Type</h2>
+                      <h2 class="mt-4">View Submission History</h2>
                       <div class="card mb-4 mt-3">
-                          <div class="card-header"><i class="fas fa-table mr-1"></i>Material Table <button class="btn btn-success squareBtn py-0 px-2 float-right" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button></div>
+                          <div class="card-header"><i class="fas fa-table mr-1"></i>Submission Table <button class="btn btn-success squareBtn py-0 px-2 float-right" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button></div>
                           <div class="card-body">
+                              <h4>Material</h4>
+                              <select name="material" class="materialSelection mb-4 p-1">
+                                <option value="first">First</option>
+                                <option value="second">Second</option>
+                                <option value="third">Third</option>
+                                <option value="fourth">Fourth</option>
+                              </select>
+
+                              <h4>Submission</h4>
+
                               <div class="table-responsive">
                                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                       <thead>
                                           <tr>
-                                              <th>Material ID</th>
-                                              <th>Material Name</th>
-                                              <th>Description</th>
-                                              <th>Points(per kg)</th>
-                                              <th>Options</th>
+                                              <th colspan=8><span class="mr-5">Total Weight: 473</span><span>Total Points: 1234</span></th>
+                                          </tr>
+                                          <tr>
+                                              <th>Submission ID</th>
+                                              <th>Proposed Date</th>
+                                              <th>Actual Date</th>
+                                              <th>Collector</th>
+                                              <th>Recycler</th>
+                                              <th>Status</th>
+                                              <th>Weight(kg)</th>
+                                              <th>Points Awarded</th>
+                                          </tr>
+                                          <tr>
+                                            <td><select class="w-100" ame="submissionID">
+                                              <option value="12">12</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="proposedDate">
+                                              <option value="date">Date</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="actualDate">
+                                              <option value="aDate">aDate</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="collector">
+                                              <option value="ricky">Ricky</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="recycler">
+                                              <option value="daihee">DaiHee</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="status">
+                                              <option value="proposed">Proposed</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="weight">
+                                              <option value="8">8</option>
+                                            </select></td>
+                                            <td><select class="w-100" name="pointsAwarded">
+                                              <option value="95">95</option>
+                                            </select></td>
                                           </tr>
                                       </thead>
                                       <tbody>
