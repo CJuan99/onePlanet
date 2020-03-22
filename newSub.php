@@ -1,6 +1,10 @@
 <?php
 session_start();
 include("conn.php");
+
+$points=0;
+$pA=0;
+$tpoints=0;
 if(isset($_POST["recycler"]) && isset($_POST["materialID"])&& isset($_POST["weightInKg"]) )
 {
 $sql_submission = "SELECT * FROM submission";
@@ -24,11 +28,63 @@ $recNew = $_POST["recycler"];
 $matID= $_POST["materialID"];
 $weightNew= $_POST["weightInKg"];
 
-$sql_insert = "INSERT INTO submission (submissionID,proposedDate,actualDate,weightInKg,status,recycler,collector,materialID) VALUES ('$submissionID', null, now(), '$weightNew','Submitted', '$recNew', '$username', '$matID')";
 
-if($conn->query($sql_insert)){
-  echo "A new submission is inserted";
+$sqlPoints= "SELECT pointsPerKg from material where materialID='$matID'";
+$rpoint= $conn->query($sqlPoints);
+if($rpoint->num_rows>0){
+    while($row = $rpoint->fetch_assoc()){
+      $points=$row["pointsPerKg"];
+}
+}
+
+
+$pA= $weightNew*$points;
+
+$sqlInsert="INSERT INTO submission  VALUES ('$submissionID', null, now(), '$weightNew','$pA','Submitted', '$recNew', '$username', '$matID')";
+
+//$sqlUserP="UPDATE users set totalPoints+'$pA' where username='$username' AND username='$recNew'";
+mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$recNew'") or die(mysqli_error($conn));
+
+
+if($conn->query($sqlInsert)){
+    echo "A new submission is inserted";
 }else{
   echo "Unable to insert";
 }
+
+
+
+/*
+
+$points=mysqli_query($conn,"SELECT pointsPerKg from material where materialID='$matID'") or die(mysqli_error($conn));
+
+(SELECT
+SUM(weightInKg*pointsPerKG)
+FROM submission,material
+WHERE submission.materialID=material.materialID AND submissionID='$submissionID'),'Submitted', '$recNew', '$username', '$matID')
+
+$pointAwarded= mysqli_query($conn,"SELECT SUM (weightInKg*pointsPerKg) FROM submission, material") or die(mysqli_error($conn));
+//$sql_insert = "INSERT INTO submission (submissionID,proposedDate,actualDate,weightInKg,status,recycler,collector,materialID) VALUES ('$submissionID', null, now(), '$weightNew','Submitted', '$recNew', '$username', '$matID')";
+
+/*$sqlPA="INSERT INTO submission(pointAwarded)
+SELECT
+SUM(submission.weightInKg*material.pointsPerKG)
+FROM submission,material
+WHERE submission.materialID=material.materialID AND submissionID='$submissionID'";
+
+/*$sqlPA="UPDATE submission set pointAwarded =(select submission.weightInKg*material.pointPerKG
+  from submission,material where material.materialID = submission.materialID AND submissionID='$submissionID')";
+
+$sqlPA="UPDATE submission set pointAwarded= material.pointPerKg*submission.weightInKg from submission inner join material on submission.submissionID= material.materialID and submission.submissionID='$submissionID'";*/
+ /*mysqli_query($conn,"INSERT INTO submission VALUES ('$submissionID', null, now(), '$weightNew', (SELECT
+ SUM(weightInKg*pointsPerKG)
+ FROM submission,material
+ WHERE submission.materialID=material.materialID AND submissionID='$submissionID'),'Submitted', '$recNew', '$username', '$matID')") or die(mysqli_error($conn));*/
+
+/*if($conn->query($sql_insert)){
+
+    echo "A new submission is inserted";
+}else{
+  echo "Unable to insert";
+}*/
 }?>

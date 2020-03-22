@@ -14,7 +14,7 @@ $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
 
-$sql = "SELECT * FROM material";
+$sql = "SELECT * FROM material WHERE materialStatus='Available'";
 $result = $conn->query($sql);
 $arr_mat= [];
 
@@ -585,7 +585,7 @@ if ($resultRec->num_rows > 0) {
               success: function(data){
                   alert(data);
               $('#newSub').modal('hide');
-
+              location.reload();
 
               }
             });
@@ -604,8 +604,6 @@ if ($resultRec->num_rows > 0) {
           $.post('fetch.php', {recycler:name}, function(data){
            $('div#info').html(data);
             add.classList.remove("d-none");
-          //  icon.classList.add("d-none");
-
 
           });
         }else{
@@ -634,34 +632,34 @@ if ($resultRec->num_rows > 0) {
                 $('#txt_mat').val(data[2]);
         });
 
-        $('input#acceptBtn').on('click',function(){
-
-
+       $(document).on('click','#acceptBtn',function(){
 
          var rec= $('input#txt_recUn').val();
          var sub= $('input#txt_sub').val();
          var mat= $('input#txt_mat').val();
-         var weight= $('input#weightAcc').val();
+         var w= $('input#weightAcc').val();
 
         // var sub = document.getElementById('addSub');
          //var icon=  document.getElementById('ico');
 
+           console.log(rec,sub,mat,w);
+
+           if(w==""){
+           alert("Please enter weight in kg");
+           }else{
+
+             $.ajax({
+               url:"accept.php",
+               type:"post",
+               data:{recycler:rec, submissionID:sub, materialID:mat, weightInKg:w},
+               success: function(data){
+                   alert(data);
+                   $('#acceptSub').modal('hide');
+               }
+             });
+            }
 
 
-         $.ajax({
-           url:'accept.php',
-           method:"post",
-           data: $('form').serialize(),
-           dataType:"text",
-           success:function(data){
-             if(data){
-               alert("Submission proposed successfully.");
-               location.reload();
-             }else{
-               alert("Submission not proposed successfully.");
-             }
-           }
-         });
 
         });
 

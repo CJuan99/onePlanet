@@ -3,13 +3,13 @@
 session_start();
 include("conn.php");
 $output = '';
-
+$username = $_SESSION["username"];
 
 
 if(isset($_POST["recycler"]) === true && empty($_POST["recycler"])===false)
 {
  $search = mysqli_real_escape_string($conn, $_POST["recycler"]);
- $query = "  SELECT * FROM submission, material WHERE submission.materialID = material.materialID AND recycler LIKE '%".$search."%'
+ $query = " SELECT * FROM submission, material WHERE submission.materialID = material.materialID AND status='Proposed' AND collector='$username' AND recycler LIKE '%".$search."%'
  ";
 }
 
@@ -34,6 +34,15 @@ if(mysqli_num_rows($result) > 0)
  ';
  while($row = mysqli_fetch_array($result))
  {
+   $subID= array();
+   $subID[]=$row["submissionID"];
+   $_SESSION["submissionID"]=$subID;
+  // print_r($subID);
+   $_SESSION["recycler"]=$row["recycler"];
+   $_SESSION["materialName"]=$row["materialName"];
+   $_SESSION["proposedDate"]=$row["proposedDate"];
+
+
   $output .= '
 
    <tr>
@@ -44,17 +53,16 @@ if(mysqli_num_rows($result) > 0)
     <td>'.$row["status"].'</td>
 
     <td class="buttonGroup text-center">
-      <button class="btn btn-success px-3 py-1" data-toggle="modal" data-target="#acceptSub"><i class="far fa-check-circle"></i> Accept</button>
-      <button class="btn btn-warning px-3 py-1" data-toggle="modal" data-target="#updateSub"><i class="far fa-edit"></i>Update</button>
+      <button class="btn btn-success px-3 py-1 btnAccept" ><i class="far fa-check-circle"></i> Accept</button>
+      <button class="btn btn-warning px-3 py-1" data-toggle="modal" data-target="#updateSub" id="btnUpdate" ><i class="far fa-edit"></i>Update</button>
     </td>
 
    </tr>
   ';
  }
  echo $output;
- $_SESSION["submissionID"]=$row["submissionID"];
- $_SESSION["recycler"]=$row["recycler"];
- $_SESSION["materialName"]=$row["materialName"];
+
+
 
 }
 else
@@ -64,5 +72,23 @@ else
 
 ';
 }
+
+if(isset($_POST['weightAcc'])){
+  $rec =$_POST['txt_recUn'];
+  $sub=$_POST['txt_sub'];
+  $mat=$_POST['txt_mat'];
+  $weight=$_POST['weightAcc'];
+
+  $sqlAccpt="UPDATE submission SET weightInKg='$weight', actualDate= now() where submissionID= '$sub'";
+  if( $conn->query($sqlAccpt) ){
+      echo '<script> alert("Data Updated"); </script>';
+   }
+   else{
+      echo '<script> alert("Data Not Updated"); </script>';
+   }
+  /*update submission
+set pointAwarded = (select submission.weightInKg*material.pointPerKG from submission,material where material.materialID = submission.materialID AND submission.submissionID='S008')*/
+}
+
 
 ?>
