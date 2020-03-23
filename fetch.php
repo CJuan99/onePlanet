@@ -73,22 +73,7 @@ else
 ';
 }
 
-if(isset($_POST['weightAcc'])){
-  $rec =$_POST['txt_recUn'];
-  $sub=$_POST['txt_sub'];
-  $mat=$_POST['txt_mat'];
-  $weight=$_POST['weightAcc'];
 
-  $sqlAccpt="UPDATE submission SET weightInKg='$weight', actualDate= now() where submissionID= '$sub'";
-  if( $conn->query($sqlAccpt) ){
-      echo '<script> alert("Data Updated"); </script>';
-   }
-   else{
-      echo '<script> alert("Data Not Updated"); </script>';
-   }
-  /*update submission
-set pointAwarded = (select submission.weightInKg*material.pointPerKG from submission,material where material.materialID = submission.materialID AND submission.submissionID='S008')*/
-}
 
 
 ?>

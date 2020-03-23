@@ -203,22 +203,24 @@ if ($resultRec->num_rows > 0) {
 
 <div class="container">
 
- <h2 align="center" class="py-3">Record Submission</h2>
+
 
  <div class="row justify-content-center ">
+
                        <div class="col-12 col-md-10 col-lg-8 ">
 
                                <div class="card-body row no-gutters align-items-center">
+                                  <h2  class="col-md-5 py-3">Record Submission</h2>
+                                   <!--end of col-->
+                                   <div class="input-group col-md-7">
 
-                                   <!--end of col-->
-                                   <div class="col">
                                   <input class="form-control form-control-lg form-control-borderless bg-light" type="text" name="recycler" id="recycler" placeholder="Search reycler username" required=""><i class="fas fa-exclamation-circle errspan fa-2x d-none" id="ico"></i>
-                                <!--  <div class="" id="reclist"> </div>-->
+                                  <div class="input-group-append">
+                                   <button class="btn btn-lg btn-success" type="submit" name="searchbtn" id="searchbtn"> <i class="fas fa-search "></i></button>
+                                  </div>
                                    </div>
                                    <!--end of col-->
-                                   <div class="col-2">
-                                       <button class="btn btn-lg btn-success" type="submit" name="searchbtn" id="searchbtn"> <i class="fas fa-search "></i></button>
-                                   </div>
+
                                    <!--end of col-->
                                </div>
 
@@ -261,39 +263,35 @@ if ($resultRec->num_rows > 0) {
 
 
                             <div class="form-group">
+                          <!--  <h5 class=' pb-2'>Please insert the weight of the submission as below</h5>-->
 
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <label class="mb-2 px-2">Recycler Username: </label>
+                              <div class="form-group row">
+                              <label  class=" col-sm-5 col-form-label">Submission ID</label>
+                              <div class="col-sm-7">
+                              <input id="txt_sub" name="txt_sub"  class="form-control " type="text" readonly>
                               </div>
-                              <input id="txt_recUn" name="txt_recUn" class="form-control" type="text" readonly>
+                              </div>
+
+                              <div class="form-group row">
+                              <label  class=" col-sm-5 col-form-label">Recycler's Username</label>
+                              <div class="col-sm-7">
+                              <input id="txt_recUn" name="txt_recUn" class="form-control md-5" type="text" readonly>
+                            </div>
                             </div>
 
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <label class="mb-2 px-2">Submission ID: </label>
-                              </div>
-                              <input id="txt_sub" name="txt_sub"  class="form-control" type="text" readonly>
-
+                            <div class="form-group row">
+                            <label  class=" col-sm-5 col-form-label">Material</label>
+                            <div class="col-sm-7">
+                                <input id="txt_matID" name="txt_matID" class="form-control d-none" type="text" readonly>
+                              <input id="txt_mat" name="txt_mat" class="form-control md-5" type="text" readonly>
                             </div>
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <label class="mb-2 px-2">Material Name: </label>
-                              </div>
-                              <input id="txt_mat" name="txt_mat" class="form-control" type="text" readonly>
                             </div>
 
-                          </div>
-
-
-                          <div class="form-group">
-                            <h6 class='lead pb-2'>Please insert the weight of the submission</h6>
-                            <!--  <label class="mb-2">Username</label>-->
-                            <div class="input-group mb-2">
-                              <div class="input-group-prepend">
-                                <div class="input-group-text">Weight (kg)</div>
-                              </div>
+                            <div class="form-group row">
+                            <label  class=" col-sm-5 col-form-label">Weight (kg)</label>
+                            <div class="col-sm-7">
                               <input type="text" class="form-control" name="weightAcc" id="weightAcc" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
+                            </div>
                             </div>
                           </div>
 
@@ -332,12 +330,28 @@ if ($resultRec->num_rows > 0) {
           <div class="signup-form profile">
             <form action="javascript:void(0);" method="POST" name="updateForm" id="updateForm" >
               <div class="form-group">
-                <h6 class='lead pb-2'>Please update the collected material</h6>
+                <h6 class='lead pb-2'>Please update the material and weight of the following submission: </h6>
                 <!--  <label class="mb-2">Username</label>-->
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text pr-4">Materials</div>
-                  </div>
+
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Submission ID</label>
+                <div class="col-sm-7">
+                  <input id="subUp" name="subUp" class="form-control" type="text" readonly>
+                </div>
+                </div>
+
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Recycler's Username</label>
+                <div class="col-sm-7">
+                  <input id="recUp" name="recUp" class="form-control" type="text" readonly>
+                </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Material</label>
+                <div class="col-sm-7">
                   <select id="cmat" name="materials" class="form-control " required="true">
                     <option disabled="disabled" selected="selected" value="">Choose materials </option>
                     <?php if(!empty($arr_mat)) { ?>
@@ -346,23 +360,21 @@ if ($resultRec->num_rows > 0) {
                                       echo "<option value='". $mat['materialID']."'>" . $mat['materialID']. ", ".$mat['materialName'].'</option>'; ?>
                           <?php } ?>
                         <?php }  ?>
-
                   </select>
                 </div>
-
               </div>
-              <div class="form-group">
-                <!--<label class="mb-2">Password</label>-->
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text pr-2">Weight (kg)</span>
+
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Weight (kg)</label>
+                <div class="col-sm-7">
+                <input type="text" class="form-control " name="weight" id="weightUp" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                   </div>
-              <input type="text" class="form-control " name="weight" id="weightUp" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                 </div>
 
               </div>
+
               <div class="text-center">
-                <input type="submit" name="updatebtn" value="Submit">
+                <input type="submit" name="updatebtn" id="updatebtn" value="Submit">
               </div>
               <p class="text-center pb-4">
                 <span>Don't match the submission? </span>
@@ -397,10 +409,9 @@ if ($resultRec->num_rows > 0) {
                 <h6 class='lead pb-2'>Please fill up the submission details as below:</h6>
                 <!--  <label class="mb-2">Username</label>-->
 
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text pr-4 ">Recycler</div>
-                  </div>
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Recycler's Username</label>
+                <div class="col-sm-7">
                   <select id="recyclerNew" name="recyclerNew" class="form-control " required="true">
                     <option disabled="disabled" selected="selected" value="">Choose recycler </option>
                     <?php if(!empty($arr_rec)) { ?>
@@ -411,13 +422,13 @@ if ($resultRec->num_rows > 0) {
                         <?php }  ?>
                   </select>
                 </div>
+              </div>
               <!--    <label id="lblNewRec" class="lead" style="color:red"></label>-->
               </div>
               <div class="form-group">
-                <div class="input-group ">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text pr-4">Materials</div>
-                  </div>
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Material</label>
+                <div class="col-sm-7">
                   <select id="materialNew" name="materialNew" class="form-control " required="true">
                     <option disabled="disabled" selected="selected" value="">Choose materials </option>
                     <?php if(!empty($arr_mat)) { ?>
@@ -429,17 +440,18 @@ if ($resultRec->num_rows > 0) {
 
                   </select>
                 </div>
+              </div>
                 <!--  <label id="lblNewMat" class="lead" style="color:red"></label>-->
               </div>
 
               <div class="form-group">
                 <!--<label class="mb-2">Password</label>-->
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text pr-2">Weight (kg)</span>
-                  </div>
+                <div class="form-group row">
+                <label  class=" col-sm-5 col-form-label">Weight (kg)</label>
+                <div class="col-sm-7">
                 <input type="text" class="form-control " name="weightNew" id="weightNew" placeholder="Enter weight in numeric" required pattern="[0-9]+([,\.][0-9]+)?" title="Weight must be numeric">
                 </div>
+              </div>
               <!--  <label id="lblNewWgt" class="lead" style="color:red"></label>-->
               </div>
               <span id="resultNew"></span>
@@ -568,6 +580,10 @@ if ($resultRec->num_rows > 0) {
           var mat=$("select#materialNew").val();
           var w=$("input#weightNew").val();
 
+          var intRegex = /^\d+$/;
+          var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+
+
           console.log(name,mat,w);
 
           if(name==null){
@@ -577,7 +593,7 @@ if ($resultRec->num_rows > 0) {
           }else if(w==""){
           alert("Please enter weight in kg");
           }else{
-
+            if(intRegex.test(w) || floatRegex.test(w)) {
             $.ajax({
               url:"newSub.php",
               type:"post",
@@ -589,6 +605,10 @@ if ($resultRec->num_rows > 0) {
 
               }
             });
+          }else{
+            alert('Please enter valid weight in kg');
+          }
+
            }
           });
 
@@ -629,42 +649,103 @@ if ($resultRec->num_rows > 0) {
 
                 $('#txt_recUn').val(data[0]);
                 $('#txt_sub').val(data[1]);
-                $('#txt_mat').val(data[2]);
+                $('#txt_matID').val(data[2]);
+                $('#txt_mat').val(data[3]);
         });
 
        $(document).on('click','#acceptBtn',function(){
 
          var rec= $('input#txt_recUn').val();
          var sub= $('input#txt_sub').val();
-         var mat= $('input#txt_mat').val();
+         var mat= $('input#txt_matID').val();
          var w= $('input#weightAcc').val();
 
-        // var sub = document.getElementById('addSub');
-         //var icon=  document.getElementById('ico');
+         var intRegex = /^\d+$/;
+         var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+
 
            console.log(rec,sub,mat,w);
 
            if(w==""){
            alert("Please enter weight in kg");
            }else{
-
-             $.ajax({
-               url:"accept.php",
-               type:"post",
-               data:{recycler:rec, submissionID:sub, materialID:mat, weightInKg:w},
-               success: function(data){
-                   alert(data);
-                   $('#acceptSub').modal('hide');
-               }
-             });
+                 if(intRegex.test(w) || floatRegex.test(w)) {
+               $.ajax({
+                 url:"accept.php",
+                 type:"post",
+                 data:{recycler:rec, submissionID:sub, materialID:mat, weightInKg:w},
+                 success: function(data){
+                     alert(data);
+                     $('#acceptSub').modal('hide');
+                 }
+               });
+             }else{
+               alert('Please enter valid weight in kg');
+             }
             }
-
-
-
         });
 
+        $('#info').on('click',".btnUpdate",function(){
+                 //get data from table row
+
+                 //open modal
+                 $("#updateSub").modal('show');
+                 $tr = $(this).closest('tr');
+
+                 var data = $tr.children("td").map(function() {
+                     return $(this).text();
+                 }).get();
+
+                 console.log(data);
 
 
+                 $('#recUp').val(data[0]);
+                 $('#subUp').val(data[1]);
+
+
+                 $("#cmat option").each(function(){
+                  if ($(this).val() == data[2]) {
+                    $(this).attr("disabled", "disabled").siblings().removeAttr("disabled");
+                  }
+                  });
+
+
+
+         });
+
+        $(document).on('click','#updatebtn',function(){
+
+          var rec=$('input#recUp').val();
+          var sub= $('input#subUp').val();
+          var mat= $('select#cmat').val();
+          var w= $('input#weightUp').val();
+
+          var intRegex = /^\d+$/;
+          var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+
+            console.log(rec,sub,mat,w);
+
+          if(mat==null){
+            alert("Please select a material");
+          }else if(w==""){
+             alert("Please enter weight in kg");
+          }else{
+            if(intRegex.test(w) || floatRegex.test(w)) {
+              $.ajax({
+                url:"updateSub.php",
+                type:"post",
+                data:{recycler:rec, submissionID:sub, materialID:mat, weightInKg:w},
+                success: function(data){
+                    alert(data);
+                    $('#updateSub').modal('hide');
+                }
+              });
+            }else{
+              alert('Please enter valid weight in kg');
+            }
+
+             }
+         });
        </script>
 
 

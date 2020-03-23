@@ -436,15 +436,12 @@ if ($resultSub->num_rows > 0) {
                                                   <label>Choose the submitted materials</label>
                                               </div>
                                               <div class="col-md-6">
-                                                <select name="materials" class="form-control "  id="selectMat">
+                                                <select name="materials" class="form-control "  id="selectMatSub">
                                                   <option disabled="disabled" selected="selected" value="">Choose materials </option>
                                                   <?php if(!empty($arr_sub)) { ?>
                                                       <?php foreach($arr_sub as $sub) {?>
                                                           <?php
-                                                                    echo "<option value='". $sub['materialID']."'>" . $sub['materialID']. ", ".$sub['materialName']. ", ".$sub['description'].", ".$sub['pointsPerKg'].'</option>'; ?>
-
-                                                                   $sub['materialID'] = $_SESSION['materialID'];
-                                                                   $sub['materialName']=$_SESSION['materialName'];
+                                                                    echo "<option value='". $sub['materialID'].", ".$sub['materialName']. "'>" . $sub['materialID']. ", ".$sub['materialName']. ", ".$sub['description'].", ".$sub['pointsPerKg'].'</option>'; ?>
                                                         <?php } ?>
                                                       <?php }  ?>
 
@@ -453,7 +450,7 @@ if ($resultSub->num_rows > 0) {
                                           </div>
                                           <div class="row">
                                               <div class="col-md-12 py-3">
-                                                    <button class="btn btn-success py-2 px-3 text-uppercase ml-auto float-right" id="btnOk" name="btnOk" type="submit" value="Ok"  onclick="window.location.href='viewHistory.php'">Ok</button>
+                                                    <button class="btn btn-success py-2 px-3 text-uppercase ml-auto float-right" id="btnOk" name="btnOk" type="submit" value="Ok" >Ok</button>
                                               </div>
 
                                           </div>
@@ -530,6 +527,17 @@ if ($resultSub->num_rows > 0) {
 
 
     <script src="js/cj.js"></script>
+    <script src="js/jquery.redirect.js"></script>
+    <script type="text/javascript">
+     $('button#btnOk').on('click',function(){
+
+         var strMat=$("select#selectMatSub").val();
+         var mat= strMat.split(',');
+            console.log(mat);
+       $.redirect("viewHistory.php", {materialID: mat[0], materialName: mat[1]});
+
+       });
+    </script>
 
 
   </body>

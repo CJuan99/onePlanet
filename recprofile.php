@@ -42,6 +42,9 @@ if ($resultSub->num_rows > 0) {
     $arr_sub = $resultSub->fetch_all(MYSQLI_ASSOC);
 }
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -332,14 +335,12 @@ if ($resultSub->num_rows > 0) {
                                                   <label>Choose the submitted materials</label>
                                               </div>
                                               <div class="col-md-6">
-                                                <select name="materials" class="form-control "  id="selectMat">
+                                                <select name="materials" class="form-control "  id="selectMatSub">
                                                   <option disabled="disabled" selected="selected" value="">Choose materials </option>
                                                   <?php if(!empty($arr_sub)) { ?>
                                                       <?php foreach($arr_sub as $sub) {?>
                                                           <?php
-                                                                    echo "<option value='". $sub['materialID']."'>" . $sub['materialID']. ", ".$sub['materialName']. ", ".$sub['description'].", ".$sub['pointsPerKg'].'</option>'; ?>
-                                                                    $sub['materialID'] = $_SESSION['materialID'];
-                                                                    $sub['materialName']=$_SESSION['materialName'];
+                                                        echo "<option value='". $sub['materialID'].", ".$sub['materialName']. "'>" . $sub['materialID']. ", ".$sub['materialName']. ", ".$sub['description'].", ".$sub['pointsPerKg'].'</option>'; ?>
                                                         <?php } ?>
                                                       <?php }  ?>
 
@@ -431,6 +432,17 @@ if ($resultSub->num_rows > 0) {
 
 
     <script src="js/cj.js"></script>
+    <script src="js/jquery.redirect.js"></script>
+    <script type="text/javascript">
+     $('button#btnOk').on('click',function(){
+
+         var strMat=$("select#selectMatSub").val();
+         var mat= strMat.split(',');
+            console.log(mat);
+       $.redirect("viewHistory.php", {materialID: mat[0], materialName: mat[1]});
+
+       });
+    </script>
 
 
   </body>
