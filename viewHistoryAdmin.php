@@ -81,7 +81,7 @@ include("maintainMaterial_JS.php");
                               $result_material = $conn->query($sql_material);
                               if($result_material->num_rows>0){
                                 while($row = $result_material->fetch_assoc()){
-                                  echo '<option value='.$row["materialID"].'>'.$row["materialName"].'</option>';
+                                  echo '<option value='.$row["materialID"].'>'.$row["materialID"].', '.$row["materialName"].', '.$row["description"].', '.$row["pointsPerKg"].'</option>';
                                 }
                               }
                               ?>
@@ -89,13 +89,13 @@ include("maintainMaterial_JS.php");
                           </div>
                       </div>
                       <div class="card mb-4 mt-3">
-                          <div class="card-header"><i class="fas fa-table mr-1"></i>Submission Table</div>
+                          <div class="card-header"><i class="fas fa-table mr-1"></i>Submission Table<button id="clearBtn" class="btn btn-primary squareBtn py-0 px-2 float-right"><i class="fas fa-eraser"></i></button></div>
                           <div class="card-body">
                               <div class="table-responsive">
                                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                       <thead>
                                           <tr>
-                                              <th colspan=8><span id="totalWeight" class="ml-1 mr-5">Total Weight: 0</span><span id="totalPoints">Total Points: 0</span><button id="clearBtn" class="btn btn-primary squareBtn py-0 px-2 mr-2 float-right"><i class="fas fa-eraser"></i></button></th>
+                                              <th colspan=8><span id="totalWeight" class="ml-1 mr-5">Total Weight: 0</span><span id="totalPoints">Total Points: 0</span></th>
                                           </tr>
                                           <tr>
                                               <th>Submission ID</th>
@@ -249,12 +249,36 @@ include("maintainMaterial_JS.php");
               // $("#submissionContent").html(rowsElement);
               $("#totalWeight").html("Total Weight: "+totalWeight);
               $("#totalPoints").html("Total Points: "+totalPoints);
+
+              // To clear the filter after select another material
+              var selectTags = $("#dataTable thead").find("select");
+              $.each(selectTags, function(index, tag){
+                tag.value = "";
+                if(table.column(index).search() !== tag.value){
+                  table
+                      .column(index)
+                      .search( tag.value )
+                      .draw();
+                }
+              });
             }else{
               var table = $("#submissionContent").parent().DataTable();
               table.rows().remove().draw();
 
+              // To clear the filter after select another material
+              var selectTags = $("#dataTable thead").find("select");
+              $.each(selectTags, function(index, tag){
+                tag.value = "";
+                if(table.column(index).search() !== tag.value){
+                  table
+                      .column(index)
+                      .search( tag.value )
+                      .draw();
+                }
+              });
             }
           });
+
         });
 
         $(document).on("change", "#dataTable thead tr td select", function(){

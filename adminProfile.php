@@ -22,7 +22,7 @@ if($result_user->num_rows > 0){
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Maintain Material Type - Admin</title>
+        <title>Manage Profile - Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/ricky.css" rel="stylesheet" />
 

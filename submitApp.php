@@ -19,7 +19,7 @@ $matName = $_POST["materialName"];
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <link rel="stylesheet" type="text/css" href="css/ricky.css">
-  <title>Collector Profile</title>
+  <title>Propose Submission</title>
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">

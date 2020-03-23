@@ -146,6 +146,16 @@
   background:#000;
 }
 
+@media (max-width: 992px) {
+  #separator_points_weight{
+    display:none;
+  }
+
+  .totalAmount{
+    display:block;
+  }
+}
+
 /* For ui-datepicker */
 .ui-state-active a:visited {
   border: 1px solid #003eff;
