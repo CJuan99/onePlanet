@@ -181,7 +181,7 @@ if($result_submissions->num_rows>0){
 }else{
   echo '<ul>
           <li class="project-item first-child mix p-4">
-            <span class="text-muted">No submission exist/related to the filter.</span>
+            <span class="text-muted">No submission related to the filter.</span>
           </li>
         </ul>';
 

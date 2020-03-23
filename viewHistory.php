@@ -5,8 +5,8 @@ include("conn.php");
 
 $username = $_SESSION['username'];
 $userType = $_SESSION['userType'];
-$matID = '8'; //$_POST["materialID"];
-$matName = 'Batteries'; //$_POST["materialName"];
+$matID = $_POST["materialID"];
+$matName = $_POST["materialName"];
 
 ?>
 
