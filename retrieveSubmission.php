@@ -177,18 +177,18 @@ if($result_submissions->num_rows>0){
   echo '~';
 
   echo '<h4>Material: '.$matName.'</h4>
-        <span class="px-3">Total Weight: '.$totalWeight.'</span> | <span class="px-3">Total Points: '.$totalPoints.'</span>';
+        <span class="totalAmount px-3">Total Weight: '.$totalWeight.'</span><span id="separator_points_weight"> | </span><span class="totalAmount px-3">Total Points: '.$totalPoints.'</span>';
 }else{
   echo '<ul>
           <li class="project-item first-child mix p-4">
-            <span class="text-muted">No submission exist/related to the filter.</span>
+            <span class="text-muted">No submission related to the filter.</span>
           </li>
         </ul>';
 
   echo '~';
 
   echo '<h4>Material: '.$matName.'</h4>
-        <span class="px-3">Total Weight: 0</span> | <span class="px-3">Total Points: 0</span>';
+        <span class="totalAmount px-3">Total Weight: 0</span><span id="separator_points_weight"> | </span><span class="totalAmount px-3">Total Points: 0</span>';
 
 }
 

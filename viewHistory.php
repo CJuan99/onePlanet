@@ -5,8 +5,8 @@ include("conn.php");
 
 $username = $_SESSION['username'];
 $userType = $_SESSION['userType'];
-$matID = '8'; //$_POST["materialID"];
-$matName = 'Batteries'; //$_POST["materialName"];
+$matID = $_POST["materialID"];
+$matName = $_POST["materialName"];
 
 ?>
 
@@ -21,7 +21,7 @@ $matName = 'Batteries'; //$_POST["materialName"];
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <link rel="stylesheet" type="text/css" href="css/ricky.css">
   <link rel="stylesheet" type="text/css" href="css/templatemo-style.css">
-  <title>Collector Profile</title>
+  <title>View History</title>
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -114,10 +114,10 @@ $matName = 'Batteries'; //$_POST["materialName"];
         <div class="col-lg-12">
           <div class="row">
             <div class="col-md-4 text-center">
-              <button id="showAll" class="btn btn-mint w-100 my-4">Show All</button>
+              <button id="showAll" class="btn btn-mint w-100 mt-4">Show All</button>
             </div>
             <div class="col-md-4 text-center">
-              <button id="showProposed" class="btn btn-mint w-100 my-4">Proposed</button>
+              <button id="showProposed" class="btn btn-mint w-100 mt-4">Proposed</button>
             </div>
             <div class="col-md-4 text-center">
               <button id="showSubmitted" class="btn btn-mint w-100 my-4">Submitted</button>
@@ -148,16 +148,16 @@ $matName = 'Batteries'; //$_POST["materialName"];
                 }
                 $result_submissions = $conn->query($sql_submissions);
 
+                $totalWeight=0;
+                $totalPoints=0;
                 if($result_submissions->num_rows>0){
-                  $totalWeight=0;
-                  $totalPoints=0;
                   while($row = $result_submissions->fetch_assoc()){
                     $totalWeight+=$row["weightInKg"];
                     $totalPoints+=$row["pointsAwarded"];
                   }
                 }
                 ?>
-                <span class="px-3">Total Weight: <?php echo $totalWeight ?></span> | <span class="px-3">Total Points: <?php echo $totalPoints ?></span>
+                <span class="totalAmount px-3">Total Weight: <?php echo $totalWeight ?></span><span id="separator_points_weight"> | </span><span class="totalAmount px-3">Total Points: <?php echo $totalPoints ?></span>
               </div>
             </div>
           </div>
