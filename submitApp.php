@@ -40,34 +40,34 @@ $matName = $_POST["materialName"];
         <?php if(!empty($_SESSION['username'])) { ?>
 			    <?php if($_SESSION['userType']=='Recycler') { ?>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                    <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#recycle">Recycle Now</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
                   </li>
           <?php }else { ?>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
               </li>
             <?php } ?>
         <?php }else { ?>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#recycle">Recycle Now</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
               </li>
         <?php } ?>
       </div>
@@ -109,7 +109,7 @@ $matName = $_POST["materialName"];
 
     <div class="container">
       <div class="row">
-        <table class="table bg-white mb-5">
+        <table class="table bg-white mb-4">
           <h3 class="mt-5 mb-3">Collectors who collect the material, <?php echo $matName ?></h3>
           <thead>
             <tr class="bg-dark text-white">
@@ -222,6 +222,8 @@ $matName = $_POST["materialName"];
             ?>
           </tbody>
         </table>
+
+        <button onclick='window.location.href="index.php#recycle"' class="btn btn-primary mb-5">Back To Select Material</button>
       </div>
     </div>
 
