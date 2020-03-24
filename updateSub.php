@@ -4,6 +4,8 @@ include("conn.php");
 
 $points=0;
 $pA=0;
+$tp=0;
+$ecoLevel="";
 
 if(isset($_POST["weightInKg"]) && isset($_POST["materialID"]))
 {
@@ -23,10 +25,34 @@ if($rpoint->num_rows>0){
 }
 $pA= $weight*$points;
 
+$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec'";
+$reco= $conn->query($sqlEco);
+if($reco->num_rows>0){
+    while($row = $reco->fetch_assoc()){
+      $tp=$row["totalPoints"];
+}
+
+}
+
+$tp=$tp+$pA;
+
+if($tp > 1000){
+  $ecoLevel='Eco Warrior';
+}else if($tp > 500){
+    $ecoLevel='Eco Hero';
+}else if($tp > 100){
+   $ecoLevel = 'Eco Saver';
+}else{
+  $ecoLevel='Eco Newbie';
+}
+mysqli_query($conn,"UPDATE users set totalPoints='$tp' where username='$username'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
+
+
 $sqlAcc= "UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted', materialID='$matID' WHERE submissionID='$sub'";
 //mysqli_query($conn,"UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'") or die(mysqli_error($conn));
 //$sqlUpdate = "UPDATE submission SET weightInKg='$weight' AND status='Submitted' WHERE submissionID='$sub'";
-mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$rec'") or die(mysqli_error($conn));
+//mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$rec'") or die(mysqli_error($conn));
 
 if($conn->query($sqlAcc)){
   echo "Submission is updated and confirmed ";

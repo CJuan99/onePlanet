@@ -43,8 +43,6 @@ if ($resultSub->num_rows > 0) {
 }
 
 
-
-
 ?>
 
 <!DOCTYPE html>

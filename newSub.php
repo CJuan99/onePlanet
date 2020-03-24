@@ -4,7 +4,8 @@ include("conn.php");
 
 $points=0;
 $pA=0;
-$tpoints=0;
+$tp=0;
+$ecoLevel="";
 if(isset($_POST["recycler"]) && isset($_POST["materialID"])&& isset($_POST["weightInKg"]) )
 {
 $sql_submission = "SELECT * FROM submission";
@@ -42,8 +43,30 @@ $pA= $weightNew*$points;
 
 $sqlInsert="INSERT INTO submission  VALUES ('$submissionID', null, now(), '$weightNew','$pA','Submitted', '$recNew', '$username', '$matID')";
 
-//$sqlUserP="UPDATE users set totalPoints+'$pA' where username='$username' AND username='$recNew'";
-mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$recNew'") or die(mysqli_error($conn));
+$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec'";
+$reco= $conn->query($sqlEco);
+if($reco->num_rows>0){
+    while($row = $reco->fetch_assoc()){
+      $tp=$row["totalPoints"];
+}
+
+}
+
+$tp=$tp+$pA;
+
+if($tp > 1000){
+  $ecoLevel='Eco Warrior';
+}else if($tp > 500){
+    $ecoLevel='Eco Hero';
+}else if($tp > 100){
+   $ecoLevel = 'Eco Saver';
+}else{
+  $ecoLevel='Eco Newbie';
+}
+mysqli_query($conn,"UPDATE users set totalPoints='$tp' where username='$username'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
+
+//mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$recNew'") or die(mysqli_error($conn));
 
 
 if($conn->query($sqlInsert)){
