@@ -126,7 +126,7 @@ $matName = $_POST["materialName"];
             if($result_recycler->num_rows>0){
               $recycler = $result_recycler->fetch_assoc();
             }
-            $sql_collector = "SELECT * FROM users u, registeredmaterial r, material m WHERE u.username=r.username AND r.materialID=m.materialID AND m.materialID='$matID' AND u.username NOT IN (SELECT collector FROM submission WHERE recycler='$username' AND materialID='$matID')";
+            $sql_collector = "SELECT * FROM users u, registeredmaterial r, material m WHERE u.username=r.username AND r.materialID=m.materialID AND m.materialID='$matID' AND u.username NOT IN (SELECT collector FROM submission WHERE recycler='$username' AND materialID='$matID' AND status='Proposed')";
 
             $result_collector = $conn->query($sql_collector);
             if($result_collector->num_rows>0){
