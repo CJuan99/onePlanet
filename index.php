@@ -17,7 +17,7 @@ if(isset($_POST['materialID'])){
 	$_SESSION['materialID']=$matID;
 }*/
 
-$sql = "SELECT * FROM material";
+$sql = "SELECT * FROM material WHERE materialStatus='Available'";
 $result = $conn->query($sql);
 $arr_mat= [];
 
