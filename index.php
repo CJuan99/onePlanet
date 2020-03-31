@@ -212,7 +212,7 @@ if(isset($_POST['materialID'])){
                     </div>
                     <div class="form-group">
                       <!-- <label for="newpwd">Password</label>-->
-                      <input type="password" class="form-control" id="rpassword" placeholder="Password" name="password" required minlength="6">
+                      <input type="password" class="form-control" id="rpassword" placeholder="Password" name="password" required minlength="6" >
 
                     </div>
                     <div class="form-group">
