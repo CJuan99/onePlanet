@@ -31,6 +31,6 @@ mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where userna
 if($conn->query($sqlAcc)){
   echo "Submission is confirmed ";
 }else{
-  echo "Unable to update";
+  echo "Unable to accept the submission";
 }
 }?>
