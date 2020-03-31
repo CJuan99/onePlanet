@@ -42,6 +42,8 @@ if(mysqli_num_rows($result) > 0)
    $_SESSION["materialName"]=$row["materialName"];
    $_SESSION["proposedDate"]=$row["proposedDate"];
 
+   $pDate=$row["proposedDate"];
+   $proposedDate=date("d-m-Y", strtotime($pDate));
 
   $output .= '
 
@@ -50,7 +52,7 @@ if(mysqli_num_rows($result) > 0)
     <td>'.$row["submissionID"].'</td>
     <td class="d-none">'.$row["materialID"].'</td>
     <td>'.$row["materialName"].'</td>
-    <td>'.$row["proposedDate"].'</td>
+    <td>'.$proposedDate.'</td>
     <td>'.$row["status"].'</td>
 
     <td class="buttonGroup text-center">
