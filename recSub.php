@@ -677,6 +677,7 @@ if ($resultRec->num_rows > 0) {
                  success: function(data){
                      alert(data);
                      $('#acceptSub').modal('hide');
+                     location.reload();
                  }
                });
              }else{
@@ -738,6 +739,7 @@ if ($resultRec->num_rows > 0) {
                 success: function(data){
                     alert(data);
                     $('#updateSub').modal('hide');
+                    location.reload();
                 }
               });
             }else{

@@ -10,7 +10,7 @@ $sql = "SELECT * FROM users WHERE username ='$username'";
 $resultset = mysqli_query($conn, $sql);
 $userRecord = mysqli_fetch_assoc($resultset);
 
-$sqlCollMat = "SELECT materialName FROM registeredmaterial, material
+$sqlCollMat = "SELECT  materialName FROM registeredmaterial, material
  WHERE registeredmaterial.materialID= material.materialID AND registeredmaterial.username ='$username'";
 
 
@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
 
 
 
-$sqlSub = "SELECT material.materialID, materialName, description, pointsPerKg FROM submission, material WHERE submission.materialID = material.materialID AND recycler='$username'";
+$sqlSub = "SELECT DISTINCT material.materialID, materialName, description, pointsPerKg FROM submission, material WHERE submission.materialID = material.materialID AND recycler='$username'";
 $resultSub = $conn->query($sqlSub);
 $arr_sub= [];
 
