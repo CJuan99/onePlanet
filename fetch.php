@@ -69,7 +69,7 @@ if(mysqli_num_rows($result) > 0)
 else
 {
  echo '<h5>Searching "'.$search.'" </h5>
-<div class="bg-light py-3 px-3" ><h5> Data Not Found</h5></div>
+<div class="bg-light py-3 px-3" ><h5> Submission not found</h5></div>
 
 ';
 }
