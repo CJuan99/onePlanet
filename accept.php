@@ -43,7 +43,7 @@ if($tp > 1000){
 }else if($tp > 100){
    $ecoLevel = 'Eco Saver';
 }else{
-  $ecoLevel='Eco Newbie';
+  $ecoLevel='Newbie';
 }
 
 $sqlAcc= "UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'";

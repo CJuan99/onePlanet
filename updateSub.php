@@ -43,9 +43,9 @@ if($tp > 1000){
 }else if($tp > 100){
    $ecoLevel = 'Eco Saver';
 }else{
-  $ecoLevel='Eco Newbie';
+  $ecoLevel='Newbie';
 }
-mysqli_query($conn,"UPDATE users set totalPoints='$tp' where username='$username'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints=totalPoints+'$pA' where username='$username'") or die(mysqli_error($conn));
 mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
 
 

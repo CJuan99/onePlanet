@@ -1,62 +1,90 @@
 <?php
 session_start();
-include("conn.php");
+  include("conn.php");
 
-$points=0;
-$pA=0;
-$tp=0;
-$ecoLevel="";
+//if(isset($_GET["btnsubmitColl"])){
 
-if(isset($_POST["weightInKg"]) && isset($_POST["materialID"]))
-{
+  $username = $_SESSION["username"];
+  $fullname = $_REQUEST["fullname"];
+  $password= $_REQUEST["password"];
 
-$username = $_SESSION["username"];
-$rec = $_POST["recycler"];
-$sub=$_POST["submissionID"];
-$matID= $_POST["materialID"];
-$weight= $_POST["weightInKg"];
+	$password=md5($password);
+  $sql_update = "UPDATE users SET fullname='$fullname' WHERE username= '$username'";
 
-$sqlPoints= "SELECT pointsPerKg from material where materialID='$matID'";
-$rpoint= $conn->query($sqlPoints);
-if($rpoint->num_rows>0){
-    while($row = $rpoint->fetch_assoc()){
-      $points=$row["pointsPerKg"];
-}
-}
-$pA= $weight*$points;
+  $sql_updatePwd = "UPDATE users SET password='$password' WHERE username= '$username'";
 
-$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec'";
-$reco= $conn->query($sqlEco);
-if($reco->num_rows>0){
-    while($row = $reco->fetch_assoc()){
-      $tp=$row["totalPoints"];
-}
+//var_dump($_GET);
+if($_REQUEST["password"]!="******"){
+  if(strlen($_REQUEST["materialID"])>0){
 
-}
+    $matID = $_REQUEST["materialID"];
 
-$tp=$tp+$pA;
+    $sql_updateMat= "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
 
-if($tp > 1000){
-  $ecoLevel='Eco Warrior';
-}else if($tp > 500){
-    $ecoLevel='Eco Hero';
-}else if($tp > 100){
-   $ecoLevel = 'Eco Saver';
+    if( $conn->query($sql_update) && $conn->query($sql_updatePwd) && $conn->query($sql_updateMat) ){
+       echo true;
+     }
+     else{
+       echo false;
+     }
+
+  }else{
+    if( $conn->query($sql_update) && $conn->query($sql_updatePwd) ){
+     /*  echo '<script type="text/javascript"> window.alert("Account is successfully updated");';
+       echo 'window.location.href="profile.php";</script>';
+     //  header("Location:profile.php");
+       $_SESSION['username']=$username;*/
+       echo true;
+     }
+     else{
+       echo false;
+     }
+  }
 }else{
-  $ecoLevel='Eco Newbie';
+  if(strlen($_REQUEST["materialID"])>0){
+
+    $matID = $_REQUEST["materialID"];
+
+    $sql_updateMat= "INSERT INTO registeredmaterial ( materialID, username) VALUES ( '$matID','$username')";
+
+    if( $conn->query($sql_update) && $conn->query($sql_updateMat) ){
+       echo true;
+     }
+     else{
+       echo false;
+     }
+
+  }else{
+    if( $conn->query($sql_update) ){
+     /*  echo '<script type="text/javascript"> window.alert("Account is successfully updated");';
+       echo 'window.location.href="profile.php";</script>';
+     //  header("Location:profile.php");
+       $_SESSION['username']=$username;*/
+       echo true;
+     }
+     else{
+       echo false;
+     }
+  }
 }
-mysqli_query($conn,"UPDATE users set totalPoints=totalPoints+'$pA' where username='$username'") or die(mysqli_error($conn));
-mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
+
+//}
 
 
-$sqlAcc= "UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted', materialID='$matID' WHERE submissionID='$sub'";
-//mysqli_query($conn,"UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'") or die(mysqli_error($conn));
-//$sqlUpdate = "UPDATE submission SET weightInKg='$weight' AND status='Submitted' WHERE submissionID='$sub'";
-//mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$rec'") or die(mysqli_error($conn));
+//Recycler
 
-if($conn->query($sqlAcc)){
-  echo "Submission is updated and confirmed ";
-}else{
-  echo "Unable to update";
-}
-}?>
+//if(isset($_GET["btnsubmit"])){
+/*
+  $username = $_SESSION["username"];
+  $fullname = $_REQUEST["fullname"];
+  $password= $_REQUEST["password"];
+
+var_dump($_REQUEST);
+
+  $sql_upRfn= "UPDATE users SET fullname='$fullname' WHERE username= '$username'";
+  $sql_upRpwd = "UPDATE users SET password='$password' WHERE username= '$username'";
+
+  $conn->query($sql_upRfn);
+  $conn->query($sql_upRpwd );
+}*/
+?>
