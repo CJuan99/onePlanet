@@ -431,12 +431,13 @@ if ($resultRec->num_rows > 0) {
                 <div class="col-sm-7">
                   <select id="materialNew" name="materialNew" class="form-control " required="true">
                     <option disabled="disabled" selected="selected" value="">Choose materials </option>
-                    <?php if(!empty($arr_mat)) { ?>
+                      <!-- <option disabled="disabled" selected="selected" value="">Choose materials </option>
+                        <?php if(!empty($arr_mat)) { ?>
                         <?php foreach($arr_mat as $mat) {?>
                             <?php
                                       echo "<option value='". $mat['materialID']."'>" . $mat['materialID']. ", ".$mat['materialName'].'</option>'; ?>
                           <?php } ?>
-                        <?php }  ?>
+                        <?php }  ?>-->
 
                   </select>
                 </div>
@@ -612,6 +613,32 @@ if ($resultRec->num_rows > 0) {
            }
           });
 
+          $('#recyclerNew').change(function(){
+          var recyclerNew= $(this).val();
+
+            $.ajax({
+              url:"matNew.php",
+              type:"post",
+              data:{recycler:recyclerNew},
+              success: function(data){
+                //  alert(data);
+                if(data!="notFound"){
+
+                  $('#materialNew').html(data);
+                $('#newBtn').attr("disabled", false);
+                //  $('#Sub').modal('hide');
+                  //  location.reload();
+              }else{
+                  $('#materialNew').html("<option value=''>No available material</option>");
+                  $('#newBtn').attr("disabled", true);
+                }
+                //  $('#Sub').modal('hide');
+                  //  location.reload();
+              }
+            });
+
+          });
+
 
 
        $('button#searchbtn').on('click',function(){
@@ -706,7 +733,9 @@ if ($resultRec->num_rows > 0) {
 
                  $("#cmat option").each(function(){
                   if ($(this).val() == data[2]) {
-                    $(this).attr("disabled", "disabled").siblings().removeAttr("disabled");
+                    //$(this).attr("disabled", "disabled").siblings().removeAttr("disabled");
+                    $(this).hide().siblings().show();
+                    //attr("disabled", "disabled").siblings().removeAttr("disabled");
                   }
                   });
 

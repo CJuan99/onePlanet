@@ -25,7 +25,7 @@ if($rpoint->num_rows>0){
 }
 $pA= $weight*$points;
 
-$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec' OR username='$username'";
+$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec'";
 $reco= $conn->query($sqlEco);
 if($reco->num_rows>0){
     while($row = $reco->fetch_assoc()){

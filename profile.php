@@ -60,7 +60,7 @@ if ($result->num_rows > 0) {
 
 
 
-$sqlSub = "SELECT material.materialID, materialName, description, pointsPerKg FROM submission, material WHERE submission.materialID = material.materialID AND collector='$username'";
+$sqlSub = "SELECT DISTINCT material.materialID, materialName, description, pointsPerKg FROM submission, material WHERE submission.materialID = material.materialID AND collector='$username'";
 $resultSub = $conn->query($sqlSub);
 $arr_sub= [];
 

@@ -22,7 +22,7 @@ if($result_user->num_rows > 0){
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Maintain Material Type - Admin</title>
+        <title>Manage Profile - Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/ricky.css" rel="stylesheet" />
 
@@ -63,7 +63,7 @@ if($result_user->num_rows > 0){
                             <a class="nav-link" href="maintainMaterial.php"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                                 Maintain Material Type</a
-                            ><a class="nav-link" href="viewHistory.php"
+                            ><a class="nav-link" href="viewHistoryAdmin.php"
                                 ><div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
                                 View Submission History</a
                             >

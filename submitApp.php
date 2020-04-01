@@ -19,7 +19,7 @@ $matName = $_POST["materialName"];
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <link rel="stylesheet" type="text/css" href="css/ricky.css">
-  <title>Collector Profile</title>
+  <title>Propose Submission</title>
 </head>
 
 <body id="page-top" style="background-color: #D0F0C0;">
@@ -40,34 +40,34 @@ $matName = $_POST["materialName"];
         <?php if(!empty($_SESSION['username'])) { ?>
 			    <?php if($_SESSION['userType']=='Recycler') { ?>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                    <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#recycle">Recycle Now</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
                   </li>
           <?php }else { ?>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="recSub.php">My Collection</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
               </li>
             <?php } ?>
         <?php }else { ?>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger " href="#about">About Us</a>
+                <a class="nav-link js-scroll-trigger " href="index.php#about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#recycle">Recycle Now</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#recycle">Recycle Now</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a>
+                <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact Us</a>
               </li>
         <?php } ?>
       </div>
@@ -109,7 +109,7 @@ $matName = $_POST["materialName"];
 
     <div class="container">
       <div class="row">
-        <table class="table bg-white mb-5">
+        <table class="table bg-white mb-4">
           <h3 class="mt-5 mb-3">Collectors who collect the material, <?php echo $matName ?></h3>
           <thead>
             <tr class="bg-dark text-white">
@@ -126,7 +126,7 @@ $matName = $_POST["materialName"];
             if($result_recycler->num_rows>0){
               $recycler = $result_recycler->fetch_assoc();
             }
-            $sql_collector = "SELECT * FROM users u, registeredmaterial r, material m WHERE u.username=r.username AND r.materialID=m.materialID AND m.materialID='$matID' AND u.username NOT IN (SELECT collector FROM submission WHERE recycler='$username' AND materialID='$matID')";
+            $sql_collector = "SELECT * FROM users u, registeredmaterial r, material m WHERE u.username=r.username AND r.materialID=m.materialID AND m.materialID='$matID' AND u.username NOT IN (SELECT collector FROM submission WHERE recycler='$username' AND materialID='$matID' AND status='Proposed')";
 
             $result_collector = $conn->query($sql_collector);
             if($result_collector->num_rows>0){
@@ -222,6 +222,8 @@ $matName = $_POST["materialName"];
             ?>
           </tbody>
         </table>
+
+        <button onclick='window.location.href="index.php#recycle"' class="btn btn-primary mb-5">Back To Select Material</button>
       </div>
     </div>
 

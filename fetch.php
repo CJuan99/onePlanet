@@ -42,6 +42,8 @@ if(mysqli_num_rows($result) > 0)
    $_SESSION["materialName"]=$row["materialName"];
    $_SESSION["proposedDate"]=$row["proposedDate"];
 
+   $pDate=$row["proposedDate"];
+   $proposedDate=date("d-m-Y", strtotime($pDate));
 
   $output .= '
 
@@ -50,7 +52,7 @@ if(mysqli_num_rows($result) > 0)
     <td>'.$row["submissionID"].'</td>
     <td class="d-none">'.$row["materialID"].'</td>
     <td>'.$row["materialName"].'</td>
-    <td>'.$row["proposedDate"].'</td>
+    <td>'.$proposedDate.'</td>
     <td>'.$row["status"].'</td>
 
     <td class="buttonGroup text-center">
@@ -69,7 +71,7 @@ if(mysqli_num_rows($result) > 0)
 else
 {
  echo '<h5>Searching "'.$search.'" </h5>
-<div class="bg-light py-3 px-3" ><h5> Data Not Found</h5></div>
+<div class="bg-light py-3 px-3" ><h5> Submission not found</h5></div>
 
 ';
 }
