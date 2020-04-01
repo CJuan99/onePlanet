@@ -621,8 +621,17 @@ if ($resultRec->num_rows > 0) {
               type:"post",
               data:{recycler:recyclerNew},
               success: function(data){
-                  alert(data);
+                //  alert(data);
+                if(data!="notFound"){
+
                   $('#materialNew').html(data);
+                $('#newBtn').attr("disabled", false);
+                //  $('#Sub').modal('hide');
+                  //  location.reload();
+              }else{
+                  $('#materialNew').html("<option value=''>No available material</option>");
+                  $('#newBtn').attr("disabled", true);
+                }
                 //  $('#Sub').modal('hide');
                   //  location.reload();
               }

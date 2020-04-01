@@ -6,9 +6,9 @@ $username = $_SESSION["username"];
 
 $output = '';
 
-if(isset($_POST["recyclerNew"]) )
+if(isset($_POST["recycler"]) )
 {
-$rec = $_POST["recyclerNew"];
+$rec = $_POST["recycler"];
 
 $query ="SELECT * FROM material
 WHERE materialStatus='Available'
@@ -27,7 +27,11 @@ if(mysqli_num_rows($result) > 0)
       echo "<option value='". $mat['materialID']."'>" . $mat['materialID']. ", ".$mat['materialName']."</option>";
 
     }
+}else{
+  echo "<option value=''>No available material</option>";
 }
 
+}else{
+  echo "NOT FOUND";
 }
  ?>
