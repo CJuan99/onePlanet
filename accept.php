@@ -25,7 +25,7 @@ if($rpoint->num_rows>0){
 }
 $pA= $weight*$points;
 
-$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec'";
+$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec' OR username='$username'";
 $reco= $conn->query($sqlEco);
 if($reco->num_rows>0){
     while($row = $reco->fetch_assoc()){
@@ -49,7 +49,7 @@ if($tp > 1000){
 $sqlAcc= "UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'";
 //mysqli_query($conn,"UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'") or die(mysqli_error($conn));
 //$sqlUpdate = "UPDATE submission SET weightInKg='$weight' AND status='Submitted' WHERE submissionID='$sub'";
-mysqli_query($conn,"UPDATE users set totalPoints='$tp' where username='$username'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints=totalPoints+'$pA' where username='$username'") or die(mysqli_error($conn));
 mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
 
 if($conn->query($sqlAcc)){
