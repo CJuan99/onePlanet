@@ -49,7 +49,7 @@ if($tp > 1000){
 $sqlAcc= "UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'";
 //mysqli_query($conn,"UPDATE submission SET weightInKg='$weight', actualDate= now(),pointsAwarded='$pA', status='Submitted' WHERE submissionID='$sub'") or die(mysqli_error($conn));
 //$sqlUpdate = "UPDATE submission SET weightInKg='$weight' AND status='Submitted' WHERE submissionID='$sub'";
-mysqli_query($conn,"UPDATE users set totalPoints='$tp' where username='$username'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints=totalPoints+'$pA' where username='$username'") or die(mysqli_error($conn));
 mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
 
 if($conn->query($sqlAcc)){

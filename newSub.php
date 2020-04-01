@@ -43,7 +43,7 @@ $pA= $weightNew*$points;
 
 $sqlInsert="INSERT INTO submission  VALUES ('$submissionID', null, now(), '$weightNew','$pA','Submitted', '$recNew', '$username', '$matID')";
 
-$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$rec'";
+$sqlEco ="SELECT totalPoints, ecoLevel from users where username='$recNew' ";
 $reco= $conn->query($sqlEco);
 if($reco->num_rows>0){
     while($row = $reco->fetch_assoc()){
@@ -63,8 +63,8 @@ if($tp > 1000){
 }else{
   $ecoLevel='Eco Newbie';
 }
-mysqli_query($conn,"UPDATE users set totalPoints='$tp' where username='$username'") or die(mysqli_error($conn));
-mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$rec'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints=totalPoints+'$pA' where username='$username'") or die(mysqli_error($conn));
+mysqli_query($conn,"UPDATE users set totalPoints='$tp', ecoLevel='$ecoLevel' where username='$recNew'") or die(mysqli_error($conn));
 
 //mysqli_query($conn,"UPDATE users set totalPoints= totalPoints+'$pA' where username='$username' OR username='$recNew'") or die(mysqli_error($conn));
 
