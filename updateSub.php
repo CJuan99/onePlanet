@@ -36,11 +36,11 @@ if($reco->num_rows>0){
 
 $tp=$tp+$pA;
 
-if($tp > 1000){
+if($tp >= 1000){
   $ecoLevel='Eco Warrior';
-}else if($tp > 500){
+}else if($tp >= 500){
     $ecoLevel='Eco Hero';
-}else if($tp > 100){
+}else if($tp >= 100){
    $ecoLevel = 'Eco Saver';
 }else{
   $ecoLevel='Newbie';
