@@ -670,12 +670,12 @@ if(isset($_POST['materialID'])){
   function setCookiesAttempt() {
     var now = new Date();
     var time = now.getTime();
-    var expireTime = time + 60 * 1000;
+    var expireTime = time + 5 * 60 * 1000; // 5 mins
     now.setTime(expireTime);
 
     errorAttempted=getCookie("attempt");
     if(errorAttempted!=null){
-      document.cookie = 'attempt='+(errorAttempted++)+';expires='+now.toGMTString()+';path=/';
+      document.cookie = 'attempt='+(++errorAttempted)+';expires='+now.toGMTString()+';path=/';
     }else{
       document.cookie = 'attempt=1;expires='+now.toGMTString()+';path=/';
     }
@@ -704,37 +704,48 @@ if(isset($_POST['materialID'])){
       var xmlhttp = new XMLHttpRequest();
       if(getCookie("attempt")!=null){
           attempt = getCookie("attempt");
-        }else{
-          attempt = 0;
-        }
-        if(attempt<=5){
-        //  alert(2);
+      }else{
+        attempt = 0;
+      }
 
-          xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            var resp=this.responseText.split(",");
-            loginSuccess=resp[0];
-            userType=resp[1];
-            if (loginSuccess){
-              if(userType=="Recycler")
-                window.location.href="index.php";
-              else if(userType=="Collector")
-                window.location.href="index.php";
-              else
-                window.location.href="maintainMaterial.php";
+      if(attempt<5){
+      //  alert(2);
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var resp=this.responseText.split(",");
+          loginSuccess=resp[0];
+          userType=resp[1];
+          if (loginSuccess){
+            document.cookie = "attempt=0;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+            if(userType=="Recycler")
+              window.location.href="index.php";
+            else if(userType=="Collector")
+              window.location.href="index.php";
+            else
+              window.location.href="maintainMaterial.php";
+          }else{
+            //attempt++;
+            setCookiesAttempt();
+            var attemptLeft = 4-(attempt);
+            if(attemptLeft>1){
+              alert("Incorrect username or password. Please try again. ("+attemptLeft+" attempts left.)");
+            }else if(attemptLeft>0){
+              alert("Incorrect username or password. Please try again. ("+attemptLeft+" attempt left.)");
             }else{
-              //attempt++;
-              //setCookiesAttempt(attempt);
-             alert("You have left "+attempt+" attempt;");
-               location.reload();
+              alert("Incorrect username or password. (No more attempts.)");
             }
+            location.reload();
           }
-          };
         }
-          xmlhttp.open("GET", "login.php?username="+username+"&password="+pwd, true);
-          xmlhttp.send();
-        });
-      });
+        };
+      }else{
+        alert("Your attempts have exceeded 5 times. Please retry after 5 minutes.");
+      }
+
+      xmlhttp.open("GET", "login.php?username="+username+"&password="+pwd, true);
+      xmlhttp.send();
+    });
+  });
 
 
 
