@@ -344,7 +344,11 @@ $matName = $_POST["materialName"];
         </div>
       </div>
       <div class="row">
-          <button onclick='window.history.back()' class="btn btn-primary mt-4">Back To Profile Page</button>
+        <?php if($userType=="Recycler"){ ?>
+          <button onclick='window.location.href="recprofile.php"' class="btn btn-primary mt-4">Back To Profile Page</button>
+        <?php }else{ ?>
+          <button onclick='window.location.href="profile.php"' class="btn btn-primary mt-4">Back To Profile Page</button>
+        <?php }?>
       </div>
     </div>
 
