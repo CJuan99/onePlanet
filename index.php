@@ -663,20 +663,93 @@ if(isset($_POST['materialID'])){
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <script src="js/cj.js"></script>
-  <script src="js/login-registration.js"></script>
+
 
   <script type="text/javascript">
+  var attempt;
+  function setCookiesAttempt() {
+    var now = new Date();
+    var time = now.getTime();
+    var expireTime = time + 5 * 60 * 1000; // 5 mins
+    now.setTime(expireTime);
+
+    errorAttempted=getCookie("attempt");
+    if(errorAttempted!=null){
+      document.cookie = 'attempt='+(++errorAttempted)+';expires='+now.toGMTString()+';path=/';
+    }else{
+      document.cookie = 'attempt=1;expires='+now.toGMTString()+';path=/';
+    }
+  }
+
+  function getCookie(name) {
+    //alert(11);
+    var nameEQ = name + "=";
+  	var ca = document.cookie.split(';');
+  	for(var i=0;i < ca.length;i++) {
+  		var c = ca[i];
+  		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+  		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  	}
+  	return null;
+  //  alert(12);
+  }
+
   jQuery(document).ready(function(){
       $('#loginForm').submit(function(){
-
       var username=document.getElementById("username").value;
       var pwd=document.getElementById("password").value;
       var loginSuccess=false;
       var userType;
 
       var xmlhttp = new XMLHttpRequest();
+      if(getCookie("attempt")!=null){
+          attempt = getCookie("attempt");
+      }else{
+        attempt = 0;
+      }
 
-      xmlhttp.onreadystatechange = function() {
+      if(attempt<5){
+      //  alert(2);
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var resp=this.responseText.split(",");
+          loginSuccess=resp[0];
+          userType=resp[1];
+          if (loginSuccess){
+            document.cookie = "attempt=0;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+            if(userType=="Recycler")
+              window.location.href="index.php";
+            else if(userType=="Collector")
+              window.location.href="index.php";
+            else
+              window.location.href="maintainMaterial.php";
+          }else{
+            //attempt++;
+            setCookiesAttempt();
+            var attemptLeft = 4-(attempt);
+            if(attemptLeft>1){
+              alert("Incorrect username or password. Please try again. ("+attemptLeft+" attempts left.)");
+            }else if(attemptLeft>0){
+              alert("Incorrect username or password. Please try again. ("+attemptLeft+" attempt left.)");
+            }else{
+              alert("Incorrect username or password. (No more attempts.)");
+            }
+            location.reload();
+          }
+        }
+        };
+      }else{
+        alert("Your attempts have exceeded 5 times. Please retry after 5 minutes.");
+      }
+
+      xmlhttp.open("GET", "login.php?username="+username+"&password="+pwd, true);
+      xmlhttp.send();
+    });
+  });
+
+
+
+    /*  xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var resp=this.responseText.split(",");
         loginSuccess=resp[0];
@@ -689,16 +762,26 @@ if(isset($_POST['materialID'])){
           else
             window.location.href="maintainMaterial.php";
         }else{
-          alert("Incorrect username or password. Please try again.");
+
+
+          attempt --;// Decrementing by one.
+          alert("You have left "+attempt+" attempt;");
+          //  location.reload();
+          //alert("Incorrect username or password. Please try again.");
+            if( attempt == 0){
+
+            //return false;
+            }
+
         }
       }
-      };
+    };
 
 
       xmlhttp.open("GET", "login.php?username="+username+"&password="+pwd, true);
       xmlhttp.send();
     });
-  });
+  });*/
 
   jQuery(document).ready(function(){
       $('#registration').submit(function(){
