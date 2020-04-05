@@ -299,9 +299,8 @@ if ($resultRec->num_rows > 0) {
                             <input type="submit" name="acceptBtn" id="acceptBtn" value="Submit">
                           </div>
                           <p class="text-center pb-4">
-                            <span>Don't match the submission's material? </span>
-
-                            <a class="text-decoration-none text-success" href="#" data-toggle="modal" data-target="#updateSub" data-dismiss="modal">Click here to update</a>
+                            <span>Don't match the submission? </span>
+                            <a class="text-decoration-none text-success" href="#" data-toggle="modal" data-target="#newSub" data-dismiss="modal">Click here to add submission</a>
                           </p>
                         </form>
                       </div>
