@@ -732,7 +732,7 @@ if(isset($_POST['materialID'])){
             }else if(attemptLeft>0){
               alert("Incorrect username or password. Please try again. ("+attemptLeft+" attempt left.)");
             }else{
-              alert("Incorrect username or password. (No more attempts.)");
+              alert("You have exceeded the limit of login. Please retry after 5 minutes.");
             }
             location.reload();
           }
